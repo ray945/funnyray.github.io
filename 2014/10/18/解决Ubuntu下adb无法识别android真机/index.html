@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>解决Ubuntu下adb无法识别android真机 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前段时间在使用Ubuntu学android开发的时候，发现adb并不能识别我插在电脑上的Nokia X，显示的设备为“???????”……虽然大多时候是可以用genymotion的模拟器来调试程序的，不过在涉及一些复杂的情况，比如多点触控的时候，就很捉急了……其实一些知名的手机如Nexus是可以直接识别的，其他的国产手机什么的，就需要自己动下手啦…… 首先，插上你的手机，打开终端，执行命令： 1l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决Ubuntu下adb无法识别android真机">
+<meta property="og:url" content="http://yoursite.com/2014/10/18/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8Badb%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABandroid%E7%9C%9F%E6%9C%BA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前段时间在使用Ubuntu学android开发的时候，发现adb并不能识别我插在电脑上的Nokia X，显示的设备为“???????”……虽然大多时候是可以用genymotion的模拟器来调试程序的，不过在涉及一些复杂的情况，比如多点触控的时候，就很捉急了……其实一些知名的手机如Nexus是可以直接识别的，其他的国产手机什么的，就需要自己动下手啦…… 首先，插上你的手机，打开终端，执行命令： 1l">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-10-18T08:15:20.000Z">
+<meta property="article:modified_time" content="2020-03-21T16:18:42.393Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-解决Ubuntu下adb无法识别android真机" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/18/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8Badb%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABandroid%E7%9C%9F%E6%9C%BA/" class="article-date">
+  <time datetime="2014-10-18T08:15:20.000Z" itemprop="datePublished">2014-10-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      解决Ubuntu下adb无法识别android真机
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间在使用Ubuntu学android开发的时候，发现adb并不能识别我插在电脑上的Nokia X，显示的设备为“???????”……虽然大多时候是可以用genymotion的模拟器来调试程序的，不过在涉及一些复杂的情况，比如多点触控的时候，就很捉急了……其实一些知名的手机如Nexus是可以直接识别的，其他的国产手机什么的，就需要自己动下手啦……</p>
+<p>首先，插上你的手机，打开终端，执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsusb</span><br></pre></td></tr></table></figure>
+<p>如此便可查看当前连接在电脑上的设备</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Bus 002 Device 005: ID 5986:a006 Acer, Inc</span><br><span class="line">Bus 002 Device 004: ID 1c4f:0002 SiGma Micro Keyboard TRACER Gamma Ivory</span><br><span class="line">Bus 002 Device 009: ID 05c6:9039 Qualcomm, Inc.</span><br><span class="line">Bus 002 Device 003: ID 2188:0ae1</span><br><span class="line">Bus 002 Device 002: ID 8087:0024 Intel Corp. Integrated Rate Matching Hub</span><br><span class="line">Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br><span class="line">Bus 001 Device 003: ID 0489:e030 Foxconn / Hon Hai</span><br><span class="line">Bus 001 Device 002: ID 8087:0024 Intel Corp. Integrated Rate Matching Hub</span><br><span class="line">Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br></pre></td></tr></table></figure>
+<p>通过设备的描述，其实很容易看出哪个设备是自己的手机的，比如我就是通过Qualcomm（高通）找出我的Nokia X的，实在看不出来的话，还有个办法，把手机拔掉，再使用lsusb命令查看设备，通过前后对比来找出你的手机。</p>
+<p>找到自己的手机后，记下我标注的红色部分的厂商ID（每个品牌都不一样的哦亲，看清楚自己的，不要傻乎乎地直接把我的这个记下了- -b）</p>
+<p>在用户的 home 目录下，寻找 .android 目录，如果没有就创建。在 .android 目录下新建一个文件，叫adb_usb.ini, 记住，后缀是 “ini” 哦；添加前面获得的 VID 到 adb_usb.ini 中</p>
+<p>如：<br>05c6<br>注意，红色部分为你自己刚刚记下的厂商ID哦～</p>
+<p>保存关闭，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="built_in">kill</span>-server</span><br><span class="line">adb start-server</span><br></pre></td></tr></table></figure>
+<p>把手机拔掉，重新插上，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb devices</span><br></pre></td></tr></table></figure>
+<p>如果显示正常，就搞定啦！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List of devices attached</span><br><span class="line">4e4cb84a    device</span><br></pre></td></tr></table></figure>
+<p>如果显示 no permission，表示需要权限，在启动adb服务的时候加上sudo就行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo adb start-server</span><br></pre></td></tr></table></figure>
+<p>补充：还有一种方法，是参阅最新的 官方文档,需要新建或修改的文件名和配置项的具体参数有差别。</p>
+<p>文件路径为：/etc/udev/rules.d/51-android.rules</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/udev/rules.d/51-android.rules</span><br></pre></td></tr></table></figure>
+<p>在文档中添加以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SUBSYSTEM==<span class="string">"usb"</span>, ATTR&#123;idVendor&#125;==<span class="string">"&lt;span style="</span>color: <span class="comment">#ff0000;"&gt;05c6&lt;/span&gt;", MODE="0666", GROUP="plugdev"</span></span><br></pre></td></tr></table></figure>
+<p>然后添加权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod a+x /etc/udev/rules.d/51-android.rules</span><br></pre></td></tr></table></figure>
+<p>重启，搞定</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/18/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8Badb%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABandroid%E7%9C%9F%E6%9C%BA/" data-id="ck81u39of000nqcw67h166gmw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/11/16/%C2%96%E6%97%B6%E9%97%B4%E3%80%81%E7%A9%BA%E9%97%B4%E3%80%81%E7%88%B1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          时间、空间、爱
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/09/18/%E9%9B%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">雨</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adb/" rel="tag">adb</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/03/21/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/01/%E5%B9%BB%E6%83%B3%EF%BC%8C%E6%A2%A6%E6%83%B3/">幻想，梦想</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/29/%C2%96%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%AF%92%E5%81%87/">最后一个寒假</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/30/%C2%962014%EF%BC%8C%E5%B0%B1%E8%BF%99%E6%A0%B7%E5%90%A7/">2014，就这样吧</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/07/%C2%96%E2%80%9C%E5%A2%99%E2%80%9D%E5%A4%96%E7%9A%84%E4%B8%96%E7%95%8C/">“墙”外的世界</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

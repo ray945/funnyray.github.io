@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Ubuntu、Windows双系统安装指南 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="可能是windows XP停止更新的缘故，再加上前段时间政府禁止采购windows 8操作系统，越来越多的linux操作系统开始出现在大众的视野，诸如Ubuntu&#x2F;UbuntuKylin、LinuxDeepin、 LinuxMint之类的，它们免费、流畅、美观，虽然应用依旧偏少，但已经逐渐趋于完善，但对于大多数不玩游戏的家庭或者办公用途的电脑来说，绝对是个 很好的选择。周围很多朋友想尝试一下，但是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu、Windows双系统安装指南">
+<meta property="og:url" content="http://yoursite.com/2014/07/19/Ubuntu%E3%80%81Windows%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="可能是windows XP停止更新的缘故，再加上前段时间政府禁止采购windows 8操作系统，越来越多的linux操作系统开始出现在大众的视野，诸如Ubuntu&#x2F;UbuntuKylin、LinuxDeepin、 LinuxMint之类的，它们免费、流畅、美观，虽然应用依旧偏少，但已经逐渐趋于完善，但对于大多数不玩游戏的家庭或者办公用途的电脑来说，绝对是个 很好的选择。周围很多朋友想尝试一下，但是">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-07-18T16:41:40.000Z">
+<meta property="article:modified_time" content="2016-12-31T16:06:45.808Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Ubuntu、Windows双系统安装指南" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/07/19/Ubuntu%E3%80%81Windows%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2014-07-18T16:41:40.000Z" itemprop="datePublished">2014-07-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ubuntu、Windows双系统安装指南
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>可能是windows XP停止更新的缘故，再加上前段时间政府禁止采购windows 8操作系统，越来越多的linux操作系统开始出现在大众的视野，诸如Ubuntu/UbuntuKylin、LinuxDeepin、 LinuxMint之类的，它们免费、流畅、美观，虽然应用依旧偏少，但已经逐渐趋于完善，但对于大多数不玩游戏的家庭或者办公用途的电脑来说，绝对是个 很好的选择。周围很多朋友想尝试一下，但是又不愿意抛弃windows下的众多游戏应用，那么双系统自然就成了一个很好的解决方案。我之前也在网上搜过很 多教程，但要不就是不详细，要不就是有个别地方会出错，所以还是决定自己也来写一篇，方便众多初次尝试linux的朋友~</p>
+<p>我这次采用的是UbuntuKylin 14.04版本（<a href="http://www.ubuntu-china.cn/download" target="_blank">点此下载系统镜像</a>）的系统，因为对Ubuntu比较偏爱，而且作为最受欢迎的Linux发行版本，很多软件下载起来也比较方便，而UbuntuKylin在原生Ubuntu上进行了一点本土化的定制，更适合初步接触linux的用户。如果喜欢原汁原味的Ubuntu系统(<a href="http://www.ubuntu.com/download/desktop" target="_blank">点此下载系统镜像</a>)的话，方法也大致差不多，我就不一一赘述了。</p>
+<p>【因为安装系统时不好截图，博主手机像素也太渣，再加上博主实在有点懒，就不放图了，抱歉- -b但博主保证能看得懂这篇纯文字的教程，如果有问题，可以留言，或在微博上联系博主<a href="http://weibo.com/594ray" target="_blank">@Ray不忘初心</a>】</p>
+<h1>一、准备工作</h1>
+<h2>1、留出系统空间</h2>
+首先需要做的准备工作是给即将安装的Ubuntu系统留出专门的系统空间，最好20G以上，喜欢折腾一点的预留30G，够用了，如果准备长期使用Ubuntu办公，需要存放大量文件，那么空间大小就视自己的情况而定了。
+
+<p>在 桌面上对“计算机”单机鼠标右键，选择“管理”，在打开的计算机管理窗口左侧选择存储-磁盘管理，选择一个比较空余的磁盘，单击右键，选择压缩卷，在输入 压缩空间量里填入你需要压缩的空间，注意单位是M，不是G，点击压缩（可以一次性把空间压缩够，也可以分别从每个卷压缩一点）。压缩出来的空间是空闲空 间，没有盘符的，也不必给这个空间新建一个卷添加盘符，直接空闲出来就好，</p>
+<h2>2、引导系统镜像</h2>
+从系统系统镜像下载好后，安装前还需要做点小小的准备。安装系统可以通过U盘安装，也可以直接通过硬盘安装，我这里分两种方法准备，大家可以根据自己的情况自行选择。
+<h4>U盘安装：(适合有Windows装机经验的朋友)</h4>
+用U盘装系统需要先把系统镜像写入U盘，这里需要用到unetbootin（<a href="http://dow6.pc6.com/gm/unetbootin.zip" target="_blank">点此下载</a>）这个工具。其他的系统盘制作工具应该也可以（推荐软碟通），不过之前很多人说他们做出来的启动盘开机不能识别，这个软件是我自己实验过的，应该可行。
+
+<p>打开unetbootin后，选择光盘镜像，在后面导入之前下好的系统ISO镜像文件，然后在驱动器那里选择已经插入的U盘盘符，点击确定，等到进度执行完毕。</p>
+<p>重 启计算机，进入BIOS，选择U盘启动（每台电脑方法不一样，不会的可自行百度，或者转用后面那种硬盘安装办法），出现蓝色选择框，选择“Try Ubuntu without installing”，这个选项能进入Ubuntu试用界面，在这里可以先领略一下Ubuntu系统的风采。</p>
+<h4>硬盘安装：(适合没有U盘、比较懒的朋友)</h4>
+不用U盘，我们就需要用一个叫EasyBCD（<a href="http://6.scdx3.crsky.com/201310/EasyBCD-v2.2.zip" target="_blank">点此下载</a>）的软件神器来引导安装镜像了。
+
+<p>先 用压缩软件打开之前下载的系统ISO镜像文件，进入casper文件夹，找到initrd.lz和vmlinuz.efi两个文件，解压出来，然后把这两 个文件连同ISO镜像文件本身一起复制到C盘根目录下。（其实放任何一个盘都可以，只是需要更改下面的一个配置文件，根据网上很多人出现配置不正确的情 况，我索性直接复制到C盘，安装完后直接删除就行）</p>
+<p>打开EasyBCD软件，点击“添加新条目”，在右边选择NeoGrub，点击安装，然后点配置，会弹出一个文本文件，将以下内容复制到文本后面：</p>
+<blockquote>title Install Ubuntu
+
+<p>root (hd0,0)</p>
+<p>kernel (hd0,0)/vmlinuz.efi boot=casper iso-scan/filename=/<i><b>ubuntukylin-14.04-desktop-amd64.iso </b></i>ro quiet splash locale=zh_CN.UTF-8</p>
+<p>initrd (hd0,0)/initrd.lz</blockquote><br><b><i>注意：斜体部分需要改成之前下载的系统镜像的文件名，务必一模一样。</i></b></p>
+<p>复制好后保存，关闭文本配置文件。</p>
+<p>下面重启计算机，在系统选择启动菜单中选择刚刚设置的NeoGrub启动加载，回车进入Install Ubuntu，之后计算机会去加载相应盘符的ubuntu安装文件，然后进入Ubuntu试用界面。</p>
+<p>进 入试用界面后不要急着打开系统安装软件，先用Ctrl+Alt+T打开终端命令行，输入sudo umount -l /isodevice 然后回车（注意那里是小写的L，不是大写的i，也有很多人因为这个出错的- -b）这个是硬盘安装系统时候需要运行的命令，是把已经挂载的iso文件卸载。因为iso文件是存储在硬盘上的，所以只有卸载之后才能够给该硬盘分区。</p>
+<p>&nbsp;</p>
+<h1>二、系统安装</h1>
+打开桌面上的系统安装软件，进入傻瓜式安装过程，和安装软件一样，选择语言，地区之类的不提，需要注意的是，过程中会问你需不需要联网，在这里我建议大家果断地选择“我现在不想连接到网络”，不然它会在系统安装过程中下载各种更新，那你的安装过程就只能用漫长来形容了……
+
+<p>然后安装类型，如果打算只用Ubuntu的话，尽管替换掉windows系统，如果想保持双系统的话，选最后一个“其他选项”。（没试过直接选与windows共存，不知道会怎么样，不过好像都不建议这么做）</p>
+<p>继续之后就是分区了，找到之前分好的空闲出来的那部分空间，点下面那个“+”号，如果你计算机的物理内存不高于2G，建议挂载一个swap交换空间，大小一般为物理内存的2倍，比如2G内存的话就分配4096M，挂载点选择“swap交换空间”，4G、8G内存就不用了。</p>
+<p>分配的总空间在40G以下的话，建议直接把所有空间全部挂载到“根目录/”，类型为用于Ext4日志文件系统，然后确定。如果想自己具体分区的话，可以在网上搜一下分区方案，在这里我就不瞎建议了……下面的启动引导器直接用默认的整块硬盘就好。</p>
+<p>然后就是等待安装了，安装完毕后，重启计算机。</p>
+<p><i><b>注 意：若重启发现原来 Windows进不去了。打开终端输，入命令sudo gedit /etc/default/grub，修改GRUB_TIMEOUT=”10”然后在终端中输入sudo update-grubupdate， 命令会自动找到 windows 启动项。并且自动更新 /boot/grub/grub.cfg 文件。这样重启就能进windows了。（反正我没遇到过这种情况）</b></i></p>
+<p><i><b> </b></i></p>
+<h1>三、善后处理</h1>
+<h4>修复windows默认引导</h4>
+安装了Ubuntu系统后，你会发现开机后系统选择界面和以前的不一样了，而且如果不选择的话，默认是进入Ubuntu系统的，这是因为Ubuntu的grub引导覆盖了windows的引导程序，如果这给你带来不便的话，没关系，可以用MbrFix工具（<a href="http://dc6.pc6.com/xy2/MBRFIX.zip" target="_blank">点此下载</a>）进行引导修复。
+
+<p>将mbrfix.exe文件解压出来后，鼠标右键点击属性，在兼容性里勾上以管理员身份运行此程序，确定。然后进入命令行，用cd命令进入mbrfix.exe文件所在目录，输入命令 MbrFix /drive 0 fixmbr ，再确认一下即可。</p>
+<p>然后再打开EasyBCD，添加新条目，选Linux/BSD，类型选GRUB 2，名称自己改，Ubuntu就好，驱动器选择装有Ubuntu的那个盘就好，然后点添加条目。再点进NeoGrub，点删除，删掉刚刚的安装引导。</p>
+<p>最后进C盘，删掉之前拷贝进去的initrd.lz、vmlinuz.efi以及镜像文件，一切搞定~</p>
+<h4>UbuntuKylin安装更新</h4>
+进入Ubuntu系统后，第一件事情就是要大更新，不过在更新之前要先修改一下软件源的镜像，不然速度会慢到让你哭的……点击右上角的“系统-系统设置”，点击“软件更新”，在“下载自”里面选择“其他站点”，然后选择最佳服务器，等待测速，然后点选择服务器就好。
+
+<p>点击右上角“系统-关于这台计算机”，在弹出来的窗口右下角点击检查更新，然后就可以慢慢等待它更新啦～</p>
+<p>&nbsp;</p>
+<p>至此，恭喜你已经成功地装好了Ubuntu、Windows双系统！之后我会再给新手推荐一些Ubuntu下常用的软件和一些非常赞的主题包，让你的桌面彻底地炫起来～</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/07/19/Ubuntu%E3%80%81Windows%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/" data-id="ck81u39nn0000qcw6hny8bpyu" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/07/21/%E5%9C%A8Ubuntu%E4%B8%8B%E6%90%AD%E5%BB%BAAndroid%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          在Ubuntu下搭建Android开发环境
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/06/01/%E5%8E%BBKTV%E8%81%9A%E4%BC%9A%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">去KTV聚会的几种情况</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adb/" rel="tag">adb</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/03/21/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/01/%E5%B9%BB%E6%83%B3%EF%BC%8C%E6%A2%A6%E6%83%B3/">幻想，梦想</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/29/%C2%96%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%AF%92%E5%81%87/">最后一个寒假</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/30/%C2%962014%EF%BC%8C%E5%B0%B1%E8%BF%99%E6%A0%B7%E5%90%A7/">2014，就这样吧</a>
+          </li>
+        
+          <li>
+            <a href="/2014/12/07/%C2%96%E2%80%9C%E5%A2%99%E2%80%9D%E5%A4%96%E7%9A%84%E4%B8%96%E7%95%8C/">“墙”外的世界</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
