@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。">
@@ -170,7 +170,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/11/16/%C2%96%E6%97%B6%E9%97%B4%E3%80%81%E7%A9%BA%E9%97%B4%E3%80%81%E7%88%B1/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2018/01/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -184,7 +184,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/11/16/%C2%96%E6%97%B6%E9%97%B4%E3%80%81%E7%A9%BA%E9%97%B4%E3%80%81%E7%88%B1/" class="post-title-link" itemprop="url">时间、空间、爱</a>
+            <a href="/2018/01/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">无监督学习-生成模型</a>
         </h2>
 
         <div class="post-meta">
@@ -194,15 +194,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-11-16 17:20:32" itemprop="dateCreated datePublished" datetime="2014-11-16T17:20:32+08:00">2014-11-16</time>
+              <time title="创建时间：2018-01-18 00:00:00" itemprop="dateCreated datePublished" datetime="2018-01-18T00:00:00+08:00">2018-01-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:52:27" itemprop="dateModified" datetime="2020-03-23T01:52:27+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:22:38" itemprop="dateModified" datetime="2020-03-23T11:22:38+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -215,11 +224,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>不敢说诺兰从没让人失望过，但他确确实实是唯一一个给了我一次又一次冲击的电影艺术家。《黑暗骑士》、《盗梦空间》、《星际穿越》，目前我最喜欢的电影居然全部出自他手，这让我无法不承认自己已然沦为他的脑残粉……四年前，我带着网络上铺天盖地的好评走进影院观看了《盗梦空间》，我说，这是近几年来最值得一看的电影；四年后的今天，我把这句话原封不动地送给了《星际穿越》，并且，仰慕之情有增无减……</p>
-<p>这不是一篇影评，也不是一篇科普，这只是一篇……whatever……我都不知道我接下来会说些什么……想到啥说啥吧，just follow me.</p>
+          <h2 id="监督学习与无监督学习"><a href="#监督学习与无监督学习" class="headerlink" title="监督学习与无监督学习"></a>监督学习与无监督学习</h2><h3 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h3><p><strong>Data</strong>: (x, y)</p>
+<p>x is data, y is label</p>
+<p><strong>Goal</strong>: Learn a function to map x -&gt; y</p>
+<p><strong>Example</strong>: Classification, regression, object detection, semantic segmentation, image captioning, etc.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2014/11/16/%C2%96%E6%97%B6%E9%97%B4%E3%80%81%E7%A9%BA%E9%97%B4%E3%80%81%E7%88%B1/#more" rel="contents">
+              <a class="btn" href="/2018/01/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -243,7 +254,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/10/18/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8Badb%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABandroid%E7%9C%9F%E6%9C%BA/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2017/12/23/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -257,7 +268,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/10/18/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8Badb%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABandroid%E7%9C%9F%E6%9C%BA/" class="post-title-link" itemprop="url">解决Ubuntu下adb无法识别android真机</a>
+            <a href="/2017/12/23/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB/" class="post-title-link" itemprop="url">数据驱动的图像分类</a>
         </h2>
 
         <div class="post-meta">
@@ -267,15 +278,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-10-18 16:15:20" itemprop="dateCreated datePublished" datetime="2014-10-18T16:15:20+08:00">2014-10-18</time>
+              <time title="创建时间：2017-12-23 00:00:00" itemprop="dateCreated datePublished" datetime="2017-12-23T00:00:00+08:00">2017-12-23</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:52:33" itemprop="dateModified" datetime="2020-03-23T01:52:33+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:22:46" itemprop="dateModified" datetime="2020-03-23T11:22:46+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -288,10 +308,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>前段时间在使用Ubuntu学android开发的时候，发现adb并不能识别我插在电脑上的Nokia X，显示的设备为“???????”……虽然大多时候是可以用genymotion的模拟器来调试程序的，不过在涉及一些复杂的情况，比如多点触控的时候，就很捉急了……其实一些知名的手机如Nexus是可以直接识别的，其他的国产手机什么的，就需要自己动下手啦……</p>
+          <h2 id="图像分类"><a href="#图像分类" class="headerlink" title="图像分类"></a>图像分类</h2><p>所谓图像分类问题，就是已有固定的分类标签集合，然后对于输入的图像，从分类标签集合中找出一个分类标签，最后把分类标签分配给该输入图像。虽然看起来挺简单的，但这可是计算机视觉领域的核心问题之一，并且有着各种各样的实际应用。在后面的课程中，我们可以看到计算机视觉领域中很多看似不同的问题（比如物体检测和分割），都可以被归结为图像分类问题。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2014/10/18/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8Badb%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%ABandroid%E7%9C%9F%E6%9C%BA/#more" rel="contents">
+              <a class="btn" href="/2017/12/23/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -315,7 +335,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/09/18/%E9%9B%A8/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2017/11/19/Tensorflow%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -329,7 +349,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/09/18/%E9%9B%A8/" class="post-title-link" itemprop="url">雨</a>
+            <a href="/2017/11/19/Tensorflow%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Tensorflow笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -339,15 +359,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-09-18 19:47:21" itemprop="dateCreated datePublished" datetime="2014-09-18T19:47:21+08:00">2014-09-18</time>
+              <time title="创建时间：2017-11-19 00:00:00" itemprop="dateCreated datePublished" datetime="2017-11-19T00:00:00+08:00">2017-11-19</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:53:10" itemprop="dateModified" datetime="2020-03-23T01:53:10+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:24:01" itemprop="dateModified" datetime="2020-03-23T11:24:01+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -360,17 +389,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这场雨已经连续下了好几天了。</p>
-<p>人们说，一场秋雨一场凉。</p>
-<p>如果对这句话只停留在表面的意思，我是十分赞同的。几天前的晚上躺在床上还在热得翻来覆去，几场秋雨过后，现在的我即便穿着外套坐在办公室，也仍需不停地晃动腿以达到取暖的目的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/09/18/%E9%9B%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>使用TensorFlow前必须明白的基本概念：</p>
+<p>图（Graph）：图描述了计算的过程，TensorFlow使用图来表示计算任务。</p>
+<p>张量（Tensor）：TensorFlow使用tensor表示数据。每个Tensor是一个类型化的多维数组。</p>
+<p>操作（op）：图中的节点被称为op（operation的缩写），一个op获得0个或多个Tensor，执行计算，产生0个或多个Tensor。</p>
+<p>会话（Session）：图必须在称之为“会话”的上下文中执行。会话将图的op分发到诸如CPU或GPU之类的设备上执行。</p>
+<p>变量（Variable）：运行过程中可以被改变，用于维护状态。</p>
+<h2 id="计算图（The-computation-graph）"><a href="#计算图（The-computation-graph）" class="headerlink" title="计算图（The computation graph）"></a>计算图（The computation graph）</h2><p>Tensorflow程序通常被组织成一个构建阶段和一个执行阶段。在构建阶段，op的执行步骤被描述成一个图。在执行阶段，使用会话执行图中的op。</p>
+<h3 id="构建图"><a href="#构建图" class="headerlink" title="构建图"></a>构建图</h3><p>构建图的第一步是创建源op（sources op）。源op不需要任何输入，例如常量（Constant）。源op的输出被传递给其他op做运算。</p>
+<p>在TensorFlow的Python库中，op构造器的返回值代表这个op的输出。这些返回值可以作为输入传递给其他op构造器。</p>
+<p>TensorFlow的Python库中包含了一个默认的graph，可以在上面使用添加节点。如果你的程序需要多个graph那就需要使用Graph类管理多个graph。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个常量 op, 产生一个 1x2 矩阵. 这个 op 被作为一个节点</span></span><br><span class="line"><span class="comment"># 加到默认图中.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 构造器的返回值代表该常量 op 的返回值.</span></span><br><span class="line">matrix1 = tf.constant([[<span class="number">3.</span>, <span class="number">3.</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建另外一个常量 op, 产生一个 2x1 矩阵.</span></span><br><span class="line">matrix2 = tf.constant([[<span class="number">2.</span>],[<span class="number">2.</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个矩阵乘法 matmul op , 把 'matrix1' 和 'matrix2' 作为输入.</span></span><br><span class="line"><span class="comment"># 返回值 'product' 代表矩阵乘法的结果.</span></span><br><span class="line">product = tf.matmul(matrix1, matrix2)</span><br></pre></td></tr></table></figure>
+
+<p>默认图中包含了3个节点：两个constant() op和一个matmul() op。为了真正的执行矩阵相乘运算，并得到矩阵乘法的结果，你必须在会话中启动这个图。</p>
+<h3 id="启动图"><a href="#启动图" class="headerlink" title="启动图"></a>启动图</h3><p>构造阶段完成后，才能在会话中启动图。启动图的第一步是创建一个Session对象。如果没有任何参数，会话构造器将启动默认图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动默认图.</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用 sess 的 'run()' 方法来执行矩阵乘法 op, 传入 'product' 作为该方法的参数.</span></span><br><span class="line"><span class="comment"># 上面提到, 'product' 代表了矩阵乘法 op 的输出, 传入它是向方法表明, 我们希望取回</span></span><br><span class="line"><span class="comment"># 矩阵乘法 op 的输出.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 整个执行过程是自动化的, 会话负责传递 op 所需的全部输入. op 通常是并发执行的.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 函数调用 'run(product)' 触发了图中三个 op (两个常量 op 和一个矩阵乘法 op) 的执行.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 返回值 'result' 是一个 numpy `ndarray` 对象.</span></span><br><span class="line">result = sess.run(product)</span><br><span class="line"><span class="keyword">print</span> result</span><br><span class="line"><span class="comment"># ==&gt; [[ 12.]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 任务完成, 关闭会话.</span></span><br><span class="line">sess.close()</span><br></pre></td></tr></table></figure>
+
+<p>对象在使用完成或需要关闭以释放资源。除了显示调用close外，也可以使用“with”代码块来自动完成关闭动作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">result = sess.run([product])</span><br><span class="line"><span class="keyword">print</span> result</span><br><span class="line">&lt;/syntaxhighlight&gt;Tensorflow的实现上，会把图转换成可分布式执行的操作，以充分利用计算资源（例如CPU或GPU）。通常情况下，你不需要显示指使用CPU或者GPU。TensorFlow能自动检测，如果检测到GPU，TensorFlow会使用第一个GPU来执行操作。</span><br><span class="line"></span><br><span class="line">如果机器上有多个GPU，除第一个GPU外的其他GPU是不参与计算的，为了使用这些GPU，你必须将op明确指派给他们执行。<span class="keyword">with</span>…Device语句用来指派特定的CPU或GPU执行操作：&lt;syntaxhighlight lang=<span class="string">"python"</span>&gt;</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/gpu:1"</span>):</span><br><span class="line">matrix1 = tf.constant([[<span class="number">3.</span>, <span class="number">3.</span>]])</span><br><span class="line">matrix2 = tf.constant([[<span class="number">2.</span>],[<span class="number">2.</span>]])</span><br><span class="line">product = tf.matmul(matrix1, matrix2)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>设备用字符串进行标识. 目前支持的设备包括:</p>
+<p>“/cpu:0”: 机器的 CPU.</p>
+<p>“/gpu:0”: 机器的第一个 GPU, 如果有的话.</p>
+<p>“/gpu:1”: 机器的第二个 GPU, 以此类推.</p>
+<h2 id="Tensor"><a href="#Tensor" class="headerlink" title="Tensor"></a>Tensor</h2><p>Tensorflow使用tensor数据结构来代表所有的数据。计算图的操作之间仅能传递tensor。你可以把tensor当作多维数组或列表。每一个tensor包含有一个静态类型，一个rank和一个shape。想了解更多TensorFlow是如何操作这些概念的，参考Rank, Shape, and Type</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>变量维持图计算过程中的状态信息。下面的例子演示了如何使用变量作为一个简单的计数器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a Variable, that will be initialized to the scalar value 0.</span></span><br><span class="line">state = tf.Variable(<span class="number">0</span>, name=<span class="string">"counter"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create an Op to add one to `state`.</span></span><br><span class="line"></span><br><span class="line">one = tf.constant(<span class="number">1</span>)</span><br><span class="line">new_value = tf.add(state, one)</span><br><span class="line">update = tf.assign(state, new_value)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Variables must be initialized by running an `init` Op after having</span></span><br><span class="line"><span class="comment"># launched the graph. We first have to add the `init` Op to the graph.</span></span><br><span class="line">init_op = tf.global_variables_initializer()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Launch the graph and run the ops.</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line"><span class="comment"># Run the 'init' op</span></span><br><span class="line">sess.run(init_op)</span><br><span class="line"><span class="comment"># Print the initial value of 'state'</span></span><br><span class="line">print(sess.run(state))</span><br><span class="line"><span class="comment"># Run the op that updates 'state' and print 'state'.</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">sess.run(update)</span><br><span class="line">print(sess.run(state))</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 0</span></span><br><span class="line"><span class="comment"># 1</span></span><br><span class="line"><span class="comment"># 2</span></span><br><span class="line"><span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+
+<p>通常可以将一个统计模型中的参数表示为一组变量。例如，你可以将一个神经网络的权重当作一个tensor存储在变量中。在训练图的重复运行过程中去更新这个tensor。</p>
+<h2 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch"></a>Fetch</h2><p>为了取回操作的输出内容，在使用Session对象的run()方法执行图时，传入一些tensor，这些tensor会帮你取回结果。之前的例子中，我们只取回了state节点，但是你也可以取回多个tensor：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">input1 = tf.constant(<span class="number">3.0</span>)</span><br><span class="line">input2 = tf.constant(<span class="number">2.0</span>)</span><br><span class="line">input3 = tf.constant(<span class="number">5.0</span>)</span><br><span class="line">intermed = tf.add(input2, input3)</span><br><span class="line">mul = tf.mul(input1, intermed)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">result = sess.run([mul, intermed])</span><br><span class="line"><span class="keyword">print</span> result</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出:</span></span><br><span class="line"><span class="comment"># [array([ 21.], dtype=float32), array([ 7.], dtype=float32)]</span></span><br></pre></td></tr></table></figure>
+
+<p>需要获取的多个 tensor 值，在 op 的一次运行中一起获得（而不是逐个去获取 tensor）。</p>
+<h2 id="Feed"><a href="#Feed" class="headerlink" title="Feed"></a>Feed</h2><p>上面的例子中展示了在计算图中引入tensor，以常量和变量的形式存储。TensorFlow还提供了feed机制，该机制可以临时替换图中的tensor。</p>
+<p>feed使用一个tensor值临时替换一个操作的输出。可以把feed数据作为参数提供给run()方法。标记的方法是使用tf.placeholder()为这些操作创建占位符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">input1 = tf.placeholder(tf.float32)</span><br><span class="line">input2 = tf.placeholder(tf.float32)</span><br><span class="line">output = tf.mul(input1, input2)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line"><span class="keyword">print</span> sess.run([output], feed_dict=&#123;input1:[<span class="number">7.</span>], input2:[<span class="number">2.</span>]&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出:</span></span><br><span class="line"><span class="comment"># [array([ 14.], dtype=float32)]</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -389,7 +443,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/08/27/%E6%A0%A1%E6%9C%8D%E5%86%8D%E4%B8%91%EF%BC%8C%E4%BD%A0%E5%86%8D%E4%B9%9F%E7%A9%BF%E4%B8%8D%E5%88%B0%E4%BA%86/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2017/06/09/MQTT%20Android%20Client/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -403,7 +457,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/08/27/%E6%A0%A1%E6%9C%8D%E5%86%8D%E4%B8%91%EF%BC%8C%E4%BD%A0%E5%86%8D%E4%B9%9F%E7%A9%BF%E4%B8%8D%E5%88%B0%E4%BA%86/" class="post-title-link" itemprop="url">校服再丑，你再也穿不到了</a>
+            <a href="/2017/06/09/MQTT%20Android%20Client/" class="post-title-link" itemprop="url">MQTT Android Client</a>
         </h2>
 
         <div class="post-meta">
@@ -413,15 +467,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-08-27 00:19:31" itemprop="dateCreated datePublished" datetime="2014-08-27T00:19:31+08:00">2014-08-27</time>
+              <time title="创建时间：2017-06-09 00:00:00" itemprop="dateCreated datePublished" datetime="2017-06-09T00:00:00+08:00">2017-06-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:53:14" itemprop="dateModified" datetime="2020-03-23T01:53:14+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:28:00" itemprop="dateModified" datetime="2020-03-23T11:28:00+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -434,17 +497,46 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>我是一看电视剧就心塞星人。</p>
-<p>昨天在网上看到了一部电视剧，叫《匆匆那年》，是根据小说改编的，同名的电影十月也会上映。我一向对这种怀旧向的标题毫无抵抗力，看我之前的日志就知道，因为我就是一个喜欢怀旧的人。</p>
-<p>有人说，怀旧说明一个人重情，还有人说，怀旧是懦弱的表现。我坚信我是一个重情的人，也不否认自己是一个懦弱的人……懦弱的性格是从小就形成的，从幼儿园开始，就总被其他熊孩子欺负，还总爱哭，而且那会儿据说我长得也挺秀气，老师们都觉得我像一个姑娘家……初中的时候，是最常被欺负的，几个室友经常拿我开玩笑，各种整，还常常被孤立。别人欺负我的时候，我从来不会回击，一直逆来顺受，偶尔还会偷偷一个人躲着抹眼，泪久而久之，别人也觉得我好欺负，很懦弱……</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/08/27/%E6%A0%A1%E6%9C%8D%E5%86%8D%E4%B8%91%EF%BC%8C%E4%BD%A0%E5%86%8D%E4%B9%9F%E7%A9%BF%E4%B8%8D%E5%88%B0%E4%BA%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h2 id="MQTT"><a href="#MQTT" class="headerlink" title="MQTT"></a>MQTT</h2><p>MQTT（Message Queuing Telemetry Transport，消息队列遥测传输）是IBM开发的一个即时通讯协议，原本设计用来作为物联网的通信协议，现在国内很多企业都广泛使用MQTT作为Android手机客户端与服务器端推送消息的协议。</p>
+<p>简单来说，机制就是使用一个代理服务器message broker，客户端client连接上这个服务器，然后告诉服务器说，我可以接收哪些类型的消息，同时，client也可以发布自己的消息，这些消息根据协议的内容，可以被其他client获取。<br>只要手机客户端，连上服务器，然后就可以接收和发布消息了，不用再自己写socket。低带宽，耗电量少，使用简单。</p>
+<p><img src="mqtt.png" alt=""></p>
+<p>客户端B和C向服务端（Broker）订阅一个叫“temperature”的主题，当客户端A向该主题发布一条消息，客户端B和C会立刻收到Broker推送的该消息</p>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>MQTT协议是为大量计算能力有限，且工作在低带宽、不可靠的网络的远程传感器和控制设备通讯而设计的协议，它具有以下主要的几项特性：</p>
+<p>1、使用发布/订阅消息模式，提供一对多的消息发布，解除应用程序耦合；</p>
+<p>2、对负载内容屏蔽的消息传输；</p>
+<p>3、使用 TCP/IP 提供网络连接；</p>
+<p>4、有三种消息发布服务质量：</p>
+<p>“至多一次”，消息发布完全依赖底层 TCP/IP 网络。会发生消息丢失或重复。这一级别可用于如下情况，环境传感器数据，丢失一次读记录无所谓，因为不久后还会有第二次发送。</p>
+<p>“至少一次”，确保消息到达，但消息重复可能会发生。</p>
+<p>“只有一次”，确保消息到达一次。这一级别可用于如下情况，在计费系统中，消息重复或丢失会导致不正确的结果。</p>
+<p>5、小型传输，开销很小（固定长度的头部是 2 字节），协议交换最小化，以降低网络流量；</p>
+<p>6、使用 Last Will 和 Testament 特性通知有关各方客户端异常中断的机制；</p>
+<h2 id="MqttAndroidClient"><a href="#MqttAndroidClient" class="headerlink" title="MqttAndroidClient"></a>MqttAndroidClient</h2><p>MqttAndroidClient是Eclipse paho推出的一个基于Android的MQTT客户端，使用简单。</p>
+<h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">repositories</span> &#123;</span><br><span class="line">    maven &#123;</span><br><span class="line">        url <span class="string">"https://repo.eclipse.org/content/repositories/paho-snapshots/"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2'</span></span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'org.eclipse.paho:org.eclipse.paho.android.service:1.0.2'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置客户端"><a href="#设置客户端" class="headerlink" title="设置客户端"></a>设置客户端</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">MqttAndroidClient mqttAndroidClient = <span class="keyword">new</span> MqttAndroidClient(getApplicationContext(), URL, CLIENT_ID);</span><br><span class="line">mqttAndroidClient.setCallback(<span class="keyword">new</span> MqttCallback() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connectionLost</span><span class="params">(Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//连接断掉</span></span><br><span class="line">        Log.e(TAG, <span class="string">"connectionLost "</span> + cause);</span><br><span class="line">        cause.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">messageArrived</span><span class="params">(String topic, MqttMessage message)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//收到消息推送</span></span><br><span class="line">        Log.e(TAG, <span class="string">"messageArrived"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deliveryComplete</span><span class="params">(IMqttDeliveryToken token)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//消息发布成功</span></span><br><span class="line">        Log.e(TAG, <span class="string">"deliveryComplete"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>URL：mqtt服务器的地址，这里给一个测试用的mqtt服务器地址：tcp://52.80.16.19:1883</p>
+<p>CLIENT_ID：客户端的唯一认证，如果某客户端使用一个client id连上服务器，另外一个客户端是无法使用同一个client id连接服务器的</p>
+<h3 id="设置连接"><a href="#设置连接" class="headerlink" title="设置连接"></a>设置连接</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MqttConnectOptions mqttConnectOptions = <span class="keyword">new</span> MqttConnectOptions();</span><br><span class="line">mqttConnectOptions.setAutomaticReconnect(<span class="keyword">true</span>);</span><br><span class="line">mqttConnectOptions.setUserName(<span class="string">"dashboard"</span>);</span><br><span class="line">mqttConnectOptions.setPassword(<span class="string">"public"</span>.toCharArray());</span><br><span class="line">mqttConnectOptions.setKeepAliveInterval(KEEP_ALIVE);</span><br><span class="line">mqttConnectOptions.setCleanSession(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+
+<p>setAutomaticReconnect：设置自动重连，设置为true后，connectionLost时会自动重新连接服务器；需要注意的是，只有在连接断开时才会重连，如果是一开始连接失败的话是不会重连的。</p>
+<p>setKeepAliveInterval：以秒为单位，定义服务器端从客户端接收消息的最大时间间隔。一般应用服务会在业务层次检测客户端网络是否连接，不是TCP/IP协议层面的心跳机制(比如开启SOCKET的SO_KEEPALIVE选项)。 一般来讲，在一个心跳间隔内，客户端发送一个PINGREQ消息到服务器，服务器返回PINGRESP消息，完成一次心跳交互，继而等待下一轮。若客户端没有收到心跳反馈，会关闭掉TCP/IP端口连接，离线。</p>
+<p>setCleanSession：设置为false时，当客户端断线，服务器必须保存该客户端订阅的消息，包括断线期间发布到该主题的QOS为1和2的消息，以便该客户端下一次连上服务器后依然能收到这些消息；设置为true则不保存，客户端将不会收到过时的消息，且每次重连都需要重新订阅主题。</p>
+<h3 id="连接mqtt服务器"><a href="#连接mqtt服务器" class="headerlink" title="连接mqtt服务器"></a>连接mqtt服务器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mqttAndroidClient.connect(mqttConnectOptions, <span class="keyword">null</span>, <span class="keyword">new</span> IMqttActionListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(IMqttToken asyncActionToken)</span> </span>&#123;</span><br><span class="line">        Log.e(TAG, <span class="string">"connect success"</span>);</span><br><span class="line">        <span class="comment">//连接mqtt服务器成功，一般会在这里进行主题订阅</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(IMqttToken asyncActionToken, Throwable exception)</span> </span>&#123;</span><br><span class="line">        Log.e(TAG, <span class="string">"connect fail "</span> + exception.toString());</span><br><span class="line">        exception.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="主题订阅"><a href="#主题订阅" class="headerlink" title="主题订阅"></a>主题订阅</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mqttAndroidClient.subscribe(mSubtopic, <span class="number">0</span>, <span class="keyword">null</span>, <span class="keyword">new</span> IMqttActionListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(IMqttToken asyncActionToken)</span> </span>&#123;</span><br><span class="line">        Log.e(TAG, <span class="string">"subscribe success"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(IMqttToken asyncActionToken, Throwable exception)</span> </span>&#123;</span><br><span class="line">        Log.e(TAG, <span class="string">"subscribe fail"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>参数依次为：</p>
+<p>Topic, qos, context, IMqttActionListener</p>
+<p>QOS：有3种模式，分别为</p>
+<p>0：“至多一次”，消息发布完全依赖底层 TCP/IP 网络。会发生消息丢失或重复。这一级别可用于如下情况，环境传感器数据，丢失一次读记录无所谓，因为不久后还会有第二次发送。</p>
+<p>1：“至少一次”，确保消息到达，但消息重复可能会发生。</p>
+<p>2：“只有一次”，确保消息到达一次。这一级别可用于如下情况，在计费系统中，消息重复或丢失会导致不正确的结果。</p>
+<h3 id="消息发布"><a href="#消息发布" class="headerlink" title="消息发布"></a>消息发布</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">"Hello World!"</span>;</span><br><span class="line">Integer qos = <span class="number">0</span>;</span><br><span class="line">Boolean retained = <span class="keyword">false</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    mqttAndroidClient.publish(subscriptionTopic, str.getBytes(), qos.intValue(), retained.booleanValue());</span><br><span class="line">&#125; <span class="keyword">catch</span> (MqttException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>retained：该消息是否长期驻留在消息队列中</p>
+
       
     </div>
 
@@ -463,7 +555,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/08/24/%E6%88%91%E7%9A%84X19-%E9%80%9D%E5%8E%BB%E4%B9%8B%E5%90%8E/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2017/06/09/Kotlin%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -477,7 +569,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/08/24/%E6%88%91%E7%9A%84X19-%E9%80%9D%E5%8E%BB%E4%B9%8B%E5%90%8E/" class="post-title-link" itemprop="url">我的X19+逝去之后</a>
+            <a href="/2017/06/09/Kotlin%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Kotlin笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -487,15 +579,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-08-24 23:45:36" itemprop="dateCreated datePublished" datetime="2014-08-24T23:45:36+08:00">2014-08-24</time>
+              <time title="创建时间：2017-06-09 00:00:00" itemprop="dateCreated datePublished" datetime="2017-06-09T00:00:00+08:00">2017-06-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:53:18" itemprop="dateModified" datetime="2020-03-23T01:53:18+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:26:01" itemprop="dateModified" datetime="2020-03-23T11:26:01+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -508,16 +609,187 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>放假回家前，在寝室翻箱倒柜了许久，也没能找到我的X19+，一个我从高中就开始使用的MP3播放器。</p>
-<p>说起来不免有些遗憾，用了这么多年，对它也着实有些感情了。高中一开始住校的时候和室友关系并不好，由于自己性格软弱，偶尔还会被欺负，后来就叫爸妈给我买了台MP3播放器，也就是这个台电X19+。当时看宣传语真的有些牛，70小时续航，急速充电，语音朗读什么的，毫不犹豫地就入手了。从那之后，不仅每天晚上我开始一个人沉浸在自己的世界，也养成了白天也随时挂着耳机听歌的习惯。我经常往里面下载新的歌曲，却从来不喜欢删除旧的，久而久之，机子里的歌越来越多，后来一共有700多首，机子也就越来越卡。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/08/24/%E6%88%91%E7%9A%84X19-%E9%80%9D%E5%8E%BB%E4%B9%8B%E5%90%8E/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><p>Kotlin 处理数字在某种程度上接近 Java， 但是并不完全相同。 例如， 对于数字没有隐式转换</p>
+<p>Kotlin提供了如下的内置类型来表示数字：</p>
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th>bit width</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Double</td>
+<td>64</td>
+</tr>
+<tr>
+<td>Float</td>
+<td>32</td>
+</tr>
+<tr>
+<td>Long</td>
+<td>64</td>
+</tr>
+<tr>
+<td>Int</td>
+<td>32</td>
+</tr>
+<tr>
+<td>Short</td>
+<td>16</td>
+</tr>
+<tr>
+<td>Byte</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<p>注意：Kotlin中基本类型的首字母也是大写</p>
+<p>当我们需要一个可空的引用（如Int?）时，会把数字装箱</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a: <span class="built_in">Int</span> = <span class="number">10000</span></span><br><span class="line">print(a === a) <span class="comment">// true</span></span><br><span class="line"><span class="keyword">val</span> boxedA: <span class="built_in">Int</span>? = a</span><br><span class="line"><span class="keyword">val</span> anotherBoxedA: <span class="built_in">Int</span>? = a</span><br><span class="line">print(boxedA === anotherBoxedA) 	<span class="comment">//false	数字装箱不具有同一性</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> a: <span class="built_in">Int</span> = <span class="number">10000</span></span><br><span class="line">print(a == a) <span class="comment">// true</span></span><br><span class="line"><span class="keyword">val</span> boxedA: <span class="built_in">Int</span>? = a</span><br><span class="line"><span class="keyword">val</span> anotherBoxedA: <span class="built_in">Int</span>? = a</span><br><span class="line">print(boxedA == anotherBoxedA) 	<span class="comment">//true	数字装箱具有相等性</span></span><br></pre></td></tr></table></figure>
+
+<p>注：Kotlin中使用==判断相等性，===判断同一性</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>数组在Kotlin中用Array类来表示，它定义了get和set函数和size属性，以及一些其他有用的成员函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Array</span>&lt;<span class="type">T</span>&gt; <span class="keyword">private</span> <span class="keyword">constructor</span></span>() &#123;</span><br><span class="line">    <span class="keyword">val</span> size: <span class="built_in">Int</span></span><br><span class="line">    <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="title">get</span><span class="params">(index: <span class="type">Int</span>)</span></span>: T</span><br><span class="line">    <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="title">set</span><span class="params">(index: <span class="type">Int</span>, value: <span class="type">T</span>)</span></span>: <span class="built_in">Unit</span></span><br><span class="line">    <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="title">iterator</span><span class="params">()</span></span>: Iterator&lt;T&gt;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用arrayOf来初始化数组，或者使用arrayOfNulls<T>创建一个指定大小和类型的空数组</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> arr = arrayOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="keyword">val</span> array = arrayOfNulls&lt;<span class="built_in">Int</span>&gt;(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>或者用接受数组大小和一个函数参数的工厂函数， 用作参数的函数能够返回给定索引的每个元素初始值：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [“0”, “1”, “4”, “9”, “16”]</span></span><br><span class="line"><span class="keyword">val</span> arr = Array(<span class="number">5</span>, &#123; i -&gt; (i * i).toString() &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>字符串的元字符可以使用索引运算符访问: s[i]，可以用for迭代字符串</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (c <span class="keyword">in</span> str) &#123;</span><br><span class="line">    println(c)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>kotlin中分两种字符串：</p>
+<p>转义字符串：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> s = “Hello, world\nThis <span class="keyword">is</span> Ray”</span><br></pre></td></tr></table></figure>
+
+<p>也就是平时我们所使用的字符串，能够使用转义字符</p>
+<p>原生字符串：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> s = <span class="string">"""</span></span><br><span class="line"><span class="string">Hello, world</span></span><br><span class="line"><span class="string">This is Ray</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p>用一对”””包起来的字符串叫原生字符串，不能使用转义字符，在编写代码时什么样，最后输出的字符串就是什么样，甚至包括缩进</p>
+<h4 id="字符串模板"><a href="#字符串模板" class="headerlink" title="字符串模板"></a>字符串模板</h4><p>Kotlin中可以使用字符串模板，在字符串中通过$符号使用该变量，或者使用${}来使用表达式</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> I = <span class="number">10</span></span><br><span class="line"><span class="keyword">val</span> s = “i = $i”	<span class="comment">// “i = 10”</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> s = “abc”</span><br><span class="line"><span class="keyword">val</span> str = “$s.length <span class="keyword">is</span> $&#123;s.length&#125;”	<span class="comment">// “abc.length is 3”</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>一次赋值的变量：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a: <span class="built_in">Int</span> = <span class="number">1</span></span><br><span class="line"><span class="keyword">val</span> b = <span class="number">2</span></span><br><span class="line"><span class="keyword">val</span> c: Intc = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>使用val定义的变量相当于使用了final关键字修饰</p>
+<p>可变变量：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">5</span></span><br><span class="line">x += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="函数定义"><a href="#函数定义" class="headerlink" title="函数定义"></a>函数定义</h3><p>带有两个Int参数，返回Int的函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">sum</span><span class="params">(a: <span class="type">Int</span>, b: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将表达式作为函数体，返回值类型自动推断的函数：</p>
+<p>当返回结果为一个计算表达式时，可以用以下方式定义函数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">sum</span><span class="params">(a: <span class="type">Int</span>, b: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> = a + b</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">sum</span><span class="params">(a: <span class="type">Int</span>, b: <span class="type">Int</span>)</span></span> = a + b</span><br></pre></td></tr></table></figure>
+
+<p>函数返回无意义的值的函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">printSum</span><span class="params">(a: <span class="type">Int</span>, b: <span class="type">Int</span>)</span></span>: <span class="built_in">Unit</span> &#123;</span><br><span class="line">    println(<span class="string">"sum of <span class="variable">$a</span> and <span class="variable">$b</span> is <span class="subst">$&#123;a + b&#125;</span>"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注：此处的Unit类似Java里的void，但不同之处在于，在没写return的情况下，会返回一个实实在在的Unit对象。当返回对象为Unit时，可省略</p>
+<h3 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h3><p>函数参数可以有默认值，当省略相应的参数时使用默认值</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> Fragment.<span class="title">toast</span><span class="params">(message: <span class="type">CharSequence</span>, duration: <span class="type">Int</span> = Toast.LENGTH_SHORT)</span></span> &#123;</span><br><span class="line">    Toast.makeText(getActivity(), message, duration).show()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="命名参数"><a href="#命名参数" class="headerlink" title="命名参数"></a>命名参数</h3><p>给定以下函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">check</span><span class="params">(str: <span class="type">String</span>, isOpen: <span class="type">boolean</span>, isFinish: <span class="type">boolean</span>)</span></span> &#123;</span><br><span class="line">    …</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在调用的时候是这个样子的：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">check(str, <span class="literal">true</span>, <span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这样的代码往往会给阅读者造成困扰，三个参数分别代表什么意思？此时就需要再跳转到方法定义去查看</p>
+<p>而是用了命名参数后就会直观很多：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">check(str, isOpen = <span class="literal">true</span>, isFinish = <span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="函数作用域"><a href="#函数作用域" class="headerlink" title="函数作用域"></a>函数作用域</h3><h4 id="顶层函数"><a href="#顶层函数" class="headerlink" title="顶层函数"></a>顶层函数</h4><p>在 Kotlin 中函数可以在文件顶层声明， 这意味着你不需要像一些语言如 Java那样创建一个类来保存一个函数。</p>
+<p>在导入了该文件后，更可直接调用该函数。</p>
+<h4 id="局部函数"><a href="#局部函数" class="headerlink" title="局部函数"></a>局部函数</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">out</span><span class="params">(str: <span class="type">String</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> value = <span class="number">1</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">in</span><span class="params">()</span></span> &#123;</span><br><span class="line">    print(“value = $value”)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">in</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="成员函数"><a href="#成员函数" class="headerlink" title="成员函数"></a>成员函数</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sample</span></span>() &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">foo</span><span class="params">()</span></span> &#123;</span><br><span class="line">    print(“Foo”)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><h3 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Empty</span></span></span><br></pre></td></tr></table></figure>
+
+<p>注：Kotlin中若类中无具体内容，可省略{}</p>
+<h3 id="可见性修饰符"><a href="#可见性修饰符" class="headerlink" title="可见性修饰符"></a>可见性修饰符</h3><p>在Kotlin中有4种可见性修饰符</p>
+<ul>
+<li>public</li>
+<li>private</li>
+<li>protected</li>
+<li>internal<br>前三个不用再提，与Java中一致，需要提一下新加入的internal，是用internal修饰的成员，在同一project同一module下可调用</li>
+</ul>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>在Kotlin中一个类可以有一个主构造函数和一个或多个次构造函数</p>
+<h4 id="主构造函数"><a href="#主构造函数" class="headerlink" title="主构造函数"></a>主构造函数</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="title">constractor</span></span>(firstName: String) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果主构造函数没有任何注解或者可见性修饰符，可以省略constructor关键字：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(firstName: String) &#123; </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主构造函数的代码放在init代码块里：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span></span>(name: String) &#123;</span><br><span class="line">    <span class="keyword">init</span> &#123;</span><br><span class="line">    …</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主构造的参数可以在初始化块中使用，也可以在类体内声明的属性初始化中使用：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span></span>(name: String) &#123;</span><br><span class="line">    <span class="keyword">val</span> customerKey = name.toUpperCase()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>声明属性以及从主构造函数初始化属性简化写法：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> firstName: String, <span class="keyword">val</span> lastName: String, <span class="keyword">var</span> age: <span class="built_in">Int</span>) &#123;</span><br><span class="line">    …</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="次构造函数"><a href="#次构造函数" class="headerlink" title="次构造函数"></a>次构造函数</h4><p>带有constructor的次构造函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(parent: Person) &#123;</span><br><span class="line">    parent.children.add(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果类有一个主构造函数， 则每个次构造函数需要委托给主构造函数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(name: String) &#123;</span><br><span class="line">    <span class="keyword">init</span> &#123;</span><br><span class="line">        Log.i(<span class="string">"Test"</span>, <span class="string">"main constructor name = <span class="variable">$name</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">constructor</span>(name: String, id: <span class="built_in">Int</span>): <span class="keyword">this</span>(name) &#123;</span><br><span class="line">        Log.i(<span class="string">"Test"</span>, <span class="string">"second constructor name = <span class="variable">$name</span> id = <span class="variable">$id</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">…</span><br><span class="line"><span class="keyword">var</span> ray: Person = Person(<span class="string">"Ray"</span>)</span><br><span class="line"><span class="keyword">var</span> bruce: Person = Person(<span class="string">"Bruce"</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>此段代码的输出为：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">main <span class="keyword">constructor</span> name = Ray</span><br><span class="line">main <span class="keyword">constructor</span> name = Bruce</span><br><span class="line">second <span class="keyword">constructor</span> name = Bruce id = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>如果一个非抽象类没有声明任何（主或次） 构造函数， 编译器会生成一个不带参数的主构造函数</p>
+<h3 id="类的继承"><a href="#类的继承" class="headerlink" title="类的继承"></a>类的继承</h3><p>在 Kotlin 中所有类都有一个共同的超类 Any，需要注意的是，Any 不是 java. lang. Object；尤其是，它除了 equals() 、 hashCode() 和 toString() 外没有任何成员</p>
+<p>在Kotlin中，只有使用open关键字修饰的类才允许被继承：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">Father</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Son</span></span>(name: String): Father()</span><br></pre></td></tr></table></figure>
+
+<p>在写子类时，子类有主构造函数，需要调用父类的主构造函数初始化；子类有次构造函数，需要是用super关键字初始化父类对象</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyView</span> : <span class="type">View &#123;</span></span></span><br><span class="line">    <span class="keyword">constructor</span>(ctx: Context) : <span class="keyword">super</span>(ctx)</span><br><span class="line">    <span class="keyword">constructor</span>(ctx: Context, attrs: AttributeSet) : <span class="keyword">super</span>(ctx, attrs)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法覆盖：</p>
+<p>同样，只有使用了open修饰的方法才允许被覆盖</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">    <span class="keyword">open</span> <span class="function"><span class="keyword">fun</span> <span class="title">v</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">nv</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span></span>(): Base() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">v</span><span class="params">()</span></span>&#123;&#125;     </span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">v</span><span class="params">()</span></span>&#123;&#125;    <span class="comment">//编译报错，覆盖必须写override</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">nv</span><span class="params">()</span></span>&#123;&#125;    <span class="comment">//编译报错，父类nv()未使用open</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">nv</span><span class="params">()</span></span>&#123;&#125;    <span class="comment">//编译报错，父类nv()未使用open</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>覆盖的方法有默认参数时，子类覆写时不能再指定默认参数，保持与父类默认参数相同</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">open</span> <span class="function"><span class="keyword">fun</span> <span class="title">foo</span><span class="params">(i: <span class="type">Int</span> = <span class="number">10</span>)</span></span> &#123; …… &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> : <span class="type">A</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">foo</span><span class="params">(i: <span class="type">Int</span>)</span></span> &#123; …… &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h2><h3 id="if表达式"><a href="#if表达式" class="headerlink" title="if表达式"></a>if表达式</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> max = a</span><br><span class="line"><span class="keyword">if</span> (a &lt; b) max = b</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> max: <span class="built_in">Int</span></span><br><span class="line"><span class="keyword">if</span> (a &gt; b) &#123;</span><br><span class="line">    max = a</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    max = b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Kotlin中if可作为表达式，返回一个值，因此不再需要三元运算符（条件？然后：否则）</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> max = <span class="keyword">if</span> (a &gt; b) a <span class="keyword">else</span> b</span><br><span class="line">&lt;/syntaxhighlight&gt;<span class="keyword">if</span>作为表达式时，后面也可跟代码块，返回的值为最后一句表达式&lt;syntaxhighlight lang=<span class="string">"kotlin"</span>&gt;</span><br><span class="line"><span class="keyword">val</span> max = <span class="keyword">if</span> (a &gt; b) &#123;</span><br><span class="line">    print(“Choose a”)</span><br><span class="line">    a</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    print(“Choose b”)</span><br><span class="line">    b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="when表达式"><a href="#when表达式" class="headerlink" title="when表达式"></a>when表达式</h3><p>when 取代了类C语言中的switch</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">when</span> (x) &#123;</span><br><span class="line">    <span class="number">1</span> -&gt; print(“x==<span class="number">1</span>”)</span><br><span class="line">    <span class="number">2</span> -&gt; print(“x==<span class="number">2</span>”)</span><br><span class="line">    <span class="keyword">else</span> -&gt; &#123;</span><br><span class="line">        print(“x <span class="keyword">is</span> neither <span class="number">1</span> or <span class="number">2</span>”)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同if一样，when也可用作表达式，返回一个值</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> s1 = <span class="keyword">when</span> (x) &#123;</span><br><span class="line">    <span class="number">1</span> -&gt; <span class="string">"x is 1"</span></span><br><span class="line">    <span class="number">2</span> -&gt; <span class="string">"x is 2"</span></span><br><span class="line">    <span class="keyword">else</span> -&gt; <span class="string">"x is neither 1 nor 2"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Kotlin中可以用任意表达式作分支条件</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">when</span> (x) &#123;</span><br><span class="line">    parseInt(s) -&gt; print(“s encodes x”)</span><br><span class="line">    <span class="keyword">else</span> -&gt; print(“s does not encode x”)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用when检测一个值是否在一个区间或者集合中</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">when</span> (x) &#123;</span><br><span class="line">    <span class="keyword">in</span> <span class="number">1</span>..<span class="number">10</span> -&gt; print(“x <span class="keyword">is</span> <span class="keyword">in</span> the range”)</span><br><span class="line">    <span class="keyword">in</span> validNumbers -&gt; print(“x <span class="keyword">is</span> valid”)</span><br><span class="line">    !<span class="keyword">in</span> <span class="number">10</span>..<span class="number">20</span> -&gt; print(x <span class="keyword">is</span> outside the rage)</span><br><span class="line">    <span class="keyword">else</span> -&gt; print(none of the above)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用when检测一个值是不是某个特定类型的值</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">isString</span><span class="params">(x: <span class="type">Any</span>)</span></span> = <span class="keyword">when</span> (x) &#123;</span><br><span class="line">    <span class="keyword">is</span> String -&gt; <span class="literal">true</span></span><br><span class="line">    <span class="keyword">else</span> -&gt; <span class="literal">false</span>	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>when 还可以取代if-else if链</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">when</span> &#123;</span><br><span class="line">    x.isString -&gt; print(“x <span class="keyword">is</span> String”)</span><br><span class="line">    x.isInt -&gt; print(“x <span class="keyword">is</span> <span class="built_in">Int</span>”)</span><br><span class="line">    <span class="keyword">else</span> -&gt; print(“x <span class="keyword">is</span> neither String nor <span class="built_in">Int</span>”)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h3><p>for循环可以对任何提供迭代器的对象进行遍历</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (item <span class="keyword">in</span> collection) &#123;</span><br><span class="line">    …</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;/syntaxhighlight&gt;对数组可基于索引遍历&lt;syntaxhighlight lang=<span class="string">"kotlin"</span>&gt;</span><br><span class="line"><span class="keyword">for</span> (I <span class="keyword">in</span> array.indices) &#123;</span><br><span class="line">    print(array[i])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ((index, value) <span class="keyword">in</span> array.withIndex()) &#123;</span><br><span class="line">    print(“the element at $index <span class="keyword">is</span> $value”)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="跳转和返回"><a href="#跳转和返回" class="headerlink" title="跳转和返回"></a>跳转和返回</h3><h4 id="标签处break和continue"><a href="#标签处break和continue" class="headerlink" title="标签处break和continue"></a>标签处break和continue</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">loop@</span> <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1</span>..<span class="number">100</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (j <span class="keyword">in</span> <span class="number">1</span>..<span class="number">100</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (…) <span class="keyword">break</span><span class="symbol">@loop</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>标签限制的 break 跳转到刚好位于该标签指定的循环后面的执行点。 continue 继续标签指定的循环的下一次迭代。</p>
+<h4 id="标签处return"><a href="#标签处return" class="headerlink" title="标签处return"></a>标签处return</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">change</span><span class="params">()</span></span> &#123;</span><br><span class="line">    arr.forEach &#123;</span><br><span class="line">    <span class="keyword">if</span> (it == <span class="number">2</span>) <span class="keyword">return</span><span class="symbol">@forEach</span></span><br><span class="line">    println(it)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
@@ -536,7 +808,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/08/12/%E4%B8%8D%E8%A6%81%E5%9C%A8%E6%84%8F%E2%80%9C%E9%82%A3%E4%BA%9B%E2%80%9D%E7%BB%86%E8%8A%82/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2016/12/21/Android%207.1%20%E6%96%B0%E7%89%B9%E6%80%A7Shortcuts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -550,7 +822,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/08/12/%E4%B8%8D%E8%A6%81%E5%9C%A8%E6%84%8F%E2%80%9C%E9%82%A3%E4%BA%9B%E2%80%9D%E7%BB%86%E8%8A%82/" class="post-title-link" itemprop="url">不要在意“那些”细节</a>
+            <a href="/2016/12/21/Android%207.1%20%E6%96%B0%E7%89%B9%E6%80%A7Shortcuts/" class="post-title-link" itemprop="url">Android 7.1 新特性Shortcuts</a>
         </h2>
 
         <div class="post-meta">
@@ -560,15 +832,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-08-12 00:13:42" itemprop="dateCreated datePublished" datetime="2014-08-12T00:13:42+08:00">2014-08-12</time>
+              <time title="创建时间：2016-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2016-12-21T00:00:00+08:00">2016-12-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:53:28" itemprop="dateModified" datetime="2020-03-23T01:53:28+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:36:20" itemprop="dateModified" datetime="2020-03-23T11:36:20+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -581,19 +862,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p style="color: #2f2f2f;">记得小学毕业时填写同学录，总有一项是“口头禅”，那时候似乎也没什么真正的口头禅，所以就很装b地写一句格言什么的，其实自己从来都没用过那句话……</p>
-<p style="color: #2f2f2f;">嘿嘿，不要在意那些细节～</p>
-<p style="color: #2f2f2f;">如果现在让我们来写自己的口头禅的话，估计也是一年变一个样。在网络待得久了，总是不知不觉地就把一些网络流行语挂在了嘴边。比如“不要迷恋哥，哥只是个传说”、“神马都是浮云”之类的流行语曾一度成为全民口头禅。</p>
-<p style="color: #2f2f2f;">什么？你没把这些话当做口头禅？算了，不要在意那些细节～</p>
-<p style="color: #2f2f2f;">反正最近我跟周围的人说的最多的一句话就是……诶，刚刚好像说过了？嗯，不要在意那些细节～</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/08/12/%E4%B8%8D%E8%A6%81%E5%9C%A8%E6%84%8F%E2%80%9C%E9%82%A3%E4%BA%9B%E2%80%9D%E7%BB%86%E8%8A%82/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Android 7.1 允许 App 自定义 Shortcuts，类似 iOS 的 3D touch。通过在桌面长按 App 弹出 Shortcut 列表，点击某个 Shortcut 快速进入某项操作，同时 Shortcut 可以拖动到桌面进行固定，如下图系统日历 App：</p>
+<p><img src="shortcuts.png" alt="Shortcuts"></p>
+<h2 id="Shortcuts-作用及分类"><a href="#Shortcuts-作用及分类" class="headerlink" title="Shortcuts 作用及分类"></a>Shortcuts 作用及分类</h2><p>Shortcuts 为 App 常用操作提供了快速访问的方式，如上面日历的新建提醒。</p>
+<p>这个功能目前可以在Android 7.1系统桌面和部分第三方桌面进行使用，第三方桌面可以通过 API 接入这个功能。</p>
+<p>目前支持Shortcut的应用主要还是Google的App，国内有一些比较极客范的app也率先支持了此功能。</p>
+<p>类似 BroadcastReceiver 可通过静态和动态方式注册，Shortcuts 也可以通过静态和动态方式添加。</p>
+<h2 id="静态Shortcuts"><a href="#静态Shortcuts" class="headerlink" title="静态Shortcuts"></a>静态Shortcuts</h2><p>静态 Shortcuts 通过在 Manifest 中声明添加。缺点是不可以修改，只能通过应用升级来添加新的静态 Shortcuts。添加主要分为两步：</p>
+<h3 id="AndroidManifest-xml-的-Main-Launcher-对应的-Activity-内添加-meta-data"><a href="#AndroidManifest-xml-的-Main-Launcher-对应的-Activity-内添加-meta-data" class="headerlink" title="AndroidManifest.xml 的 Main Launcher 对应的 Activity 内添加 meta-data"></a>AndroidManifest.xml 的 Main Launcher 对应的 Activity 内添加 meta-data</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">    ……&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">activityandroid:name=".main.MainActivity"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">actionandroid:name="android.intent.action.MAIN"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">categoryandroid:name="android.intent.category.LAUNCHER"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">"android.app.shortcuts"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:resource</span>=<span class="string">"@xml/shortcuts"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>必须在 Main Launcher 对应的 Activity 内设置，其中 android:resource 指向定义了 shortcuts 的资源文件。</p>
+<h3 id="资源文件中定义具体的-shortcuts"><a href="#资源文件中定义具体的-shortcuts" class="headerlink" title="资源文件中定义具体的 shortcuts"></a>资源文件中定义具体的 shortcuts</h3><p>res 目录下新建 xml 文件夹，并新建 shortcuts.xml 文件，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">shortcutsxmlns:android="http:</span>//<span class="attr">schemas.android.com</span>/<span class="attr">apk</span>/<span class="attr">res</span>/<span class="attr">android</span>"&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">shortcut</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:enabled</span>=<span class="string">"true"</span>     //表示 <span class="attr">shortcut</span> 是否可用，<span class="attr">false</span> 表示禁用</span></span><br><span class="line"><span class="tag">        <span class="attr">android:icon</span>=<span class="string">"@drawable/search"</span>     //为 <span class="attr">shortcut</span> 的 <span class="attr">icon</span>，在列表展示和拖动到桌面时显示需要，可选字段</span></span><br><span class="line"><span class="tag">        <span class="attr">android:shortcutId</span>=<span class="string">"search"</span>    //表示 <span class="attr">shortcut</span> 唯一标识符，相同的 <span class="attr">shortcutId</span> 会被覆盖。必须字段</span></span><br><span class="line"><span class="tag">        <span class="attr">android:shortcutDisabledMessage</span>=<span class="string">"@string/disabled"</span>     //为已固定在桌面的 <span class="attr">shortcut</span> 被 <span class="attr">Disabled</span> 后点击时的 <span class="attr">Toast</span> 提示内容。可选字段</span></span><br><span class="line"><span class="tag">        <span class="attr">android:shortcutLongLabel</span>=<span class="string">"@string/menu_label"</span>     //为 <span class="attr">shortcut</span> 列表中每个 <span class="attr">shortcut</span> 的名字，不宜过长，如果过长或未设置默认会显示 <span class="attr">ShortLabel</span>，官方建议不超过 <span class="attr">25</span> 个字符。可选字段</span></span><br><span class="line"><span class="tag">        <span class="attr">android:shortcutShortLabel</span>=<span class="string">"@string/launcher_label"</span>&gt;</span>     //为将 shortcut 拖动到桌面时显示的名字，官方建议不超过 10 个字符，必须字段</span><br><span class="line">        <span class="tag">&lt;<span class="name">intent</span>      //为点击 <span class="attr">shortcut</span> 时响应的 <span class="attr">intent</span>，必须字段</span></span><br><span class="line"><span class="tag">            <span class="attr">android:action</span>=<span class="string">"android.intent.action.VIEW"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:targetClass</span>=<span class="string">"cn.trinea.android.demo.SearchActivity"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:targetPackage</span>=<span class="string">"cn.trinea.android.demo"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">intent</span></span></span><br><span class="line"><span class="tag">            ……/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">shortcut</span>&gt;</span></span><br><span class="line">    ……</span><br><span class="line"><span class="tag">&lt;/<span class="name">shortcuts</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里可以添加多个 intent，但点击时不会启动所有 intent，而是启动最后一个 intent，在这个 intent 回退时会启动它前面一个 intent，相当于自动将所有 intent 添加到了堆栈。</p>
+<p>intent 可设置属性包括：</p>
+<p>android:action 、 android:data 、 android:mimeType 、 android:targetClass 、 android:targetPackage ，其中 android:action 为必须属性。</p>
+<h2 id="动态Shortcuts"><a href="#动态Shortcuts" class="headerlink" title="动态Shortcuts"></a>动态Shortcuts</h2><p>动态 Shortcuts 通过 ShortcutManager API 进行操作。可以动态添加、修改、删除。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.N_MR1) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">ShortcutManagershortcutManager = getSystemService(ShortcutManager<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"> </span><br><span class="line">ShortcutInfoshortcut = <span class="keyword">new</span> ShortcutInfo.Builder(<span class="keyword">this</span>, <span class="string">"id1"</span>)</span><br><span class="line">    .setShortLabel(<span class="string">"trinea.cn"</span>)</span><br><span class="line">    .setLongLabel(<span class="string">"Open trinea.cn"</span>)</span><br><span class="line">    .setDisabledMessage(<span class="string">"Disabled"</span>)</span><br><span class="line">    .setIcon(Icon.createWithResource(context, R.drawable.trinea_cn))</span><br><span class="line">    .setIntent(<span class="keyword">new</span> Intent(Intent.ACTION_VIEW, Uri.parse(<span class="string">"http://www.trinea.cn/"</span>)))</span><br><span class="line">    .build();</span><br><span class="line"> </span><br><span class="line">shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut));</span><br></pre></td></tr></table></figure>
+
+<p>通过 ShortcutInfo.Builder 新建 ShortcutInfo，再通过 shortcutManager 添加即可。其他：</p>
+<p>(1) setDynamicShortcuts(List) 可以替换并添加所有 shortcut 列表；</p>
+<p>(2) addDynamicShortcuts(List) 可以添加新的 shortcut 到列表，超过最大个数会报异常；</p>
+<p>(3) updateShortcuts(List) 可以更新一组 shortcuts；</p>
+<p>(4) removeDynamicShortcuts(List) 和 removeAllDynamicShortcuts() 可以删除部分或所有 shortcuts。</p>
+<p>ShortcutInfo 的属性与 xml 中定义字段含义一致， shortcutId shortcutShortLabel intent 是必须设置的字段，并且 intent 必须设置 Action 。</p>
+<h2 id="固定的-Shortcuts"><a href="#固定的-Shortcuts" class="headerlink" title="固定的 Shortcuts"></a>固定的 Shortcuts</h2><p>指通过拖动固定到桌面的 Shortcuts，App 不可以添加、修改、删除这些 Shortcuts，只能禁用他们。即便 App 内删除了某个 Shorcut，对应的已固定到桌面的 Shortcuts 也不会被删除。</p>
+<p>可以通过：</p>
+<p>(1) getPinnedShortcuts() 得到所有固定的 Shortcuts 的信息。</p>
+<p>(2) disableShortcuts(List) 或 disableShortcuts(List, CharSequence) 禁用动态的 Shortcuts。</p>
+<p>对于静态的 Shortcuts 需要在资源文件中设置 android:enabled=”false” 进行禁用，不过没有必要，静态 Shortcuts 可直接通过删除达到禁用的效果</p>
+<p>静态 Shortcuts 和动态 Shortcuts 是有最大个数限制的，默认为 5，超过最大个数后添加会报异常。而固定的 Shortcuts 并没有个数限制，并且固定的 Shortcut 对应的 Shortcut 即便被动态删除了，依然可以通过 id 进行 Update 操作。</p>
+<h2 id="动态-Shortcuts-与静态-Shortcuts-区别"><a href="#动态-Shortcuts-与静态-Shortcuts-区别" class="headerlink" title="动态 Shortcuts 与静态 Shortcuts 区别"></a>动态 Shortcuts 与静态 Shortcuts 区别</h2><p>(1) 静态 Shortcuts 只能通过升级应用修改，动态 Shortcuts 随时可以修改；</p>
+<p>(2) 静态 Shortcuts 的 Intent 无法设置 Flag，默认为 FLAG_ACTIVITY_NEW_TASK 和 FLAG_ACTIVITY_CLEAR_TASK Flag，即若应用运行中会清除所有已存在的 Activity。动态 Shortcuts 的 Intent 可以设置 Flag；</p>
+<p>(3) 静态 Shortcuts 的 rank 系统默认根据声明顺序设置，动态 Shortcuts 的 rank 可以通过 setRank(int rank) 接口主动设置，rank 不能小于 0，值越大表示在 shortcut 列表展示时离 App Icon 越远。静态 Shortcuts 默认比动态 Shortcuts 离 App Icon 更近。</p>
+<p>(4) 静态 Shortcuts 删除可以直接删除，动态 Shortcuts 建议通过禁用删除；</p>
+
       
     </div>
 
@@ -612,7 +916,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/07/21/%E5%9C%A8Ubuntu%E4%B8%8B%E6%90%AD%E5%BB%BAAndroid%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2016/12/11/Android%207.0%20%E5%88%86%E5%B1%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -626,7 +930,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/07/21/%E5%9C%A8Ubuntu%E4%B8%8B%E6%90%AD%E5%BB%BAAndroid%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">在Ubuntu下搭建Android开发环境</a>
+            <a href="/2016/12/11/Android%207.0%20%E5%88%86%E5%B1%8F/" class="post-title-link" itemprop="url">Android 7.0 分屏</a>
         </h2>
 
         <div class="post-meta">
@@ -636,15 +940,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-07-21 18:17:16" itemprop="dateCreated datePublished" datetime="2014-07-21T18:17:16+08:00">2014-07-21</time>
+              <time title="创建时间：2016-12-11 00:00:00" itemprop="dateCreated datePublished" datetime="2016-12-11T00:00:00+08:00">2016-12-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:52:16" itemprop="dateModified" datetime="2020-03-23T01:52:16+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:33:24" itemprop="dateModified" datetime="2020-03-23T11:33:24+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -657,15 +970,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>对一个程序猿来说，装好系统之后的第一件事，一定是搭建开发环境，已经安装各种开发工具，以便之后能方便顺利地进行程序的开发。简单的介绍下在Ubuntu环境下搭建Android开发环境，虽然基本上和在Windows下没有太大差别，但有些细节上还是很值得注意的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/07/21/%E5%9C%A8Ubuntu%E4%B8%8B%E6%90%AD%E5%BB%BAAndroid%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h2 id="7-0分屏原理"><a href="#7-0分屏原理" class="headerlink" title="7.0分屏原理"></a>7.0分屏原理</h2><p>7.0的Activity新增了onMultiWindowModeChanged方法，当页面在分屏或不分屏状态变换时，会回调这个方法。</p>
+<p>分屏的任务管理器和虚拟按键在com/Android/systemui目录下。长按多任务键时会调用PhoneStatusBar的toggleSplitScreenMode()方法。需要说明的是，多任务界面实际上是一个名叫RecentsActivity的Activity。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">toggleSplitScreenMode</span><span class="params">(<span class="keyword">int</span> metricsDockAction, <span class="keyword">int</span> metricsUndockAction)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mRecents == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> dockSide = WindowManagerProxy.getInstance().getDockSide();</span><br><span class="line">    <span class="keyword">if</span> (dockSide == WindowManager.DOCKED_INVALID) &#123;</span><br><span class="line"><span class="comment">//进入分屏模式，调出最近任务页面。</span></span><br><span class="line">    mRecents.dockTopTask(NavigationBarGestureHelper.DRAG_MODE_NONE,</span><br><span class="line">                ActivityManager.DOCKED_STACK_CREATE_MODE_TOP_OR_LEFT, <span class="keyword">null</span>, metricsDockAction);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        EventBus.getDefault().send(<span class="keyword">new</span> UndockingTaskEvent());</span><br><span class="line">    <span class="keyword">if</span> (metricsUndockAction != -<span class="number">1</span>) &#123;</span><br><span class="line">        MetricsLogger.action(mContext, metricsUndockAction);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要分屏时会调用Recents的dockTopTask方法，该方法内部会调用RecentsImpl的dockTopTask，该方法除了在多任务界面做出任务管理“样式”的调整以外，还会调用SystemServicesProxy.moveTaskToDockedStack，在分屏模式下打开最近任务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dockTopTask</span><span class="params">(<span class="keyword">int</span> topTaskId, <span class="keyword">int</span> dragMode, <span class="keyword">int</span> stackCreateMode, Rect initialBounds)</span> </span>&#123;</span><br><span class="line">    SystemServicesProxy ssp = Recents.getSystemServices();</span><br><span class="line">    <span class="comment">// Make sure we inform DividerView before we actually start the activity so we can    change</span></span><br><span class="line">    <span class="comment">// the resize mode already.</span></span><br><span class="line">    <span class="keyword">if</span> (ssp.moveTaskToDockedStack(topTaskId, stackCreateMode, initialBounds)) &#123;<span class="comment">//远程调用ActivityManagerService.moveTaskToDockedStack方法</span></span><br><span class="line">     EventBus.getDefault().send(<span class="keyword">new</span> DockedTopTaskEvent(dragMode, initialBounds));</span><br><span class="line">     showRecents(</span><br><span class="line">        <span class="keyword">false</span> <span class="comment">/* triggeredFromAltTab */</span>,</span><br><span class="line">        dragMode == NavigationBarGestureHelper.DRAG_MODE_RECENTS,</span><br><span class="line">        <span class="keyword">false</span> <span class="comment">/* animate */</span>,</span><br><span class="line">        <span class="keyword">true</span> <span class="comment">/* launchedWhileDockingTask*/</span>,</span><br><span class="line">        <span class="keyword">false</span> <span class="comment">/* fromHome */</span>,</span><br><span class="line">        DividerView.INVALID_RECENTS_GROW_TARGET);</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而该进程下的RecentsActivity则负责远程与PackageManager通信，拿到应用截图，添加到界面上</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">reloadStackView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//省略部分代码</span></span><br><span class="line">    RecentsTaskLoadPlan.Options loadOpts = <span class="keyword">new</span> RecentsTaskLoadPlan.Options();</span><br><span class="line">    loadOpts.runningTaskId = launchState.launchedToTaskId;</span><br><span class="line">    loadOpts.numVisibleTasks = launchState.launchedNumVisibleTasks;</span><br><span class="line">    loadOpts.numVisibleTaskThumbnails = launchState.launchedNumVisibleThumbnails;</span><br><span class="line">    loader.loadTasks(<span class="keyword">this</span>, loadPlan, loadOpts);</span><br><span class="line">    TaskStack stack = loadPlan.getTaskStack();</span><br><span class="line">    mRecentsView.onReload(mIsVisible, stack.getTaskCount() == <span class="number">0</span>);</span><br><span class="line">    mRecentsView.updateStack(stack, <span class="keyword">true</span> <span class="comment">/* setStackViewTasks */</span>);</span><br><span class="line">    <span class="comment">// Update the nav bar scrim, but defer the animation until the enter-window event</span></span><br><span class="line">    <span class="keyword">boolean</span> animateNavBarScrim = !launchState.launchedViaDockGesture;</span><br><span class="line">    mScrimViews.updateNavBarScrim(animateNavBarScrim, stack.getTaskCount() &gt; <span class="number">0</span>, <span class="keyword">null</span>);</span><br><span class="line">    <span class="comment">//省略部分代码</span></span><br></pre></td></tr></table></figure>
+
+<p>那么7.0的Activity新增的方法onMultiWindowModeChanged是在什么时候调用的呢？回到刚才的SystemServicesProxy.moveTaskToDockedStack，该方法会跨进程调用ActivityManagerService.moveTaskToDockedStack</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">moveTaskToDockedStack</span><span class="params">(<span class="keyword">int</span> taskId, <span class="keyword">int</span> createMode, <span class="keyword">boolean</span> toTop, <span class="keyword">boolean</span> animate, Rect initialBounds, <span class="keyword">boolean</span> moveHomeStackFront)</span> </span>&#123;</span><br><span class="line">    enforceCallingPermission(MANAGE_ACTIVITY_STACKS, <span class="string">"moveTaskToDockedStack()"</span>);</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">    <span class="keyword">long</span> ident = Binder.clearCallingIdentity();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG_STACK) Slog.d(TAG_STACK, <span class="string">"moveTaskToDockedStack: moving task="</span> + taskId</span><br><span class="line">                + <span class="string">" to createMode="</span> + createMode + <span class="string">" toTop="</span> + toTop);</span><br><span class="line">        mWindowManager.setDockedStackCreateState(createMode, initialBounds);</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> moved = mStackSupervisor.moveTaskToStackLocked(</span><br><span class="line">                taskId, DOCKED_STACK_ID, toTop, !FORCE_FOCUS, <span class="string">"moveTaskToDockedStack"</span>,</span><br><span class="line">                animate, DEFER_RESUME);</span><br><span class="line">        <span class="keyword">if</span> (moved) &#123;</span><br><span class="line">            <span class="keyword">if</span> (moveHomeStackFront) &#123;</span><br><span class="line">                mStackSupervisor.moveHomeStackToFront(<span class="string">"moveTaskToDockedStack"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            mStackSupervisor.ensureActivitiesVisibleLocked(<span class="keyword">null</span>, <span class="number">0</span>, !PRESERVE_WINDOWS);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> moved;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        Binder.restoreCallingIdentity(ident);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该方法会调用StackSupervisor.moveTaskToStackLocked，在StackSuperviso中做尺寸调整等工作以外，最终调用TaskRecord.updateOverrideConfiguration()。若需要分屏，则会调用scheduleReportMultiWindowModeChanged方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Configuration <span class="title">updateOverrideConfiguration</span><span class="params">(Rect bounds, @Nullable Rect insetBounds)</span> </span>&#123;</span><br><span class="line"><span class="comment">//省略部分代码</span></span><br><span class="line">    <span class="keyword">if</span> (mFullscreen != oldFullscreen) &#123;</span><br><span class="line">        mService.mStackSupervisor.scheduleReportMultiWindowModeChanged(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> !mOverrideConfig.equals(oldConfig) ? mOverrideConfig : <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>scheduleReportMultiWindowModeChanged最终调用ActivityThreadhandleMultiWindowModeChanged，并通过appToken找到需要回调的Activity</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleMultiWindowModeChanged</span><span class="params">(IBinder token, <span class="keyword">boolean</span> isInMultiWindowMode)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> ActivityClientRecord r = mActivities.get(token);</span><br><span class="line">    <span class="keyword">if</span> (r != <span class="keyword">null</span>) &#123;</span><br><span class="line">        r.activity.dispatchMultiWindowModeChanged(isInMultiWindowMode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Activity的dispatchMultiWindowModeChanged会回调onMultiWindowModeChanged，便可进行业务处理</p>
+<h2 id="分屏时Activity的生命周期"><a href="#分屏时Activity的生命周期" class="headerlink" title="分屏时Activity的生命周期"></a>分屏时Activity的生命周期</h2><p>分三种情况</p>
+<h4 id="当前显示自己的应用页面，长按多任务键时出现分屏"><a href="#当前显示自己的应用页面，长按多任务键时出现分屏" class="headerlink" title="当前显示自己的应用页面，长按多任务键时出现分屏"></a>当前显示自己的应用页面，长按多任务键时出现分屏</h4><p>onMultiWindowModeChanged(true)-&gt;onPause-onStop-&gt;onDestroy-&gt;onCreate-&gt;onStart- &gt;onResume-&gt;onPause</p>
+<h4 id="分屏时长按多任务键，全屏显示自己的应用时"><a href="#分屏时长按多任务键，全屏显示自己的应用时" class="headerlink" title="分屏时长按多任务键，全屏显示自己的应用时"></a>分屏时长按多任务键，全屏显示自己的应用时</h4><p>onStop-&gt;onDestroy-&gt;onCreate-&gt;onStart-&gt;onResume&gt;onPause&gt;onMultiWindowModeChanged(false)-&gt;onResume</p>
+<h4 id="当前显示其他应用，按多任务键出现自己的应用时"><a href="#当前显示其他应用，按多任务键出现自己的应用时" class="headerlink" title="当前显示其他应用，按多任务键出现自己的应用时"></a>当前显示其他应用，按多任务键出现自己的应用时</h4><p>onMultiWindowModeChanged(true)-&gt;nDestroy-&gt;onCreate-&gt;onStart-&gt;onResume</p>
+
       
     </div>
 
@@ -684,7 +1013,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/07/19/Ubuntu%E3%80%81Windows%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2016/10/17/ijkplayer%E7%AE%80%E5%8D%95%E4%B8%8A%E6%89%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -698,7 +1027,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/07/19/Ubuntu%E3%80%81Windows%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">Ubuntu、Windows双系统安装指南</a>
+            <a href="/2016/10/17/ijkplayer%E7%AE%80%E5%8D%95%E4%B8%8A%E6%89%8B/" class="post-title-link" itemprop="url">ijkplayer简单上手</a>
         </h2>
 
         <div class="post-meta">
@@ -708,15 +1037,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-07-19 00:41:40" itemprop="dateCreated datePublished" datetime="2014-07-19T00:41:40+08:00">2014-07-19</time>
+              <time title="创建时间：2016-10-17 00:00:00" itemprop="dateCreated datePublished" datetime="2016-10-17T00:00:00+08:00">2016-10-17</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:53:32" itemprop="dateModified" datetime="2020-03-23T01:53:32+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:39:12" itemprop="dateModified" datetime="2020-03-23T11:39:12+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -729,15 +1067,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>可能是windows XP停止更新的缘故，再加上前段时间政府禁止采购windows 8操作系统，越来越多的linux操作系统开始出现在大众的视野，诸如Ubuntu/UbuntuKylin、LinuxDeepin、 LinuxMint之类的，它们免费、流畅、美观，虽然应用依旧偏少，但已经逐渐趋于完善，但对于大多数不玩游戏的家庭或者办公用途的电脑来说，绝对是个 很好的选择。周围很多朋友想尝试一下，但是又不愿意抛弃windows下的众多游戏应用，那么双系统自然就成了一个很好的解决方案。我之前也在网上搜过很 多教程，但要不就是不详细，要不就是有个别地方会出错，所以还是决定自己也来写一篇，方便众多初次尝试linux的朋友~</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/07/19/Ubuntu%E3%80%81Windows%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>弹幕视频网 Bilibili（B 站）在 GitHub 网站上建立了开源工作组（BOSTF），用以分享与维护自己的开源项目，其中包括 DanmakuFlameMaster（燃烧吧！烈焰弹幕使）与 ijkplayer。前者是免费提供 Android 平台下应用弹幕集成的解决方案，而后者则提供 Android 和 iOS 双平台视频播放器的解决方案。</p>
+<p>作为国内首屈一指的弹幕视频网站，B 站的两个开源项目已经被多个 App 使用。其中美拍和斗鱼使用了 ijkplayer 项目，DanmakuFlameMaster 项目则被包括优酷土豆、开迅视频、MissEvan、echo 回声、斗鱼 TV、天天动听、被窝声次元、ACFUN 等 App 使用。</p>
+<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><p>ijkplayer，基于 ffplay 的跨平台播放器，实现了跨平台功能，API 易于集成；编译配置可裁剪，方便控制安装包大小；支持硬件加速解码，更加省电</p>
+<p>项目地址： <a href="https://github.com/Bilibili/ijkplayer" target="_blank" rel="noopener">https://github.com/Bilibili/ijkplayer</a></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/bbcallen/ijkplayer.git</span><br><span class="line">cd ijkplayer-android</span><br><span class="line">git checkout -B latest k0.5.1</span><br><span class="line"></span><br><span class="line">./init-android.sh</span><br><span class="line"></span><br><span class="line">cd android/contrib</span><br><span class="line">./compile-ffmpeg.sh clean</span><br><span class="line">./compile-ffmpeg.sh all</span><br><span class="line"></span><br><span class="line">cd ..</span><br><span class="line">./compile-ijk.sh all</span><br></pre></td></tr></table></figure>
+
+<p>上面是从github上面直接复制来的，到这里，编译好了，我们就可以直接复制到项目里面用了。上面编译之所以加上all是因为我们不止编译某一个平台下的so，当然如果你要编译某一个平台的so(如arm64)，那么把</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./compile-ffmpeg.sh all</span><br><span class="line">cd ..</span><br><span class="line">./compile-ijk.sh all</span><br></pre></td></tr></table></figure>
+
+<p>换成</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./compile-ffmpeg.sh arm64</span><br><span class="line">cd ..</span><br><span class="line">./compile-ijk.sh arm64</span><br></pre></td></tr></table></figure>
+
+<p>就行了</p>
+<h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><p>如果你没有什么特殊需求的话，也可以直接添加官方依赖：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 必要的，必须导入</span><br><span class="line"><span class="keyword">compile</span> <span class="string">'tv.danmaku.ijk.media:ijkplayer-java:0.5.1'</span> </span><br><span class="line"><span class="keyword">compile</span> <span class="string">'tv.danmaku.ijk.media:ijkplayer-armv7a:0.5.1'</span></span><br><span class="line"></span><br><span class="line"># 同平台的链接库，根据需要可以适当删除</span><br><span class="line"><span class="keyword">compile</span> <span class="string">'tv.danmaku.ijk.media:ijkplayer-armv5:0.5.1'</span> </span><br><span class="line"><span class="keyword">compile</span> <span class="string">'tv.danmaku.ijk.media:ijkplayer-arm64:0.5.1'</span> </span><br><span class="line"><span class="keyword">compile</span> <span class="string">'tv.danmaku.ijk.media:ijkplayer-x86:0.5.1'</span> </span><br><span class="line"><span class="keyword">compile</span> <span class="string">'tv.danmaku.ijk.media:ijkplayer-x86_64:0.5.1'</span> </span><br><span class="line"></span><br><span class="line"># 这个是一个MediaPlayer,因为我们后面可以在settings下设置用不同player来渲染多媒体显示</span><br><span class="line"><span class="keyword">compile</span> <span class="string">'tv.danmaku.ijk.media:ijkplayer-exo:0.5.1'</span></span><br></pre></td></tr></table></figure>
+
+<p>支持库里最关键的是IMediaPlayer这个类，类似Android原生的MediaPlayer，可搭配SurfaceView使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">    IjkMediaPlayer.loadLibrariesOnce(<span class="keyword">null</span>);</span><br><span class="line">    IjkMediaPlayer.native_profileBegin(<span class="string">"libijkplayer.so"</span>);</span><br><span class="line"></span><br><span class="line">    mSurfaceView = (SurfaceView) findViewById(R.id.surface);</span><br><span class="line">    mSurfaceView.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (isPlayed) &#123;</span><br><span class="line">                mIjkMediaPlayer.pause();</span><br><span class="line">                isPlayed = <span class="keyword">false</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                mIjkMediaPlayer.start();</span><br><span class="line">                isPlayed = <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    mSurfaceHolder = mSurfaceView.getHolder();</span><br><span class="line"></span><br><span class="line">    mSurfaceHolder.addCallback(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceCreated</span><span class="params">(SurfaceHolder surfaceHolder)</span> </span>&#123;</span><br><span class="line">    openVideo();</span><br><span class="line">    mIjkMediaPlayer.start();</span><br><span class="line">    isPlayed = <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可直接导入官方demo里封装好的ijkVideoPlayer来使用，类似Android原生里的VideoPlayer</p>
+<p><img src="ijk_struct.png" alt="Ijk_struct"></p>
+<p>然后简单的在activity里集成一下就可以使用了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mSettings = <span class="keyword">new</span> Settings(<span class="keyword">this</span>);</span><br><span class="line">videoView = (IjkVideoView) findViewById(R.id.videoview);</span><br><span class="line"><span class="comment">// init player</span></span><br><span class="line">IjkMediaPlayer.loadLibrariesOnce(<span class="keyword">null</span>);</span><br><span class="line">IjkMediaPlayer.native_profileBegin(<span class="string">"libijkplayer.so"</span>);</span><br><span class="line">videoView.setVideoURI(Uri.parse(<span class="string">"http://zv.3gv.ifeng.com/live/zhongwen800k.m3u8"</span>));</span><br><span class="line"></span><br><span class="line">videoView.setOnPreparedListener(<span class="keyword">new</span> IMediaPlayer.OnPreparedListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPrepared</span><span class="params">(IMediaPlayer mp)</span> </span>&#123;</span><br><span class="line">        videoView.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -756,7 +1109,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/06/01/%E5%8E%BBKTV%E8%81%9A%E4%BC%9A%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2016/03/27/Android%206.0%20%E8%BF%90%E8%A1%8C%E6%97%B6%E6%9D%83%E9%99%90%E5%A4%84%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -770,7 +1123,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/06/01/%E5%8E%BBKTV%E8%81%9A%E4%BC%9A%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5/" class="post-title-link" itemprop="url">去KTV聚会的几种情况</a>
+            <a href="/2016/03/27/Android%206.0%20%E8%BF%90%E8%A1%8C%E6%97%B6%E6%9D%83%E9%99%90%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">Android 6.0 运行时权限处理</a>
         </h2>
 
         <div class="post-meta">
@@ -780,15 +1133,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-06-01 15:11:22" itemprop="dateCreated datePublished" datetime="2014-06-01T15:11:22+08:00">2014-06-01</time>
+              <time title="创建时间：2016-03-27 00:00:00" itemprop="dateCreated datePublished" datetime="2016-03-27T00:00:00+08:00">2016-03-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:53:37" itemprop="dateModified" datetime="2020-03-23T01:53:37+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 12:05:12" itemprop="dateModified" datetime="2020-03-23T12:05:12+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -801,17 +1163,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p style="color: #2f2f2f;">昨天又和几个室友去KTV唱歌了，就我而言，和不同的人出去唱K，心态和感受是完全不同的，闲暇之余，总结了下我去KTV的几种状况。</p>
-<p style="color: #2f2f2f;">在总结之前，还要说一下我的情况，因为不同的人在唱k的时候总是扮演着不同的角色，就像玩儿游戏下本时的职业分配一样。我是一个很爱唱歌的人，也经常去KTV，唱得也还不错，能胜过周围大多数朋友。</p>
-<p style="color: #2f2f2f;"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/06/01/%E5%8E%BBKTV%E8%81%9A%E4%BC%9A%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h2 id="运行时权限介绍"><a href="#运行时权限介绍" class="headerlink" title="运行时权限介绍"></a>运行时权限介绍</h2><p>Android 6.0在我们原有的AndroidManifest.xml声明权限的基础上，又新增了运行时权限动态检测，以下权限都需要在运行时判断：</p>
+<blockquote>
+<p>身体传感器<br>日历<br>摄像头<br>通讯录<br>地理位置<br>麦克风<br>电话<br>短信<br>存储空间</p>
+</blockquote>
+<h2 id="运行时权限处理"><a href="#运行时权限处理" class="headerlink" title="运行时权限处理"></a>运行时权限处理</h2><p>Android6.0系统默认为targetSdkVersion小于23的应用默认授予了所申请的所有权限，<br>所以如果你以前的APP设置的targetSdkVersion低于23，在运行时也不会崩溃，<br>但这也只是一个临时的救急策略，用户还是可以在设置中取消授予的权限。</p>
+<p>声明目标SDK版本</p>
+<p>我们需要在build.gradle中声明targetSdkVersion为23</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">23</span></span><br><span class="line">    buildToolsVersion <span class="string">"23.0.1"</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId <span class="string">"com.yourcomany.app"</span></span><br><span class="line">        minSdkVersion <span class="number">18</span></span><br><span class="line">        targetSdkVersion <span class="number">23</span></span><br><span class="line">        versionCode <span class="number">1</span></span><br><span class="line">        versionName <span class="string">"1.0"</span></span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="keyword">false</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="检查并申请权限"><a href="#检查并申请权限" class="headerlink" title="检查并申请权限"></a>检查并申请权限</h3><p>我们需要在用到权限的地方，每次都检查是否APP已经拥有权限，<br>比如我们有一个下载功能，需要写SD卡的权限，<br>我们在写入之前检查是否有WRITE_EXTERNAL_STORAGE权限，没有则申请权限</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (ContextCompat.checkSelfPermission(<span class="keyword">this</span>, Manifest.permission.WRITE_EXTERNAL_STORAGE)</span><br><span class="line">        != PackageManager.PERMISSION_GRANTED) &#123;</span><br><span class="line">    <span class="comment">//申请WRITE_EXTERNAL_STORAGE权限</span></span><br><span class="line">    ActivityCompat.requestPermissions(<span class="keyword">this</span>, <span class="keyword">new</span> String[]&#123;Manifest.permission.WRITE_EXTERNAL_STORAGE&#125;,</span><br><span class="line">            WRITE_EXTERNAL_STORAGE_REQUEST_CODE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请求权限后，系统会弹出请求权限的Dialog</p>
+<p>用户选择允许或拒绝后，会回调onRequestPermissionsResult方法, 该方法类似于onActivityResult</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequestPermissionsResult</span><span class="params">(<span class="keyword">int</span> requestCode, String[] permissions, <span class="keyword">int</span>[] grantResults)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onRequestPermissionsResult(requestCode, permissions, grantResults);</span><br><span class="line">    doNext(requestCode,grantResults);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们接着需要根据requestCode和grantResults(授权结果)做相应的后续处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doNext</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span>[] grantResults)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE) &#123;</span><br><span class="line">       <span class="keyword">if</span> (grantResults[<span class="number">0</span>] == PackageManager.PERMISSION_GRANTED) &#123;</span><br><span class="line">           <span class="comment">// Permission Granted</span></span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="comment">// Permission Denied</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Fragment中运行时权限的特殊处理"><a href="#Fragment中运行时权限的特殊处理" class="headerlink" title="Fragment中运行时权限的特殊处理"></a>Fragment中运行时权限的特殊处理</h2><p>在Fragment中申请权限，不要使用ActivityCompat.requestPermissions, 直接使用Fragment的requestPermissions方法，否则会回调到Activity的onRequestPermissionsResult</p>
+<p>如果在Fragment中嵌套Fragment，在子Fragment中使用requestPermissions方法，onRequestPermissionsResult不会回调回来，建议使用getParentFragment().requestPermissions方法，<br>这个方法会回调到父Fragment中的onRequestPermissionsResult，加入以下代码可以把回调透传到子Fragment</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequestPermissionsResult</span><span class="params">(<span class="keyword">int</span> requestCode, String[] permissions, <span class="keyword">int</span>[] grantResults)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onRequestPermissionsResult(requestCode, permissions, grantResults);</span><br><span class="line">    List&lt;Fragment&gt; fragments = getChildFragmentManager().getFragments();</span><br><span class="line">    <span class="keyword">if</span> (fragments != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (Fragment fragment : fragments) &#123;</span><br><span class="line">            <span class="keyword">if</span> (fragment != <span class="keyword">null</span>) &#123;</span><br><span class="line">                fragment.onRequestPermissionsResult(requestCode,permissions,grantResults);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
@@ -830,7 +1205,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/05/25/%E4%B8%80%E4%B8%AA%E8%BF%98%E4%B8%8D%E7%AE%97%E5%A4%AA%E7%B3%9F%E7%9A%84%E5%BC%80%E5%A7%8B/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2016/03/07/%E4%BD%BF%E7%94%A8MPAndroidChart%E7%94%BB%E9%A5%BC%E7%8A%B6%E5%9B%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -844,7 +1219,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/05/25/%E4%B8%80%E4%B8%AA%E8%BF%98%E4%B8%8D%E7%AE%97%E5%A4%AA%E7%B3%9F%E7%9A%84%E5%BC%80%E5%A7%8B/" class="post-title-link" itemprop="url">一个还不算太糟的开始</a>
+            <a href="/2016/03/07/%E4%BD%BF%E7%94%A8MPAndroidChart%E7%94%BB%E9%A5%BC%E7%8A%B6%E5%9B%BE/" class="post-title-link" itemprop="url">使用MPAndroidChart画饼状图</a>
         </h2>
 
         <div class="post-meta">
@@ -854,15 +1229,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-05-25 23:22:39" itemprop="dateCreated datePublished" datetime="2014-05-25T23:22:39+08:00">2014-05-25</time>
+              <time title="创建时间：2016-03-07 00:00:00" itemprop="dateCreated datePublished" datetime="2016-03-07T00:00:00+08:00">2016-03-07</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:53:47" itemprop="dateModified" datetime="2020-03-23T01:53:47+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 12:06:44" itemprop="dateModified" datetime="2020-03-23T12:06:44+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">经验总结</span></a>
+                </span>
+            </span>
 
           
 
@@ -875,17 +1259,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这是一个还不算太糟的开始……</p>
-<p>今天下午是一年一度的网协换届选举大会，按学校要求是应该有80%的协会会员到场的，虽然人没到齐，但到场情况也还不错——有十个人到场……除开学生会社团部的一个师兄、上届一个会长、两个副会长外，六个参与竞选的核心会员都到场了……</p>
-<p>我是第一个上场的，发言内容大致是这样的：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/05/25/%E4%B8%80%E4%B8%AA%E8%BF%98%E4%B8%8D%E7%AE%97%E5%A4%AA%E7%B3%9F%E7%9A%84%E5%BC%80%E5%A7%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>MPAndroidChart是一款基于Android的开源图表库，MPAndroidChart不仅可以在Android设备上绘制各种统计图表，而且可以对图表进行拖动和缩放操作，应用起来非常灵活。MPAndroidChart同样拥有常用的图表类型：线型图、饼图、柱状图和散点图。</p>
+<p>GitHub地址：</p>
+<p><a href="https://github.com/PhilJay/MPAndroidChart" target="_blank" rel="noopener">https://github.com/PhilJay/MPAndroidChart</a></p>
+<p>下面主要实现以下饼状图：</p>
+<h1 id="导入jar包"><a href="#导入jar包" class="headerlink" title="导入jar包"></a>导入jar包</h1><p>Github上有MPChartLib库，用Eclipse开发，可以直接在工程里添加这个Library就可以了，使用Android Studio也可以直接添加库，也可以通过gradle依赖</p>
+<p>在build.gradle里添加：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'com.github.PhilJay:MPAndroidChart:v2.1.6'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="布局中使用组件"><a href="#布局中使用组件" class="headerlink" title="布局中使用组件"></a>布局中使用组件</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">com.github.mikephil.charting.charts.PieChart</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/pie_chart"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"300dp"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="代码中使用示例"><a href="#代码中使用示例" class="headerlink" title="代码中使用示例"></a>代码中使用示例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ray.piechartTest;    </span><br><span class="line">    </span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;    </span><br><span class="line">    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.charts.PieChart;    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.components.Legend;    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.components.Legend.LegendPosition;    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.data.Entry;    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.data.PieData;    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.data.PieDataSet;    </span><br><span class="line">    </span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.ActionBarActivity;    </span><br><span class="line"><span class="keyword">import</span> android.graphics.Color;    </span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;    </span><br><span class="line"><span class="keyword">import</span> android.util.DisplayMetrics;    </span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">ActionBarActivity</span> </span>&#123;    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> PieChart mChart;    </span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span>    </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;    </span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);    </span><br><span class="line">        setContentView(R.layout.activity_main);    </span><br><span class="line">            </span><br><span class="line">        mChart = (PieChart) findViewById(R.id.pie_chart);    </span><br><span class="line">        PieData mPieData = getPieData(<span class="number">4</span>, <span class="number">100</span>);    </span><br><span class="line">        showChart(mChart, mPieData);    </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showChart</span><span class="params">(PieChart pieChart, PieData pieData)</span> </span>&#123;    </span><br><span class="line">        pieChart.setHoleColorTransparent(<span class="keyword">true</span>);    </span><br><span class="line">    </span><br><span class="line">        pieChart.setHoleRadius(<span class="number">60f</span>);  <span class="comment">//半径    </span></span><br><span class="line">        pieChart.setTransparentCircleRadius(<span class="number">64f</span>); <span class="comment">// 半透明圈    </span></span><br><span class="line">        <span class="comment">//pieChart.setHoleRadius(0)  //实心圆    </span></span><br><span class="line">    </span><br><span class="line">        pieChart.setDescription(<span class="string">"测试饼状图"</span>);    </span><br><span class="line">    </span><br><span class="line">        <span class="comment">// mChart.setDrawYValues(true);    </span></span><br><span class="line">        pieChart.setDrawCenterText(<span class="keyword">true</span>);  <span class="comment">//饼状图中间可以添加文字    </span></span><br><span class="line">    </span><br><span class="line">        pieChart.setDrawHoleEnabled(<span class="keyword">true</span>);    </span><br><span class="line">    </span><br><span class="line">        pieChart.setRotationAngle(<span class="number">90</span>); <span class="comment">// 初始旋转角度    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">// draws the corresponding description value into the slice    </span></span><br><span class="line">        <span class="comment">// mChart.setDrawXValues(true);    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">// enable rotation of the chart by touch    </span></span><br><span class="line">        pieChart.setRotationEnabled(<span class="keyword">true</span>); <span class="comment">// 可以手动旋转    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">// display percentage values    </span></span><br><span class="line">        pieChart.setUsePercentValues(<span class="keyword">true</span>);  <span class="comment">//显示成百分比    </span></span><br><span class="line">        <span class="comment">// mChart.setUnit(" €");    </span></span><br><span class="line">        <span class="comment">// mChart.setDrawUnitsInChart(true);    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">// add a selection listener    </span></span><br><span class="line"><span class="comment">//      mChart.setOnChartValueSelectedListener(this);    </span></span><br><span class="line">        <span class="comment">// mChart.setTouchEnabled(false);    </span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//      mChart.setOnAnimationListener(this);    </span></span><br><span class="line">    </span><br><span class="line">        pieChart.setCenterText(<span class="string">"Quarterly Revenue"</span>);  <span class="comment">//饼状图中间的文字    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">//设置数据    </span></span><br><span class="line">        pieChart.setData(pieData);     </span><br><span class="line">            </span><br><span class="line">        <span class="comment">// undo all highlights    </span></span><br><span class="line"><span class="comment">//      pieChart.highlightValues(null);    </span></span><br><span class="line"><span class="comment">//      pieChart.invalidate();    </span></span><br><span class="line">    </span><br><span class="line">        Legend mLegend = pieChart.getLegend();  <span class="comment">//设置比例图    </span></span><br><span class="line">        mLegend.setPosition(LegendPosition.RIGHT_OF_CHART);  <span class="comment">//最右边显示    </span></span><br><span class="line"><span class="comment">//      mLegend.setForm(LegendForm.LINE);  //设置比例图的形状，默认是方形    </span></span><br><span class="line">        mLegend.setXEntrySpace(<span class="number">7f</span>);    </span><br><span class="line">        mLegend.setYEntrySpace(<span class="number">5f</span>);    </span><br><span class="line">            </span><br><span class="line">        pieChart.animateXY(<span class="number">1000</span>, <span class="number">1000</span>);  <span class="comment">//设置动画    </span></span><br><span class="line">        <span class="comment">// mChart.spin(2000, 0, 360);    </span></span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**  </span></span><br><span class="line"><span class="comment">     *   </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> count 分成几部分  </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> range  </span></span><br><span class="line"><span class="comment">     */</span>    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> PieData <span class="title">getPieData</span><span class="params">(<span class="keyword">int</span> count, <span class="keyword">float</span> range)</span> </span>&#123;    </span><br><span class="line">            </span><br><span class="line">        ArrayList&lt;String&gt; xValues = <span class="keyword">new</span> ArrayList&lt;String&gt;();  <span class="comment">//xVals用来表示每个饼块上的内容    </span></span><br><span class="line">    </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;    </span><br><span class="line">            xValues.add(<span class="string">"Quarterly"</span> + (i + <span class="number">1</span>));  <span class="comment">//饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4    </span></span><br><span class="line">        &#125;    </span><br><span class="line">    </span><br><span class="line">        ArrayList&lt;Entry&gt; yValues = <span class="keyword">new</span> ArrayList&lt;Entry&gt;();  <span class="comment">//yVals用来表示封装每个饼块的实际数据    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">// 饼图数据    </span></span><br><span class="line">        <span class="comment">/**  </span></span><br><span class="line"><span class="comment">         * 将一个饼形图分成四部分， 四部分的数值比例为14:14:34:38  </span></span><br><span class="line"><span class="comment">         * 所以 14代表的百分比就是14%   </span></span><br><span class="line"><span class="comment">         */</span>    </span><br><span class="line">        <span class="keyword">float</span> quarterly1 = <span class="number">14</span>;    </span><br><span class="line">        <span class="keyword">float</span> quarterly2 = <span class="number">14</span>;    </span><br><span class="line">        <span class="keyword">float</span> quarterly3 = <span class="number">34</span>;    </span><br><span class="line">        <span class="keyword">float</span> quarterly4 = <span class="number">38</span>;    </span><br><span class="line">    </span><br><span class="line">        yValues.add(<span class="keyword">new</span> Entry(quarterly1, <span class="number">0</span>));    </span><br><span class="line">        yValues.add(<span class="keyword">new</span> Entry(quarterly2, <span class="number">1</span>));    </span><br><span class="line">        yValues.add(<span class="keyword">new</span> Entry(quarterly3, <span class="number">2</span>));    </span><br><span class="line">        yValues.add(<span class="keyword">new</span> Entry(quarterly4, <span class="number">3</span>));    </span><br><span class="line">    </span><br><span class="line">        <span class="comment">//y轴的集合    </span></span><br><span class="line">        PieDataSet pieDataSet = <span class="keyword">new</span> PieDataSet(yValues, <span class="string">"Quarterly Revenue 2014"</span><span class="comment">/*显示在比例图上*/</span>);    </span><br><span class="line">        pieDataSet.setSliceSpace(<span class="number">0f</span>); <span class="comment">//设置个饼状图之间的距离    </span></span><br><span class="line">    </span><br><span class="line">        ArrayList&lt;Integer&gt; colors = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();    </span><br><span class="line">    </span><br><span class="line">        <span class="comment">// 饼图颜色    </span></span><br><span class="line">        colors.add(Color.rgb(<span class="number">205</span>, <span class="number">205</span>, <span class="number">205</span>));    </span><br><span class="line">        colors.add(Color.rgb(<span class="number">114</span>, <span class="number">188</span>, <span class="number">223</span>));    </span><br><span class="line">        colors.add(Color.rgb(<span class="number">255</span>, <span class="number">123</span>, <span class="number">124</span>));    </span><br><span class="line">        colors.add(Color.rgb(<span class="number">57</span>, <span class="number">135</span>, <span class="number">200</span>));    </span><br><span class="line">    </span><br><span class="line">        pieDataSet.setColors(colors);    </span><br><span class="line">    </span><br><span class="line">        DisplayMetrics metrics = getResources().getDisplayMetrics();    </span><br><span class="line">        <span class="keyword">float</span> px = <span class="number">5</span> * (metrics.densityDpi / <span class="number">160f</span>);    </span><br><span class="line">        pieDataSet.setSelectionShift(px); <span class="comment">// 选中态多出的长度    </span></span><br><span class="line">    </span><br><span class="line">        PieData pieData = <span class="keyword">new</span> PieData(xValues, pieDataSet);    </span><br><span class="line">            </span><br><span class="line">        <span class="keyword">return</span> pieData;    </span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果图如下</p>
+<p><img src="%E6%95%88%E6%9E%9C%E5%9B%BE.png" alt="Piechart"></p>
+
       
     </div>
 
@@ -904,7 +1292,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -972,25 +1360,28 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ray945" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ray945" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
       <span class="links-of-author-item">
         <a href="mailto:ray945@outlook.com" title="E-Mail → mailto:ray945@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
       </span>
@@ -1000,17 +1391,6 @@
   </div>
 
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      Links
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="http://winxo.cn/" title="http:&#x2F;&#x2F;winxo.cn" rel="noopener" target="_blank">Winxo</a>
-        </li>
-    </ul>
-  </div>
 
       </div>
 

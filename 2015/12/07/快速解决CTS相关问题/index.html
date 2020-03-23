@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言CTS是每个项目必走的流程，每次测试同学把CTS报告发出来后，开发的同学都是一阵眩晕。目前很多开发同学都没有处理CTS的相关经验，面对满大篇的fail项，究竟该如何解决呢？本篇wiki就教你快速上手CTS，让你在短时间内解决大部分CTS fail项~ （本篇wiki只是作者根据自己的经验总结出的快速解决方法，如果想要更深入地了解和学习相关测试项，还需自行阅读相关源码） 搭建CTS测试环境CTS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="快速解决CTS相关问题">
+<meta property="og:url" content="http://funnyray.plus/2015/12/07/%E5%BF%AB%E9%80%9F%E8%A7%A3%E5%86%B3CTS%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="但愿人长久有趣的Ray">
+<meta property="og:description" content="前言CTS是每个项目必走的流程，每次测试同学把CTS报告发出来后，开发的同学都是一阵眩晕。目前很多开发同学都没有处理CTS的相关经验，面对满大篇的fail项，究竟该如何解决呢？本篇wiki就教你快速上手CTS，让你在短时间内解决大部分CTS fail项~ （本篇wiki只是作者根据自己的经验总结出的快速解决方法，如果想要更深入地了解和学习相关测试项，还需自行阅读相关源码） 搭建CTS测试环境CTS">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2015-12-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-23T04:08:52.322Z">
+<meta property="article:author" content="Ray">
+<meta property="article:tag" content="CTS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://funnyray.plus/2015/12/07/%E5%BF%AB%E9%80%9F%E8%A7%A3%E5%86%B3CTS%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>快速解决CTS相关问题 | 但愿人长久有趣的Ray</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">但愿人长久有趣的Ray</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Funny Ray</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2015/12/07/%E5%BF%AB%E9%80%9F%E8%A7%A3%E5%86%B3CTS%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Ray">
+      <meta itemprop="description" content="我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="但愿人长久有趣的Ray">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          快速解决CTS相关问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-12-07 00:00:00" itemprop="dateCreated datePublished" datetime="2015-12-07T00:00:00+08:00">2015-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-23 12:08:52" itemprop="dateModified" datetime="2020-03-23T12:08:52+08:00">2020-03-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">经验总结</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>CTS是每个项目必走的流程，每次测试同学把CTS报告发出来后，开发的同学都是一阵眩晕。目前很多开发同学都没有处理CTS的相关经验，面对满大篇的fail项，究竟该如何解决呢？本篇wiki就教你快速上手CTS，让你在短时间内解决大部分CTS fail项~</p>
+<p>（本篇wiki只是作者根据自己的经验总结出的快速解决方法，如果想要更深入地了解和学习相关测试项，还需自行阅读相关源码）</p>
+<h2 id="搭建CTS测试环境"><a href="#搭建CTS测试环境" class="headerlink" title="搭建CTS测试环境"></a>搭建CTS测试环境</h2><p>CTS测试需在Ubuntu下进行，测试包在\10.120.10.100\ckt_cd_share\Test\专项测试\CTS\android-cts-5.1_r3-linux_x86-arm.zip （5.1系统的最新测试包）也可根据实际情况在Android官网下载对应版本：<a href="https://source.android.com/compatibility/downloads.html" target="_blank" rel="noopener">https://source.android.com/compatibility/downloads.html</a></p>
+<p>解压后，进入android-cts\tools目录，执行./cts-tradefed ,便进入了CTS测试环境。</p>
+<h2 id="测试前准备"><a href="#测试前准备" class="headerlink" title="测试前准备"></a>测试前准备</h2><p>(以下是某些测试项的要求，可选择性地操作，但还是建议一次性做完)</p>
+<p>1.下载android-cts-media-1.1.zip(media相关测试项需要的媒体文件)<br><a href="https://dl.google.com/dl/android/cts/android-cts-media-1.1.zip" target="_blank" rel="noopener">https://dl.google.com/dl/android/cts/android-cts-media-1.1.zip</a> ，解压后进入android-cts-media目录，执行./copy_media.sh，脚本会将所需要的视频资源拷贝到手机中。</p>
+<p>2.插上sim卡和sd卡</p>
+<p>3.安装CtsDeviceAdmin.apk<br>进入Settings -&gt; Security -&gt; Select device administrators，勾选android.deviceadmin.cts的前两项。</p>
+<p>4.勾选开发者选项如下三项<br>Settings -&gt; Developer options -&gt; USB debugging (enable)<br>Settings -&gt; Developer options -&gt; Stay awake (enable)<br>Settings -&gt; Developer options -&gt; Allow mock locations (enable)</p>
+<p>更多的测试前准备可参考“Google测试指引”文档</p>
+<h2 id="run-cts"><a href="#run-cts" class="headerlink" title="run cts"></a>run cts</h2><p>开发同学在解决CTS问题的时候一般只用根据测试报告，重测fail项即可</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run cts -c android.security.cts.ServicePermissionsTest -m testDumpProtected</span><br></pre></td></tr></table></figure>
+
+<p>-c 和 -m 后的参数分别为CTS测试类和测试方法，在CTS报告上可以很直观的看到</p>
+<p>（至于CTS怎么分plan进行测试，请参考Google测试指引）</p>
+<p> 获取测试报告和log<br>测试结果报告在 android-cts/repository/results/ 可以根据测试时间找到</p>
+<p>测试的log在 android-cts/repository/logs/ 同样根据测试时间找到</p>
+<h2 id="分析并解决fail项"><a href="#分析并解决fail项" class="headerlink" title="分析并解决fail项"></a>分析并解决fail项</h2><p>1.根据测试同学发的测试报告，我们在本地进行复验，如果在本地测试能够pass，则基本上是测试环境以及测试方法的问题，需要跟测试同学进行沟通；</p>
+<p>2.如果本地测试也fail了，可能是软件问题，也可能是硬件因素，还可能是你测试的姿势不太对……不要马上就点开log进行分析，因为那样可能会花掉大量时间，却仍然得不出结论。很多CTS fail项并不是只有我们的项目才会遇到，所以有些fail项的原因和解决办法很容易就能在网上找到，这里推荐几个途径：</p>
+<p>（1）公司wiki：wiki上有很多好东西，比如总结好的CTS豁免项：Cts waived fail list</p>
+<p>（2）百度:  外事问谷歌，内事问百度，如果不想直接面对大片的英文，百度会是一个很好的途径。直接把测试的类名或方法名扔到百度进行搜索，运气好的话，往往能在CSDN上找到一些别人整理的CTS fail项</p>
+<p>（3）Google:  百度的搜索结果毕竟是有限的，Android毕竟是Google的东西，同样的方法，扔到Google上试试，会有更广阔的天地</p>
+<p>（4）Google issue:  如果Google上搜到的内容太过繁杂，很难筛选，可以直接到Google issue试试,如果能搜到的话，那么恭喜你，这个问题80%都搞定了，点进去你会发现，不是给出了详细的分析和解决办法，就是告诉你“此项可以豁免”</p>
+<p>（5）MTK online：  除了Google issue，直接上MTK online搜索也是一个很好的办法，如果该项可以豁免的话，说不定还能直接搜到相关的文档</p>
+<p>3.如果你运气不好，遇到的fail项都是那么与众不同，以上方法都搜不到，那么就需要自己分析了：</p>
+<p>（1）利用OpenGrok搜索该项测试方法，查看该部分源码，先搞清楚该测试项测的是什么东西，测试的原理是什么</p>
+<p>（2）打开CTS测试的log，根据错误提示定位到出错的具体代码位置，然后开始分析</p>
+<p>4.如果一个人实在很难分析出原因，就可以放大招了：跟MTK提单吧，让万能的Supporter帮忙解决吧……</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CTS/" rel="tag"># CTS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015/11/24/Android%20M%20Doze%20&%20App%20Standby/" rel="prev" title="Android M Doze & App Standby">
+      <i class="fa fa-chevron-left"></i> Android M Doze & App Standby
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/03/05/%E4%BD%BF%E7%94%A8AChartEngine%E7%94%BB%E7%BB%9F%E8%AE%A1%E5%9B%BE/" rel="next" title="使用AChartEngine画统计图">
+      使用AChartEngine画统计图 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建CTS测试环境"><span class="nav-number">2.</span> <span class="nav-text">搭建CTS测试环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试前准备"><span class="nav-number">3.</span> <span class="nav-text">测试前准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#run-cts"><span class="nav-number">4.</span> <span class="nav-text">run cts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析并解决fail项"><span class="nav-number">5.</span> <span class="nav-text">分析并解决fail项</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ray</p>
+  <div class="site-description" itemprop="description">我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ray945" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ray945" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ray945@outlook.com" title="E-Mail → mailto:ray945@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/594ray" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;594ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ray</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

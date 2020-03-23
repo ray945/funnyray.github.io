@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。">
@@ -532,7 +532,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:15:30" itemprop="dateModified" datetime="2020-03-23T01:15:30+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:02:51" itemprop="dateModified" datetime="2020-03-23T11:02:51+08:00">2020-03-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -555,7 +555,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>首先简单说一下，AWS Iot SDK 的 mqtt 模块是基于 paho 标准的 mqtt client java 进行开发的，没有加入 paho 的 android 扩展包，所以心跳只能通过 TimerPingSender 进行定时发送。但由于在 android 系统中，如果系统长时间没有 cpu 活动，会进入休眠状态，而简单的 Timer 是无法唤醒 cpu 的，这就导致官方的 AWS IoT SDK 无法理想地运行在游乐园项目（相机需一直保持 mqtt 在线）。所以游乐园项目使用的 AWS IoT SDK 是我们手动加入了android 扩展包中的 AlarmPingSender 后自己编译的。SDK 源码目录：goldsand/packages/apps/aws-android-sdk-iot-source/，直接通过 gradle 编译。</p>
+          <p>首先简单说一下，AWS Iot SDK 的 mqtt 模块是基于 paho 标准的 mqtt client java 进行开发的，没有加入 paho 的 android 扩展包，所以心跳只能通过 TimerPingSender 进行定时发送。但由于在 android 系统中，如果系统长时间没有 cpu 活动，会进入休眠状态，而简单的 Timer 是无法唤醒 cpu 的，这就导致官方的 AWS IoT SDK 无法理想地运行在游乐园项目（相机需一直保持 mqtt 在线）。所以游乐园项目使用的 AWS IoT SDK 是我们手动加入了android 扩展包中的 AlarmPingSender 后自己编译的。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/06/15/AWS%20IoT%20KeepAlive%20%E5%BF%83%E8%B7%B3%E6%B5%81%E7%A8%8B/#more" rel="contents">
@@ -582,7 +582,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2015/08/01/%E5%B9%BB%E6%83%B3%EF%BC%8C%E6%A2%A6%E6%83%B3/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -596,7 +596,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2015/08/01/%E5%B9%BB%E6%83%B3%EF%BC%8C%E6%A2%A6%E6%83%B3/" class="post-title-link" itemprop="url">幻想，梦想</a>
+            <a href="/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/" class="post-title-link" itemprop="url">处理概括关系</a>
         </h2>
 
         <div class="post-meta">
@@ -606,15 +606,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2015-08-01 22:09:13" itemprop="dateCreated datePublished" datetime="2015-08-01T22:09:13+08:00">2015-08-01</time>
+              <time title="创建时间：2019-01-12 00:00:00" itemprop="dateCreated datePublished" datetime="2019-01-12T00:00:00+08:00">2019-01-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:52:40" itemprop="dateModified" datetime="2020-03-23T01:52:40+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 10:30:35" itemprop="dateModified" datetime="2020-03-23T10:30:35+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -627,12 +636,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>又是很长一段时间没上博客了，前段时间忙着期末、实训、课程设计，以及找实习工作，博客没工夫上，Ray天气也没工夫更新……好在实习很顺利地找到了。</p>
-<p>已经整整实习两周了，感觉非常好。</p>
-<p>实习的单位是一家中小型的创业型公司，有自己的app产品，而我就在Android团队做开发，做的东西很有意思。团队成员都很年轻，基本都是85后、90后，很有意思，也很有活力，相处起来很轻松。朝九晚五，中午在公司里用微波炉加热便当吃，周末双休，不强制加班，各种福利一应俱全，工资待遇也比较满意。</p>
+          <h2 id="提炼超类（Extract-Superclass）"><a href="#提炼超类（Extract-Superclass）" class="headerlink" title="提炼超类（Extract Superclass）"></a>提炼超类（Extract Superclass）</h2><p>两个雷有相似特性。为这两个类建立一个超类，将相同特性移至超类。</p>
+<img src="/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/%E6%8F%90%E7%82%BC%E8%B6%85%E7%B1%BB.png" class="" title="This is an example image">
+
+<h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><ul>
+<li>重复代码改动麻烦。</li>
+<li>两个类以相同方式做类似的事情，或以不同的方式做类似的事情，对象提供了一种简化这种情况的机制，那就是继承。</li>
+<li>另一种选择是 Extract Class。两种方案是继承和委托的区别。如果两个类可以共享行为，也可以共享接口，那么继承是比较简单的做法。
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2015/08/01/%E5%B9%BB%E6%83%B3%EF%BC%8C%E6%A2%A6%E6%83%B3/#more" rel="contents">
+              <a class="btn" href="/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -656,7 +669,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2015/01/29/%C2%96%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%AF%92%E5%81%87/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2018/12/28/%E7%AE%80%E5%8C%96%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -670,7 +683,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2015/01/29/%C2%96%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%AF%92%E5%81%87/" class="post-title-link" itemprop="url">最后一个寒假</a>
+            <a href="/2018/12/28/%E7%AE%80%E5%8C%96%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">简化条件表达式</a>
         </h2>
 
         <div class="post-meta">
@@ -680,15 +693,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2015-01-29 18:04:56" itemprop="dateCreated datePublished" datetime="2015-01-29T18:04:56+08:00">2015-01-29</time>
+              <time title="创建时间：2018-12-28 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-28T00:00:00+08:00">2018-12-28</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:52:23" itemprop="dateModified" datetime="2020-03-23T01:52:23+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 10:33:40" itemprop="dateModified" datetime="2020-03-23T10:33:40+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -701,13 +723,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>今天是2015年1月29日，距离放假已经过去整整20天了。</p>
-<p>很难说清楚这20天的假期里我究竟做了些什么事，因为连我自己都似乎得了健忘症，把这些天的事情忘了一大半，只记得很少的一些事。</p>
-<p>起床，吃饭，上网，吃饭，上网，吃饭，上网，吃饭，睡觉……</p>
-<p>这大概是我忘记的那部分，历史总是惊人地相似，每次假期都过着这样山中不知日月的生活。不过还好，我还没到忘记时间的地步，毕竟随意瞟一眼右下角就能知道。</p>
+          <h2 id="总述"><a href="#总述" class="headerlink" title="总述"></a>总述</h2><p>核心重构 Decompose Conditional (分解条件分解)，可将一个复杂的条件逻辑分成若干小块，它使得“分支逻辑”和“操作逻辑”分离</p>
+<p>如果发现代码中的多处测试有相同结果，应该实施 Consolidate Conditional Expression (合并条件表达式)</p>
+<p>如果条件代码中有任何重复，可以运用 Consolidate Duplicate Conditional Fragments (合并重复的条件判断)将重复成分去掉</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2015/01/29/%C2%96%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%AF%92%E5%81%87/#more" rel="contents">
+              <a class="btn" href="/2018/12/28/%E7%AE%80%E5%8C%96%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -731,7 +752,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/12/30/%C2%962014%EF%BC%8C%E5%B0%B1%E8%BF%99%E6%A0%B7%E5%90%A7/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2018/06/16/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -745,7 +766,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/12/30/%C2%962014%EF%BC%8C%E5%B0%B1%E8%BF%99%E6%A0%B7%E5%90%A7/" class="post-title-link" itemprop="url">2014，就这样吧</a>
+            <a href="/2018/06/16/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">代理模式</a>
         </h2>
 
         <div class="post-meta">
@@ -755,15 +776,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-12-30 19:55:05" itemprop="dateCreated datePublished" datetime="2014-12-30T19:55:05+08:00">2014-12-30</time>
+              <time title="创建时间：2018-06-16 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-16T00:00:00+08:00">2018-06-16</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:52:45" itemprop="dateModified" datetime="2020-03-23T01:52:45+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:07:37" itemprop="dateModified" datetime="2020-03-23T11:07:37+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -776,11 +806,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>还有一天，2014就又要翻篇了。</p>
-<p>突然发现，自己貌似越长大，就越对跨年这件事儿没感觉了。高中的时候，提前半个月就能开始兴奋，跟朋友讨论某某卫士跨年晚会请了谁谁谁之类的。上了大学，跨年基本上都是在宿舍和室友们一起的，想看个晚会吧，网络直播卡得人想哭，到点后也就我一个人在那儿激动，别人该LOL还继续LOL，久而久之，我也就没了兴致。本来连博文都懒得写了，但出于强迫症，还是憋着自己写点什么，好证明我又多活了一年。最近临近放假，成天玩儿，感觉脑子里都是浆糊，所以就不写什么深刻的反思了，随随便便回顾一下我的2014吧。</p>
+          <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>给目标对象提供一个代理对象，并由代理对象控制对目标对象的引用。</p>
+<p>代理对象：起到中介作用，连接客户端和目标对象</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>当不想或无法直接访问某个对象或访问某个对象存在困难时可以通过一个代理对象来间接访问，为了保证客户端使用的透明性， 委托对象与代理对象需要实现相同的接口。</p>
+<h2 id="结构-amp-类图"><a href="#结构-amp-类图" class="headerlink" title="结构 &amp; 类图"></a>结构 &amp; 类图</h2><img src="/2018/06/16/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F.png" class="" title="This is an example image">
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2014/12/30/%C2%962014%EF%BC%8C%E5%B0%B1%E8%BF%99%E6%A0%B7%E5%90%A7/#more" rel="contents">
+              <a class="btn" href="/2018/06/16/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -804,7 +836,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/12/07/%C2%96%E2%80%9C%E5%A2%99%E2%80%9D%E5%A4%96%E7%9A%84%E4%B8%96%E7%95%8C/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2018/06/13/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -818,7 +850,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/12/07/%C2%96%E2%80%9C%E5%A2%99%E2%80%9D%E5%A4%96%E7%9A%84%E4%B8%96%E7%95%8C/" class="post-title-link" itemprop="url">“墙”外的世界</a>
+            <a href="/2018/06/13/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">命令模式</a>
         </h2>
 
         <div class="post-meta">
@@ -828,15 +860,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-12-07 18:49:55" itemprop="dateCreated datePublished" datetime="2014-12-07T18:49:55+08:00">2014-12-07</time>
+              <time title="创建时间：2018-06-13 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-13T00:00:00+08:00">2018-06-13</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:52:58" itemprop="dateModified" datetime="2020-03-23T01:52:58+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 10:55:38" itemprop="dateModified" datetime="2020-03-23T10:55:38+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -849,12 +890,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>前两天上课的时候，不知道为什么，突然有种强烈的想“翻墙”的冲动……</p>
-<p>之前用Windows系统的时候，一直是用GoAgent或者××门软件来翻墙的，速度很慢，不过也还勉强能用用。可是换了Ubuntu单系统后，××门用不了，GoAgent配置也不方便，得先上Google，这是个死循环，然后也就懒得弄了。</p>
-<p>不过对一个在学习Android开发的学生来说，不能翻墙确实是件糟心的事。不论是上Android官网，还是下载SDK，以及Google Play服务之类的，都需要跨过那道高墙。想起之前一些大牛推荐过的一款VPN，就跟朋友搭伙买了一年的。（云梯VPN，15/月，每月100G流量，不看视频、下载大文件什么的话，两个人完全够用，支持PPTP，L2TP两种连接方式，电脑和手机各个系统平台都能用，这和GA比起来算一个优势吧，也还比较稳定。<a href="http://findtizi.com/?r=b5068e83807e1177" target="_blank">点此链接购买的话你和我都能获得10块钱的优惠→_→</a>）</p>
+          <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>将一个请求封装成一个对象，从而让用户使用不同的请求把客户端参数化；对请求排队或者记录请求日志，以及支持可撤销的操作。</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><ul>
+<li>需要抽象出待执行的动作，然后以参数的形式提供出来。</li>
+<li>命令模式是回调机制的一个面向对象的替代品。</li>
+<li>在不同的时刻指定、排列和执行请求。</li>
+<li>需要支持取消操作。</li>
+<li>支持修改日志功能。</li>
+<li>需要支持事务操作。</li>
+</ul>
+<h2 id="UML图-amp-结构"><a href="#UML图-amp-结构" class="headerlink" title="UML图 &amp; 结构"></a>UML图 &amp; 结构</h2><img src="/2018/06/13/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F.png" class="" title="This is an example image">
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2014/12/07/%C2%96%E2%80%9C%E5%A2%99%E2%80%9D%E5%A4%96%E7%9A%84%E4%B8%96%E7%95%8C/#more" rel="contents">
+              <a class="btn" href="/2018/06/13/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -878,7 +926,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/12/02/%C2%96%E8%BF%99%E4%B8%80%E5%A4%9C%EF%BC%8C%E6%88%91%E5%90%AC%E8%A7%81%E3%80%81%E7%9C%8B%E8%A7%81%E7%9A%84%E7%BE%8E%E5%A5%BD/">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2018/03/11/KaiOS%E5%AE%9E%E7%8E%B0%E5%B9%BF%E6%92%AD%E9%80%9A%E4%BF%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -892,7 +940,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2014/12/02/%C2%96%E8%BF%99%E4%B8%80%E5%A4%9C%EF%BC%8C%E6%88%91%E5%90%AC%E8%A7%81%E3%80%81%E7%9C%8B%E8%A7%81%E7%9A%84%E7%BE%8E%E5%A5%BD/" class="post-title-link" itemprop="url">这一夜，我听见、看见的美好</a>
+            <a href="/2018/03/11/KaiOS%E5%AE%9E%E7%8E%B0%E5%B9%BF%E6%92%AD%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">KaiOS实现"广播"通信</a>
         </h2>
 
         <div class="post-meta">
@@ -902,15 +950,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2014-12-02 00:55:35" itemprop="dateCreated datePublished" datetime="2014-12-02T00:55:35+08:00">2014-12-02</time>
+              <time title="创建时间：2018-03-11 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-11T00:00:00+08:00">2018-03-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:53:05" itemprop="dateModified" datetime="2020-03-23T01:53:05+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:22:28" itemprop="dateModified" datetime="2020-03-23T11:22:28+08:00">2020-03-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">经验总结</span></a>
+                </span>
+            </span>
 
           
 
@@ -923,14 +980,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这是一个安静的夜晚。</p>
-<p>窗外并没有下雨，</p>
-<p>但我听见了……</p>
-<p>雨水打在屋顶，然后顺着屋檐，滴落到地面的水洼，</p>
-<p>每一滴都听得如此清晰。</p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前几天在开发 LED 功能的时候，需要找到一个类似 Android 里 Broadcast Receiver 的方法来进行通信，然而并没有找到一个完全类似的方法，试了一圈后最终在进程内通信和进程间通信使用了不同的方法来替代 Android 里的广播机制。</p>
+<p><strong>所以标题里的“广播”，并不是真的广播。</strong></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2014/12/02/%C2%96%E8%BF%99%E4%B8%80%E5%A4%9C%EF%BC%8C%E6%88%91%E5%90%AC%E8%A7%81%E3%80%81%E7%9C%8B%E8%A7%81%E7%9A%84%E7%BE%8E%E5%A5%BD/#more" rel="contents">
+              <a class="btn" href="/2018/03/11/KaiOS%E5%AE%9E%E7%8E%B0%E5%B9%BF%E6%92%AD%E9%80%9A%E4%BF%A1/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -954,7 +1008,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1022,25 +1076,28 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ray945" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ray945" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
       <span class="links-of-author-item">
         <a href="mailto:ray945@outlook.com" title="E-Mail → mailto:ray945@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
       </span>
@@ -1050,17 +1107,6 @@
   </div>
 
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      Links
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="http://winxo.cn/" title="http:&#x2F;&#x2F;winxo.cn" rel="noopener" target="_blank">Winxo</a>
-        </li>
-    </ul>
-  </div>
 
       </div>
 

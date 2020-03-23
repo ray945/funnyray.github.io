@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="首先简单说一下，AWS Iot SDK 的 mqtt 模块是基于 paho 标准的 mqtt client java 进行开发的，没有加入 paho 的 android 扩展包，所以心跳只能通过 TimerPingSender 进行定时发送。但由于在 android 系统中，如果系统长时间没有 cpu 活动，会进入休眠状态，而简单的 Timer 是无法唤醒 cpu 的，这就导致官方的 AWS Io">
@@ -28,7 +28,7 @@
 <meta property="og:description" content="首先简单说一下，AWS Iot SDK 的 mqtt 模块是基于 paho 标准的 mqtt client java 进行开发的，没有加入 paho 的 android 扩展包，所以心跳只能通过 TimerPingSender 进行定时发送。但由于在 android 系统中，如果系统长时间没有 cpu 活动，会进入休眠状态，而简单的 Timer 是无法唤醒 cpu 的，这就导致官方的 AWS Io">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-06-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-22T17:15:30.215Z">
+<meta property="article:modified_time" content="2020-03-23T03:02:51.388Z">
 <meta property="article:author" content="Ray">
 <meta property="article:tag" content="AWS IoT">
 <meta property="article:tag" content="MQTT">
@@ -199,7 +199,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 01:15:30" itemprop="dateModified" datetime="2020-03-23T01:15:30+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-23 11:02:51" itemprop="dateModified" datetime="2020-03-23T11:02:51+08:00">2020-03-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,7 +222,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>首先简单说一下，AWS Iot SDK 的 mqtt 模块是基于 paho 标准的 mqtt client java 进行开发的，没有加入 paho 的 android 扩展包，所以心跳只能通过 TimerPingSender 进行定时发送。但由于在 android 系统中，如果系统长时间没有 cpu 活动，会进入休眠状态，而简单的 Timer 是无法唤醒 cpu 的，这就导致官方的 AWS IoT SDK 无法理想地运行在游乐园项目（相机需一直保持 mqtt 在线）。所以游乐园项目使用的 AWS IoT SDK 是我们手动加入了android 扩展包中的 AlarmPingSender 后自己编译的。SDK 源码目录：goldsand/packages/apps/aws-android-sdk-iot-source/，直接通过 gradle 编译。</p>
+        <p>首先简单说一下，AWS Iot SDK 的 mqtt 模块是基于 paho 标准的 mqtt client java 进行开发的，没有加入 paho 的 android 扩展包，所以心跳只能通过 TimerPingSender 进行定时发送。但由于在 android 系统中，如果系统长时间没有 cpu 活动，会进入休眠状态，而简单的 Timer 是无法唤醒 cpu 的，这就导致官方的 AWS IoT SDK 无法理想地运行在游乐园项目（相机需一直保持 mqtt 在线）。所以游乐园项目使用的 AWS IoT SDK 是我们手动加入了android 扩展包中的 AlarmPingSender 后自己编译的。</p>
 <a id="more"></a>
 
 <h2 id="AlarmPingSender"><a href="#AlarmPingSender" class="headerlink" title="AlarmPingSender"></a>AlarmPingSender</h2><p>AlarmPingSender 与 原生的 TimerPingSender 大同小异，都继承自 MqttPingSender，并实现 init()，start()，stop()，schedule(long delayInMilliseconds) 四个方法。区别在于：schedule() 方法中，TimerPingSender 使用 Timer 设置定时来发送下一次心跳，而 AlarmPingSender 使用 AlarmManager 设置定时。这里介绍一下 AlarmPingSender 中的这四个方法以及一个广播接收器。</p>
@@ -273,8 +273,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2015/08/01/%E5%B9%BB%E6%83%B3%EF%BC%8C%E6%A2%A6%E6%83%B3/" rel="prev" title="幻想，梦想">
-      <i class="fa fa-chevron-left"></i> 幻想，梦想
+    <a href="/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/" rel="prev" title="处理概括关系">
+      <i class="fa fa-chevron-left"></i> 处理概括关系
     </a></div>
       <div class="post-nav-item">
     <a href="/2019/06/28/LogKit%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/" rel="next" title="LogKit使用介绍">
@@ -355,25 +355,28 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ray945" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ray945" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
       <span class="links-of-author-item">
         <a href="mailto:ray945@outlook.com" title="E-Mail → mailto:ray945@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
       </span>
@@ -383,17 +386,6 @@
   </div>
 
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      Links
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="http://winxo.cn/" title="http:&#x2F;&#x2F;winxo.cn" rel="noopener" target="_blank">Winxo</a>
-        </li>
-    </ul>
-  </div>
 
       </div>
 

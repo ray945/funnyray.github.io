@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="总述核心重构 Decompose Conditional (分解条件分解)，可将一个复杂的条件逻辑分成若干小块，它使得“分支逻辑”和“操作逻辑”分离 如果发现代码中的多处测试有相同结果，应该实施 Consolidate Conditional Expression (合并条件表达式) 如果条件代码中有任何重复，可以运用 Consolidate Duplicate Conditional Fragm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简化条件表达式">
+<meta property="og:url" content="http://funnyray.plus/2018/12/28/%E7%AE%80%E5%8C%96%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="但愿人长久有趣的Ray">
+<meta property="og:description" content="总述核心重构 Decompose Conditional (分解条件分解)，可将一个复杂的条件逻辑分成若干小块，它使得“分支逻辑”和“操作逻辑”分离 如果发现代码中的多处测试有相同结果，应该实施 Consolidate Conditional Expression (合并条件表达式) 如果条件代码中有任何重复，可以运用 Consolidate Duplicate Conditional Fragm">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://funnyray.plus/2018/12/28/%E7%AE%80%E5%8C%96%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F/%E5%A4%9A%E6%80%81%E5%8F%96%E4%BB%A3%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F.png">
+<meta property="og:image" content="http://funnyray.plus/2018/12/28/%E7%AE%80%E5%8C%96%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F/%E5%BC%95%E5%85%A5null%E5%AF%B9%E8%B1%A1.png">
+<meta property="article:published_time" content="2018-12-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-23T02:33:40.763Z">
+<meta property="article:author" content="Ray">
+<meta property="article:tag" content="重构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://funnyray.plus/2018/12/28/%E7%AE%80%E5%8C%96%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F/%E5%A4%9A%E6%80%81%E5%8F%96%E4%BB%A3%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F.png">
+
+<link rel="canonical" href="http://funnyray.plus/2018/12/28/%E7%AE%80%E5%8C%96%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>简化条件表达式 | 但愿人长久有趣的Ray</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">但愿人长久有趣的Ray</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Funny Ray</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2018/12/28/%E7%AE%80%E5%8C%96%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Ray">
+      <meta itemprop="description" content="我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="但愿人长久有趣的Ray">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          简化条件表达式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-12-28 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-28T00:00:00+08:00">2018-12-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-23 10:33:40" itemprop="dateModified" datetime="2020-03-23T10:33:40+08:00">2020-03-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="总述"><a href="#总述" class="headerlink" title="总述"></a>总述</h2><p>核心重构 Decompose Conditional (分解条件分解)，可将一个复杂的条件逻辑分成若干小块，它使得“分支逻辑”和“操作逻辑”分离</p>
+<p>如果发现代码中的多处测试有相同结果，应该实施 Consolidate Conditional Expression (合并条件表达式)</p>
+<p>如果条件代码中有任何重复，可以运用 Consolidate Duplicate Conditional Fragments (合并重复的条件判断)将重复成分去掉</p>
+<a id="more"></a>
+
+<p>使用 Replace Nested Conditional with Cuard Clauses 标示出特殊情况，并使用 Remove Control Flag 去除讨厌的控制标记</p>
+<p>面向对象程序中一旦出现很多 switch 语句，应该考虑运用 Replace Conditional with Polymorphism 将它替换为多态。多态还有个用处，通过 Introduce Null Object 去除对 null 值的检验</p>
+<h2 id="Decompose-Conditional-分解条件表达式"><a href="#Decompose-Conditional-分解条件表达式" class="headerlink" title="Decompose Conditional (分解条件表达式)"></a>Decompose Conditional (分解条件表达式)</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (date.before (SUMMER_START) || date.after(SUMMER_END)) &#123;</span><br><span class="line">    charge = quantity * winterRate + winterServiceCharge;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    charge = quantity * summerRate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><p>复杂的条件逻辑最常导致复杂度上升。因为必须编写代码检查不同的条件分支、根据不同的分支做不同的事，导致函数过长，使得代码可读性下降。</p>
+<p>可以将其分解为多个独立函数，根据每个小块代码的用途，为分解而得的新函数命名，并将原函数中对应的代码改为调用新函数，从而更清楚地表达意图。好处：突出条件逻辑，更清楚地表明每个分支作用，突出每个分支的原因。</p>
+<h3 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h3><ul>
+<li>将 if 段落提炼出来，构成一个独立函数</li>
+<li>将 then 段落和 else 段落都提炼出来，各自构成一个独立函数</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (notSummer(date)) &#123;</span><br><span class="line">    charge = winterCharge(quantity);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    charge = summerCharge(quantity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果发现嵌套的条件逻辑，通常会先观察是否可以使用 Replace Nested Conditional with Guard Clauses。如果不行，才开始分解其中的每个条件。</p>
+<h2 id="Consolidate-Conditional-Expression-合并条件表达式"><a href="#Consolidate-Conditional-Expression-合并条件表达式" class="headerlink" title="Consolidate Conditional Expression (合并条件表达式)"></a>Consolidate Conditional Expression (合并条件表达式)</h2><p>你有一系列条件测试，都得到相同结果。将这些测试合并为一个条件表达式，并将这个条件表达式提炼成为一个独立函数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">disabilityAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (_seniority &lt; <span class="number">2</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (_monthsDisabled &gt; <span class="number">12</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (_isPartTime) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// compute the disability amount</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>改为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">disabilityAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isNotEligableForDisability()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// compute the disability amount</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="动机-1"><a href="#动机-1" class="headerlink" title="动机"></a>动机</h3><p>有时会发现这样一串条件检查：检查条件各不相同，最终行为却一致。如果发现这种情况，就应该使用“逻辑或”和“逻辑与”将它们合并为一个条件表达式。</p>
+<p>合并条件代码的两个重要原因：</p>
+<ul>
+<li>合并后的代码会告诉你“实际上只有一次条件检查，只不过有多个并列条件需要检查而已”，从而使这一次检查的用意更清晰。而原先代码传递的信息是“这里有一些各自独立的条件测试，它们只是恰好同时发生”。</li>
+<li>这项重构往往可以为你使用 Extract Method 做好准备。将检查条件提炼成一个独立函数对于理清代码意义非常有用，以为它把描述“做什么”的语句换成了“为什么这样做”。</li>
+</ul>
+<h3 id="做法-1"><a href="#做法-1" class="headerlink" title="做法"></a>做法</h3><ul>
+<li>确定这些条件语句都没有副作用<ul>
+<li>如果条件表达式有副作用，就不用使用本项重构。</li>
+</ul>
+</li>
+<li>使用适当的逻辑操作符，将一系列相关条件表达式合并为一个。</li>
+<li>编译，测试。</li>
+<li>对合并后的条件表达式实施 Extract Method。</li>
+</ul>
+<h2 id="Consolidate-Duplicate-Conditional-Fragments-合并重复的条件判断"><a href="#Consolidate-Duplicate-Conditional-Fragments-合并重复的条件判断" class="headerlink" title="Consolidate Duplicate Conditional Fragments (合并重复的条件判断)"></a>Consolidate Duplicate Conditional Fragments (合并重复的条件判断)</h2><p>在条件表达式的每个分支上有着相同的一段代码，将这段重复代码搬移到条件表达式之外。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (isSpecialDeal()) &#123;</span><br><span class="line">    total = price * <span class="number">0.95</span>;</span><br><span class="line">    send();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    total = price * <span class="number">0.98</span>;</span><br><span class="line">    send();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (isSpecialDeal())</span><br><span class="line">    total = price * <span class="number">0.95</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    total = price * <span class="number">0.98</span>;</span><br><span class="line">send();</span><br></pre></td></tr></table></figure>
+
+<h3 id="动机-2"><a href="#动机-2" class="headerlink" title="动机"></a>动机</h3><p>有时一组条件表达式的所有分支都执行了相同的某段代码，此时应该将这段代码搬移到条件表达式外面。这样代码才能更清楚地表明哪些东西随条件的变化而变化，哪些东西保持不变。</p>
+<h3 id="做法-2"><a href="#做法-2" class="headerlink" title="做法"></a>做法</h3><ul>
+<li>鉴别出“执行方式不随条件变化而变化”的代码。</li>
+<li>如果这些共通代码位于条件表达式起始处，就将它移到条件表达式之前。</li>
+<li>如果这些共通代码位于条件表达式尾端，就将它一到条件表达式之后。</li>
+<li>如果这些共通代码位于条件表达式中段，就需要观察共通代码之前或之后的代码是否改变了什么东西。如果的确有所改变，应该首先将共通代码向前或向后移动，移至条件表达式的起始处或尾端，再以前面所说的办法来处理。</li>
+<li>如果共通代码不止一条语句，应该首先使用 Extract Method 将共通代码提炼到一个独立函数中。再以前面所说的办法来处理。</li>
+</ul>
+<h2 id="Remove-Control-Flag-移除控制标记"><a href="#Remove-Control-Flag-移除控制标记" class="headerlink" title="Remove Control Flag (移除控制标记)"></a>Remove Control Flag (移除控制标记)</h2><p>在一系列布尔表达式中，某个变量带有“控制标记”的作用，以 break 语句或 return 语句取代控制标记。</p>
+<h3 id="动机-3"><a href="#动机-3" class="headerlink" title="动机"></a>动机</h3><p>在一系列条件表达式中，有时会看到用于判断何时停止条件检查的控制标记：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set done to <span class="keyword">false</span></span><br><span class="line"><span class="keyword">while</span> not done &#123;</span><br><span class="line">    <span class="keyword">if</span> (condition) &#123;</span><br><span class="line">        <span class="keyword">do</span> something</span><br><span class="line">        set done to <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    next step of loop</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样的控制标记带来的麻烦超过了所带来的便利。人们之所以会使用这样的控制标记，因为结构化变成原则告诉他们：每个字程序只能有一个入口和一个出口。但是“单一出口”原则会在代码中加入讨厌的控制标记，大大降低条件表达式的可读性。这就是编程语言提供 break 语句和 continue 语句的原因：用它们跳出复杂的条件语句。去掉控制标记的效果：条件语句真正的用途会清晰得多。</p>
+<h3 id="做法-3"><a href="#做法-3" class="headerlink" title="做法"></a>做法</h3><p>对控制标记的处理，最显而易见的办法就是使用 java 提供的 break 语句或 continue 语句。</p>
+<ul>
+<li>找出让你跳出这段逻辑的控制标记值。</li>
+<li>找出对标记变量赋值的语句，代以恰当的 break 语句或 continue 语句。</li>
+<li>每次替换后，编译并测试。</li>
+</ul>
+<p>在未能提供 break 和 continue 语句的编程语言中，可以用以下办法：</p>
+<ul>
+<li>运用 Extract Method，将整段逻辑提炼到一个独立函数中。</li>
+<li>找出让你跳出这段逻辑的控制标记值。</li>
+<li>找出对标记变量赋值的语句，代以恰当的 return 语句。</li>
+<li>每次替换后，编译并测试。</li>
+</ul>
+<p>即使在支持 break 和 continue 的编程语言中，通常也有限考虑第二方案。因为 return 语句可以非常清楚地表示：不再执行该函数中的其他任何代码、如果还有这一类代码，你早晚需要将这段代码提炼出来。</p>
+<p>请注意标记变量是否会影响这段逻辑的最后结果，如果有影响，使用 break 语句之后还得保留控制标记值。如果你已经将这段逻辑提炼成一个独立函数，也可以将控制标记值放在 return 语句中返回</p>
+<h2 id="Replace-Nested-Conditional-with-Guard-Clauses-以卫语句取代嵌套条件表达式"><a href="#Replace-Nested-Conditional-with-Guard-Clauses-以卫语句取代嵌套条件表达式" class="headerlink" title="Replace Nested Conditional with Guard Clauses (以卫语句取代嵌套条件表达式)"></a>Replace Nested Conditional with Guard Clauses (以卫语句取代嵌套条件表达式)</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">getPayAmount</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> result;</span><br><span class="line">    <span class="keyword">if</span> (_isDead)</span><br><span class="line">    &#123;</span><br><span class="line">        result = deadAmount();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (_isSeparated)</span><br><span class="line">        &#123;</span><br><span class="line">            result = separatedAmount();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (_isRetired)</span><br><span class="line">            &#123;</span><br><span class="line">                result = retiredPayAmount();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                result = normalPayAmount();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="动机-4"><a href="#动机-4" class="headerlink" title="动机"></a>动机</h3><p>条件表达式通常有两种表现形式：</p>
+<ul>
+<li>所有分支都属于正常行为，使用形如 if…else… 的条件表达式</li>
+<li>条件表达式提供的答案中只有一种是正常行为，其他都是不常见的情况，就应该单独检查不常见的条件，并在该条件为真时立刻从函数中返回。（卫语句）</li>
+</ul>
+<p>卫语句的重点：给某一条分支以特别的重视，它告诉读者：这种情况很罕见，如果发生了，请做一些必要的整理工作，然后退出。</p>
+<h3 id="做法-4"><a href="#做法-4" class="headerlink" title="做法"></a>做法</h3><ul>
+<li>对于每个检查，放进一个卫语句<ul>
+<li>卫语句要不就从函数中返回，要不就抛出一个异常</li>
+</ul>
+</li>
+<li>每次将条件检查替换成卫语句后，编译并测试<ul>
+<li>如果所有卫语句都导致相同结果，请使用 Consolidate Conditional Expressions</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">getPayAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (_isDead) <span class="keyword">return</span> deadAmount();</span><br><span class="line">    <span class="keyword">if</span> (_isSeparated) <span class="keyword">return</span> separatedAmount();</span><br><span class="line">    <span class="keyword">if</span> (_isRetired) <span class="keyword">return</span> retiredAmount();</span><br><span class="line">    <span class="keyword">return</span> normalPayAmount();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Replace-Conditional-with-Polymorphism-以多态取代条件表达式"><a href="#Replace-Conditional-with-Polymorphism-以多态取代条件表达式" class="headerlink" title="Replace Conditional with Polymorphism (以多态取代条件表达式)"></a>Replace Conditional with Polymorphism (以多态取代条件表达式)</h2><p>有个条件表达式，它根据对象类型的不同而选择不同的行为，将这个条件表达式的每个分支放进一个子类的覆写函数中，然后将原始函数声明为抽象函数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">getSpeed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (_type) &#123;</span><br><span class="line">        <span class="keyword">case</span> EUROPEAN:</span><br><span class="line">            <span class="keyword">return</span> getBaseSpeed();</span><br><span class="line">        <span class="keyword">case</span> AFRICAN:</span><br><span class="line">            <span class="keyword">return</span> getBaseSpeed() - getLoadFactor() * _numberOfCoconuts;</span><br><span class="line">        <span class="keyword">case</span> NORWEGIAN_BLUE:</span><br><span class="line">            <span class="keyword">return</span> (_isNailed) ? <span class="number">0</span> : getBaseSpeed(_voltage);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"should be unreachable"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="%E5%A4%9A%E6%80%81%E5%8F%96%E4%BB%A3%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F.png" alt="image"></p>
+<h3 id="动机-5"><a href="#动机-5" class="headerlink" title="动机"></a>动机</h3><p>多态的根本好处：如果需要根据对象的不同类型而采取不同的行为，多态使你不必编写明显的条件表达式。</p>
+<h3 id="做法-5"><a href="#做法-5" class="headerlink" title="做法"></a>做法</h3><p>使用 Replace Conditional with Polymorphism 之前，首先必须有个集成结构</p>
+<p>要建立继承结构，有两种选择：Replace Type Code with Subclasses 和 Replace Type Code with State/Strategy。前者比较简单，应尽可能使用。如果需要在对象创建好之后修改类型码，就不能使用继承手法，只能使用 State/Strategy 模式。此外，如果要重构的类已经有了子类，那么也得使用 State/Strategy。如果若干switch语句针对的是同一个类型码，只需针对这个类型码建立一个继承结构就行了。</p>
+<p>开始：</p>
+<ul>
+<li>如果要处理的条件表达式是一个更大函数中的一部分，首先对条件表达式进行分析，然后使用 Extract Method 将它提炼到一个独立函数去</li>
+<li>如果有必要，使用 Move Method 将它提炼到一个独立函数去</li>
+<li>任选一个子类，在其中建立一个函数，使之覆写超类中容纳条件表达式的那个函数。将与该子类相关的条件表达式分支复制到新建函数中，并对它进行适当调整<ul>
+<li>为了顺利进行这一步骤，可能需要将超类中的某些private字段声明为protected</li>
+</ul>
+</li>
+<li>编译，测试</li>
+<li>在超类中删掉条件表达式内被复制了的分支</li>
+<li>编译，测试</li>
+<li>针对条件表达式的每个分支，重复上述过程，知道所有分支都被移到子类内的函数为止</li>
+<li>将超类中容纳条件表达式的函数声明为抽象函数</li>
+</ul>
+<h2 id="Introduce-Null-Object-引入Null对象"><a href="#Introduce-Null-Object-引入Null对象" class="headerlink" title="Introduce Null Object (引入Null对象)"></a>Introduce Null Object (引入Null对象)</h2><p>当你需要再三检查某对象是否为null，将null值替换为null对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (customer == <span class="keyword">null</span>) &#123;</span><br><span class="line">    plan = BillingPlan.basic();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    plan = customer.getPlan();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改为：</p>
+<p><img src="%E5%BC%95%E5%85%A5null%E5%AF%B9%E8%B1%A1.png" alt="image"></p>
+<h3 id="动机-6"><a href="#动机-6" class="headerlink" title="动机"></a>动机</h3><p>多态的根本好处在于：不必再向对象询问“你是什么类型”而后根据得到的答案调用对象的某个行为——你只管调用该行为就是了，其他的一切多态机制会为你安排妥当。</p>
+<p>使用空对象时有个非常有趣的性质：系统几乎从来不会因为空对象而被破坏。由于空对象对所有外界请求的响应都和真实对象一样，所以系统行为总是正常的。但这并非总是好事，有时会造成问题的侦测和查找上的困难，因为从来没有任何东西被破坏。当然，只要认真检查一下，你就会发现空对象有时出现在不该出现的地方。</p>
+<p>空对象一定是常量，它们的任何成分都不会发生变化。因此可以用单例模式实现它们。</p>
+<h3 id="做法-6"><a href="#做法-6" class="headerlink" title="做法"></a>做法</h3><ul>
+<li>为源类建立一个子类，使其行为就像是源类的null版本。在源类和null子类中都加上isNull()函数，前者的isNull()应该返回false，后者的isNull()应该返回true<ul>
+<li>这个方法可能有所帮助：建立一个nullable接口，将isNull()函数放在其中，让源类实现这个接口</li>
+<li>另外，也可以创建一个测试接口，专门用来检测对象是否为null</li>
+</ul>
+</li>
+<li>编译</li>
+<li>找出所有“所求源对象却获得一个null”的地方。修改这些地方，使它们改而获得一个空对象</li>
+<li>找出所有“将源对象与null做比较”的地方。修改这些地方，使它们调用isNull()函数<ul>
+<li>可以每次只处理一个源对象及其客户程序，编译并测试后，再处理另一个源对象</li>
+<li>可以在“不该再出现null”的地方放上一些断言，确保null的确不再出现</li>
+</ul>
+</li>
+<li>编译，测试</li>
+<li>找出这样的程序点：如果对象不是null，做A，否则做B</li>
+<li>对于每一个上述地点，在null类中覆写A动作，使其行为和B动作相同</li>
+<li>使用上述被覆写的动作，然后删除“对象是否等于null”的条件测试。编译并测试。</li>
+</ul>
+<h2 id="Introduce-Assertion-引入断言"><a href="#Introduce-Assertion-引入断言" class="headerlink" title="Introduce Assertion (引入断言)"></a>Introduce Assertion (引入断言)</h2><p>某一段代码需要对程序状态做出某种假设，以断言明确表现这种假设。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">getExpenseLimit</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// should have either expense limit or a primary project</span></span><br><span class="line">    <span class="keyword">return</span> (_expenseLimit != NULL_EXPENSE) ? _expenseLimit : _primaryProject.getMemberExpenseLimit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">getExpenseLimit</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Assert.isTrue(_expenseLimit != NULL_EXPENSE || _primaryProject != <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">return</span> (_expenseLimit != NULL_EXPENSE) ? _expenseLimit : _primaryProject.getMemberExpenseLimit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="动机-7"><a href="#动机-7" class="headerlink" title="动机"></a>动机</h3><p>常出现这样的代码：只有当某个条件为真时，该代码才能正常运行。</p>
+<p>断言是一个条件表达式，应该总是为真。如果它失败，表示程序员犯了错误。因此断言的失败应该导致一个非受控异常（unchecked exception）。断言绝对不能被系统的其他部分使用。实际上，程序最后的成品往往将断言统统删除。因此，标记“某些东西是个断言”是很重要的。</p>
+<p>断言可以作为交流与调试的辅助。在交流的角度上，断言可以帮助程序阅读者理解代码所做的假设；在调试的角度上，断言可以再距离bug最近的地方抓住它们。当编写自我测试代码的时候会发现，断言在调试方面的帮助变得不那么重要了，在交流方面仍然非常有价值。</p>
+<h3 id="做法-7"><a href="#做法-7" class="headerlink" title="做法"></a>做法</h3><p>如果不犯错，断言不会对系统运行造成任何影响，所以加入断言永远不会影响程序的行为。</p>
+<ul>
+<li>如果你发现代码假设某个条件始终为真，就加入一个断言明确说明这种情况。<ul>
+<li>你可以新建一个Assert类，用于处理各种情况下的断言。</li>
+</ul>
+</li>
+</ul>
+<p>注意，不要滥用断言。不要用它来检查“你认为应该为真”的条件，只能使用它来检查“一定必须为真”的条件。滥用断言可能会造成难以维护的重复逻辑。在一段逻辑中加入断言可以迫使你重新考虑这udandaimad约束条件。如果不满足这些约束条件，程序也可以正常运行，断言就不会带来任何帮助，只会把代码变得混乱，并且有可能妨碍以后的修改。</p>
+<p>所以，如果断言指示 的约束条件不能满足，代码依旧能正常运行的话，就需要把断言拿掉。</p>
+<p>另外，还需要注意段严重的重复代码。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%87%8D%E6%9E%84/" rel="tag"># 重构</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/06/16/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" rel="prev" title="代理模式">
+      <i class="fa fa-chevron-left"></i> 代理模式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/" rel="next" title="处理概括关系">
+      处理概括关系 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总述"><span class="nav-number">1.</span> <span class="nav-text">总述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decompose-Conditional-分解条件表达式"><span class="nav-number">2.</span> <span class="nav-text">Decompose Conditional (分解条件表达式)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机"><span class="nav-number">2.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法"><span class="nav-number">2.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Consolidate-Conditional-Expression-合并条件表达式"><span class="nav-number">3.</span> <span class="nav-text">Consolidate Conditional Expression (合并条件表达式)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-1"><span class="nav-number">3.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-1"><span class="nav-number">3.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Consolidate-Duplicate-Conditional-Fragments-合并重复的条件判断"><span class="nav-number">4.</span> <span class="nav-text">Consolidate Duplicate Conditional Fragments (合并重复的条件判断)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-2"><span class="nav-number">4.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-2"><span class="nav-number">4.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remove-Control-Flag-移除控制标记"><span class="nav-number">5.</span> <span class="nav-text">Remove Control Flag (移除控制标记)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-3"><span class="nav-number">5.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-3"><span class="nav-number">5.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Replace-Nested-Conditional-with-Guard-Clauses-以卫语句取代嵌套条件表达式"><span class="nav-number">6.</span> <span class="nav-text">Replace Nested Conditional with Guard Clauses (以卫语句取代嵌套条件表达式)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-4"><span class="nav-number">6.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-4"><span class="nav-number">6.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Replace-Conditional-with-Polymorphism-以多态取代条件表达式"><span class="nav-number">7.</span> <span class="nav-text">Replace Conditional with Polymorphism (以多态取代条件表达式)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-5"><span class="nav-number">7.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-5"><span class="nav-number">7.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduce-Null-Object-引入Null对象"><span class="nav-number">8.</span> <span class="nav-text">Introduce Null Object (引入Null对象)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-6"><span class="nav-number">8.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-6"><span class="nav-number">8.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduce-Assertion-引入断言"><span class="nav-number">9.</span> <span class="nav-text">Introduce Assertion (引入断言)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-7"><span class="nav-number">9.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-7"><span class="nav-number">9.2.</span> <span class="nav-text">做法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ray</p>
+  <div class="site-description" itemprop="description">我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ray945" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ray945" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ray945@outlook.com" title="E-Mail → mailto:ray945@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/594ray" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;594ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ray</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
