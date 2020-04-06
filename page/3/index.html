@@ -170,6 +170,93 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2016/03/07/%E4%BD%BF%E7%94%A8MPAndroidChart%E7%94%BB%E9%A5%BC%E7%8A%B6%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Ray">
+      <meta itemprop="description" content="我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="但愿人长久有趣的Ray">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/07/%E4%BD%BF%E7%94%A8MPAndroidChart%E7%94%BB%E9%A5%BC%E7%8A%B6%E5%9B%BE/" class="post-title-link" itemprop="url">使用MPAndroidChart画饼状图</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-07 00:00:00" itemprop="dateCreated datePublished" datetime="2016-03-07T00:00:00+08:00">2016-03-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-23 12:06:44" itemprop="dateModified" datetime="2020-03-23T12:06:44+08:00">2020-03-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">经验总结</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>MPAndroidChart是一款基于Android的开源图表库，MPAndroidChart不仅可以在Android设备上绘制各种统计图表，而且可以对图表进行拖动和缩放操作，应用起来非常灵活。MPAndroidChart同样拥有常用的图表类型：线型图、饼图、柱状图和散点图。</p>
+<p>GitHub地址：</p>
+<p><a href="https://github.com/PhilJay/MPAndroidChart" target="_blank" rel="noopener">https://github.com/PhilJay/MPAndroidChart</a></p>
+<p>下面主要实现以下饼状图：</p>
+<h1 id="导入jar包"><a href="#导入jar包" class="headerlink" title="导入jar包"></a>导入jar包</h1><p>Github上有MPChartLib库，用Eclipse开发，可以直接在工程里添加这个Library就可以了，使用Android Studio也可以直接添加库，也可以通过gradle依赖</p>
+<p>在build.gradle里添加：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'com.github.PhilJay:MPAndroidChart:v2.1.6'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="布局中使用组件"><a href="#布局中使用组件" class="headerlink" title="布局中使用组件"></a>布局中使用组件</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">com.github.mikephil.charting.charts.PieChart</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/pie_chart"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"300dp"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="代码中使用示例"><a href="#代码中使用示例" class="headerlink" title="代码中使用示例"></a>代码中使用示例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ray.piechartTest;    </span><br><span class="line">    </span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;    </span><br><span class="line">    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.charts.PieChart;    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.components.Legend;    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.components.Legend.LegendPosition;    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.data.Entry;    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.data.PieData;    </span><br><span class="line"><span class="keyword">import</span> com.github.mikephil.charting.data.PieDataSet;    </span><br><span class="line">    </span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.ActionBarActivity;    </span><br><span class="line"><span class="keyword">import</span> android.graphics.Color;    </span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;    </span><br><span class="line"><span class="keyword">import</span> android.util.DisplayMetrics;    </span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">ActionBarActivity</span> </span>&#123;    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> PieChart mChart;    </span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span>    </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;    </span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);    </span><br><span class="line">        setContentView(R.layout.activity_main);    </span><br><span class="line">            </span><br><span class="line">        mChart = (PieChart) findViewById(R.id.pie_chart);    </span><br><span class="line">        PieData mPieData = getPieData(<span class="number">4</span>, <span class="number">100</span>);    </span><br><span class="line">        showChart(mChart, mPieData);    </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showChart</span><span class="params">(PieChart pieChart, PieData pieData)</span> </span>&#123;    </span><br><span class="line">        pieChart.setHoleColorTransparent(<span class="keyword">true</span>);    </span><br><span class="line">    </span><br><span class="line">        pieChart.setHoleRadius(<span class="number">60f</span>);  <span class="comment">//半径    </span></span><br><span class="line">        pieChart.setTransparentCircleRadius(<span class="number">64f</span>); <span class="comment">// 半透明圈    </span></span><br><span class="line">        <span class="comment">//pieChart.setHoleRadius(0)  //实心圆    </span></span><br><span class="line">    </span><br><span class="line">        pieChart.setDescription(<span class="string">"测试饼状图"</span>);    </span><br><span class="line">    </span><br><span class="line">        <span class="comment">// mChart.setDrawYValues(true);    </span></span><br><span class="line">        pieChart.setDrawCenterText(<span class="keyword">true</span>);  <span class="comment">//饼状图中间可以添加文字    </span></span><br><span class="line">    </span><br><span class="line">        pieChart.setDrawHoleEnabled(<span class="keyword">true</span>);    </span><br><span class="line">    </span><br><span class="line">        pieChart.setRotationAngle(<span class="number">90</span>); <span class="comment">// 初始旋转角度    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">// draws the corresponding description value into the slice    </span></span><br><span class="line">        <span class="comment">// mChart.setDrawXValues(true);    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">// enable rotation of the chart by touch    </span></span><br><span class="line">        pieChart.setRotationEnabled(<span class="keyword">true</span>); <span class="comment">// 可以手动旋转    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">// display percentage values    </span></span><br><span class="line">        pieChart.setUsePercentValues(<span class="keyword">true</span>);  <span class="comment">//显示成百分比    </span></span><br><span class="line">        <span class="comment">// mChart.setUnit(" €");    </span></span><br><span class="line">        <span class="comment">// mChart.setDrawUnitsInChart(true);    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">// add a selection listener    </span></span><br><span class="line"><span class="comment">//      mChart.setOnChartValueSelectedListener(this);    </span></span><br><span class="line">        <span class="comment">// mChart.setTouchEnabled(false);    </span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//      mChart.setOnAnimationListener(this);    </span></span><br><span class="line">    </span><br><span class="line">        pieChart.setCenterText(<span class="string">"Quarterly Revenue"</span>);  <span class="comment">//饼状图中间的文字    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">//设置数据    </span></span><br><span class="line">        pieChart.setData(pieData);     </span><br><span class="line">            </span><br><span class="line">        <span class="comment">// undo all highlights    </span></span><br><span class="line"><span class="comment">//      pieChart.highlightValues(null);    </span></span><br><span class="line"><span class="comment">//      pieChart.invalidate();    </span></span><br><span class="line">    </span><br><span class="line">        Legend mLegend = pieChart.getLegend();  <span class="comment">//设置比例图    </span></span><br><span class="line">        mLegend.setPosition(LegendPosition.RIGHT_OF_CHART);  <span class="comment">//最右边显示    </span></span><br><span class="line"><span class="comment">//      mLegend.setForm(LegendForm.LINE);  //设置比例图的形状，默认是方形    </span></span><br><span class="line">        mLegend.setXEntrySpace(<span class="number">7f</span>);    </span><br><span class="line">        mLegend.setYEntrySpace(<span class="number">5f</span>);    </span><br><span class="line">            </span><br><span class="line">        pieChart.animateXY(<span class="number">1000</span>, <span class="number">1000</span>);  <span class="comment">//设置动画    </span></span><br><span class="line">        <span class="comment">// mChart.spin(2000, 0, 360);    </span></span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**  </span></span><br><span class="line"><span class="comment">     *   </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> count 分成几部分  </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> range  </span></span><br><span class="line"><span class="comment">     */</span>    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> PieData <span class="title">getPieData</span><span class="params">(<span class="keyword">int</span> count, <span class="keyword">float</span> range)</span> </span>&#123;    </span><br><span class="line">            </span><br><span class="line">        ArrayList&lt;String&gt; xValues = <span class="keyword">new</span> ArrayList&lt;String&gt;();  <span class="comment">//xVals用来表示每个饼块上的内容    </span></span><br><span class="line">    </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;    </span><br><span class="line">            xValues.add(<span class="string">"Quarterly"</span> + (i + <span class="number">1</span>));  <span class="comment">//饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4    </span></span><br><span class="line">        &#125;    </span><br><span class="line">    </span><br><span class="line">        ArrayList&lt;Entry&gt; yValues = <span class="keyword">new</span> ArrayList&lt;Entry&gt;();  <span class="comment">//yVals用来表示封装每个饼块的实际数据    </span></span><br><span class="line">    </span><br><span class="line">        <span class="comment">// 饼图数据    </span></span><br><span class="line">        <span class="comment">/**  </span></span><br><span class="line"><span class="comment">         * 将一个饼形图分成四部分， 四部分的数值比例为14:14:34:38  </span></span><br><span class="line"><span class="comment">         * 所以 14代表的百分比就是14%   </span></span><br><span class="line"><span class="comment">         */</span>    </span><br><span class="line">        <span class="keyword">float</span> quarterly1 = <span class="number">14</span>;    </span><br><span class="line">        <span class="keyword">float</span> quarterly2 = <span class="number">14</span>;    </span><br><span class="line">        <span class="keyword">float</span> quarterly3 = <span class="number">34</span>;    </span><br><span class="line">        <span class="keyword">float</span> quarterly4 = <span class="number">38</span>;    </span><br><span class="line">    </span><br><span class="line">        yValues.add(<span class="keyword">new</span> Entry(quarterly1, <span class="number">0</span>));    </span><br><span class="line">        yValues.add(<span class="keyword">new</span> Entry(quarterly2, <span class="number">1</span>));    </span><br><span class="line">        yValues.add(<span class="keyword">new</span> Entry(quarterly3, <span class="number">2</span>));    </span><br><span class="line">        yValues.add(<span class="keyword">new</span> Entry(quarterly4, <span class="number">3</span>));    </span><br><span class="line">    </span><br><span class="line">        <span class="comment">//y轴的集合    </span></span><br><span class="line">        PieDataSet pieDataSet = <span class="keyword">new</span> PieDataSet(yValues, <span class="string">"Quarterly Revenue 2014"</span><span class="comment">/*显示在比例图上*/</span>);    </span><br><span class="line">        pieDataSet.setSliceSpace(<span class="number">0f</span>); <span class="comment">//设置个饼状图之间的距离    </span></span><br><span class="line">    </span><br><span class="line">        ArrayList&lt;Integer&gt; colors = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();    </span><br><span class="line">    </span><br><span class="line">        <span class="comment">// 饼图颜色    </span></span><br><span class="line">        colors.add(Color.rgb(<span class="number">205</span>, <span class="number">205</span>, <span class="number">205</span>));    </span><br><span class="line">        colors.add(Color.rgb(<span class="number">114</span>, <span class="number">188</span>, <span class="number">223</span>));    </span><br><span class="line">        colors.add(Color.rgb(<span class="number">255</span>, <span class="number">123</span>, <span class="number">124</span>));    </span><br><span class="line">        colors.add(Color.rgb(<span class="number">57</span>, <span class="number">135</span>, <span class="number">200</span>));    </span><br><span class="line">    </span><br><span class="line">        pieDataSet.setColors(colors);    </span><br><span class="line">    </span><br><span class="line">        DisplayMetrics metrics = getResources().getDisplayMetrics();    </span><br><span class="line">        <span class="keyword">float</span> px = <span class="number">5</span> * (metrics.densityDpi / <span class="number">160f</span>);    </span><br><span class="line">        pieDataSet.setSelectionShift(px); <span class="comment">// 选中态多出的长度    </span></span><br><span class="line">    </span><br><span class="line">        PieData pieData = <span class="keyword">new</span> PieData(xValues, pieDataSet);    </span><br><span class="line">            </span><br><span class="line">        <span class="keyword">return</span> pieData;    </span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果图如下</p>
+<p><img src="%E6%95%88%E6%9E%9C%E5%9B%BE.png" alt="Piechart"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2016/03/05/%E4%BD%BF%E7%94%A8AChartEngine%E7%94%BB%E7%BB%9F%E8%AE%A1%E5%9B%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1010,88 +1097,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2014/11/16/%C2%96%E6%97%B6%E9%97%B4%E3%80%81%E7%A9%BA%E9%97%B4%E3%80%81%E7%88%B1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Ray">
-      <meta itemprop="description" content="我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="但愿人长久有趣的Ray">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/11/16/%C2%96%E6%97%B6%E9%97%B4%E3%80%81%E7%A9%BA%E9%97%B4%E3%80%81%E7%88%B1/" class="post-title-link" itemprop="url">时间、空间、爱</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-11-16 17:20:32" itemprop="dateCreated datePublished" datetime="2014-11-16T17:20:32+08:00">2014-11-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 15:45:30" itemprop="dateModified" datetime="2020-03-23T15:45:30+08:00">2020-03-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E7%94%9F%E6%97%B6%E4%BB%A3%E7%9A%84%E7%9E%8EBB/" itemprop="url" rel="index"><span itemprop="name">学生时代的瞎BB</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>不敢说诺兰从没让人失望过，但他确确实实是唯一一个给了我一次又一次冲击的电影艺术家。《黑暗骑士》、《盗梦空间》、《星际穿越》，目前我最喜欢的电影居然全部出自他手，这让我无法不承认自己已然沦为他的脑残粉……四年前，我带着网络上铺天盖地的好评走进影院观看了《盗梦空间》，我说，这是近几年来最值得一看的电影；四年后的今天，我把这句话原封不动地送给了《星际穿越》，并且，仰慕之情有增无减……</p>
-<p>这不是一篇影评，也不是一篇科普，这只是一篇……whatever……我都不知道我接下来会说些什么……想到啥说啥吧，just follow me.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/11/16/%C2%96%E6%97%B6%E9%97%B4%E3%80%81%E7%A9%BA%E9%97%B4%E3%80%81%E7%88%B1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1164,7 +1169,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1177,7 +1182,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
