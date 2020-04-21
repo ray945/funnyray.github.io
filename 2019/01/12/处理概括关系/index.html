@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="提炼超类（Extract Superclass）两个雷有相似特性。为这两个类建立一个超类，将相同特性移至超类。   动机 重复代码改动麻烦。 两个类以相同方式做类似的事情，或以不同的方式做类似的事情，对象提供了一种简化这种情况的机制，那就是继承。 另一种选择是 Extract Class。两种方案是继承和委托的区别。如果两个类可以共享行为，也可以共享接口，那么继承是比较简单的做法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="处理概括关系">
+<meta property="og:url" content="http://funnyray.plus/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/index.html">
+<meta property="og:site_name" content="但愿人长久有趣的Ray">
+<meta property="og:description" content="提炼超类（Extract Superclass）两个雷有相似特性。为这两个类建立一个超类，将相同特性移至超类。   动机 重复代码改动麻烦。 两个类以相同方式做类似的事情，或以不同的方式做类似的事情，对象提供了一种简化这种情况的机制，那就是继承。 另一种选择是 Extract Class。两种方案是继承和委托的区别。如果两个类可以共享行为，也可以共享接口，那么继承是比较简单的做法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://funnyray.plus/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/%E6%8F%90%E7%82%BC%E8%B6%85%E7%B1%BB.png">
+<meta property="og:image" content="http://funnyray.plus/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/%E6%8F%90%E7%82%BC%E6%8E%A5%E5%8F%A3.png">
+<meta property="og:image" content="http://funnyray.plus/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/%E6%8A%98%E5%8F%A0%E7%BB%A7%E6%89%BF%E4%BD%93%E7%B3%BB.png">
+<meta property="og:image" content="http://funnyray.plus/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/%E5%A1%91%E9%80%A0%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="http://funnyray.plus/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/%E5%A7%94%E6%89%98%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF.png">
+<meta property="og:image" content="http://funnyray.plus/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/%E7%BB%A7%E6%89%BF%E5%8F%96%E4%BB%A3%E5%A7%94%E6%89%98.png">
+<meta property="article:published_time" content="2019-01-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-23T02:30:35.146Z">
+<meta property="article:author" content="Ray">
+<meta property="article:tag" content="重构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://funnyray.plus/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/%E6%8F%90%E7%82%BC%E8%B6%85%E7%B1%BB.png">
+
+<link rel="canonical" href="http://funnyray.plus/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>处理概括关系 | 但愿人长久有趣的Ray</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">但愿人长久有趣的Ray</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Funny Ray</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Ray">
+      <meta itemprop="description" content="我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="但愿人长久有趣的Ray">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          处理概括关系
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-01-12 00:00:00" itemprop="dateCreated datePublished" datetime="2019-01-12T00:00:00+08:00">2019-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-23 10:30:35" itemprop="dateModified" datetime="2020-03-23T10:30:35+08:00">2020-03-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="提炼超类（Extract-Superclass）"><a href="#提炼超类（Extract-Superclass）" class="headerlink" title="提炼超类（Extract Superclass）"></a>提炼超类（Extract Superclass）</h2><p>两个雷有相似特性。为这两个类建立一个超类，将相同特性移至超类。</p>
+<img src="/2019/01/12/%E5%A4%84%E7%90%86%E6%A6%82%E6%8B%AC%E5%85%B3%E7%B3%BB/%E6%8F%90%E7%82%BC%E8%B6%85%E7%B1%BB.png" class="" title="This is an example image">
+
+<h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><ul>
+<li>重复代码改动麻烦。</li>
+<li>两个类以相同方式做类似的事情，或以不同的方式做类似的事情，对象提供了一种简化这种情况的机制，那就是继承。</li>
+<li>另一种选择是 Extract Class。两种方案是继承和委托的区别。如果两个类可以共享行为，也可以共享接口，那么继承是比较简单的做法。<a id="more"></a>
+
+</li>
+</ul>
+<h3 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h3><ol>
+<li>为原本的类新建一个空白的抽象超类。</li>
+<li>运用 Pull Up Field、Pull Up Method 和 Pull Up Constructor Body 逐一将子类的共同元素上移到超类<ol>
+<li>先搬移字段</li>
+<li>如果相应的子类函数有不同的签名，但用途相同，可以先使用 Rename Method 将它们的签名改为相同，然后再使用 Pull Up Method</li>
+<li>如果相应子类函数有相同的签名，但函数本体不同，可以再超类中把它们的共同签名声明为抽象函数</li>
+<li>如果相应的子类函数有不同的函数本体，但用途相同，可试着使用 Substitute Algorithm 把其中一个函数的函数体复制到另一个函数中。如果运转正常，就可以使用 Pull Up Method</li>
+</ol>
+</li>
+<li>每次上移后，编译并测试。</li>
+<li>检查留在子类中的函数，看它们是否还有共通成分。如果有，可以使用 Extract Method 将共通部分再提炼出来，然后使用 Pull Up Method 将提炼出的函数上移到超类。如果各个子类中某个函数的整体流程很相似，也许可以用 Form Template Method</li>
+<li>检查留在子类中的函数，看是否还有共同成分。如果有，使用 Extract Method 提炼出来，然后用 Pull Up Method 将提炼出的函数上移到超类。如果各个子类中某个函数的整体流程很类似，可以使用 Form Template Method</li>
+<li>将所有共同元素都上移到超类之后，检查子类的所有调用，如果只是用共同接口，就可以把请求的对象类型改为超类。</li>
+</ol>
+<h2 id="提炼接口（Extract-Interface）"><a href="#提炼接口（Extract-Interface）" class="headerlink" title="提炼接口（Extract Interface）"></a>提炼接口（Extract Interface）</h2><p>若干客户使用类接口中的同一子集，或者两个类的接口有部分相同，将相同的子集提炼到一个独立接口中。</p>
+<p><img src="%E6%8F%90%E7%82%BC%E6%8E%A5%E5%8F%A3.png" alt="image"></p>
+<h3 id="动机-1"><a href="#动机-1" class="headerlink" title="动机"></a>动机</h3><p>类之间彼此互用的方式有若干种：</p>
+<ul>
+<li>“使用一个类”意味用到该类的所有责任区</li>
+<li>某一组客户只使用类责任区中的一个特定子集</li>
+<li>这个类需要与所有协助处理某些特定请求的类合作</li>
+</ul>
+<p>后两种情况将真正用到的这部分责任分离出来可以使系统的用法更清晰，同时也更容易看清系统的责任划分。如果新的类需要支持上述子集，也比较能看清子集内有什么东西。</p>
+<p>在许多面向对象语言中，这种责任划分是通过多继承来实现的。你可以针对每组行为建立一个类，再将它们组合于同一个实现中。Java只提供单继承，但你可以运用接口来昭示并实现上述需求。</p>
+<p>提炼超类和提炼接口之间有些相似之处。提炼接口只能提炼共通接口，不同提炼共通代码。</p>
+<p>如果某个类在不同环境下扮演不同的角色，使用接口就是个好主意。可以针对每个角色以提炼接口提炼出相应接口。另一种可以用上提炼接口的情况是：想要描述一个类的外部依赖接口（即这个类要求服务提供方提供的操作）。如果你打算将来加入其它种类的服务对象，只需要求它们实现这个接口即可。</p>
+<h3 id="做法-1"><a href="#做法-1" class="headerlink" title="做法"></a>做法</h3><ul>
+<li>新建一个接口</li>
+<li>在接口中声明待提炼类的共通操作</li>
+<li>让相关的类实现上述接口</li>
+<li>调整客户端的类型声明，令其使用该接口</li>
+</ul>
+<h2 id="折叠继承体系（Collapse-Hierarchy）"><a href="#折叠继承体系（Collapse-Hierarchy）" class="headerlink" title="折叠继承体系（Collapse Hierarchy）"></a>折叠继承体系（Collapse Hierarchy）</h2><p>超类和子类之间无太大区别，将它们合为一体</p>
+<p><img src="%E6%8A%98%E5%8F%A0%E7%BB%A7%E6%89%BF%E4%BD%93%E7%B3%BB.png" alt="image"></p>
+<h3 id="动机-2"><a href="#动机-2" class="headerlink" title="动机"></a>动机</h3><p>继承体系很容易变得过分复杂。</p>
+<p>所谓重构继承体系，是将函数和字段在体系中上下移动</p>
+<p>完成这些动作后可能发现某个子类并未带来该有的价值，因此需要把超类与子类合并起来。</p>
+<h3 id="做法-2"><a href="#做法-2" class="headerlink" title="做法"></a>做法</h3><ul>
+<li>选择想移除的类：超类or子类？</li>
+<li>使用 Pull up Field 和 Pull up Method，或者 Push Down Method 和 Push Down Field，把想要移除的类的所有行为和数据搬移到另一个类</li>
+<li>每次移动后，编译并测试</li>
+<li>调整即将被一处的那个类的所有引用点，令它们改而引用合并后留下的类。这个动作将会影响变量的声明、参数的类型以及构造函数</li>
+<li>移除我们的目标：此时的它应该已经成为一个空类</li>
+<li>编译，测试</li>
+</ul>
+<h2 id="塑造模板函数（Form-TemPlate-Method）"><a href="#塑造模板函数（Form-TemPlate-Method）" class="headerlink" title="塑造模板函数（Form TemPlate Method）"></a>塑造模板函数（Form TemPlate Method）</h2><p>有一些子类，其中相应的某些函数以相同顺序执行类似的操作，但各个操作的细节上有所不同。将这些操作分别放进独立函数中，并保持它们都有相同的签名，于是原函数也就变得相同的。然后将原函数上移至超类。</p>
+<p><img src="%E5%A1%91%E9%80%A0%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0.png" alt="image"></p>
+<h3 id="动机-3"><a href="#动机-3" class="headerlink" title="动机"></a>动机</h3><p>继承是避免重复行为的一个强大工具。只要看见两个子类中有类似的函数，就可以把它们提升到超类。如果函数并不完全相同，仍有必要尽量避免重复，但又必须保持这些函数之间的使之差异</p>
+<p>两个函数以相同顺序执行大致相近的操作，但是各操作不完全相同。可以将执行操作的序列移至超类，并借助多态保证各操作仍得以保持差异性。这样的函数被称为模板函数。</p>
+<h3 id="做法-3"><a href="#做法-3" class="headerlink" title="做法"></a>做法</h3><ul>
+<li>在各个子类中分解目标函数，使分解后的各个函数要不完全相同，要不完全不同</li>
+<li>运用 Pull Up Method 将各子类内完全相同的函数上移至超类</li>
+<li>对于那些（剩余的、存在于各子类内的）完全不同的函数，实施 Rename Method，使所有这些函数的签名完全相同<ul>
+<li>这将使得原函数变为完全相同，因为它们都执行同样一组函数调用；但各子类会以不同方式响应这些调用</li>
+</ul>
+</li>
+<li>修改上述所有签名后，编译并测试</li>
+<li>运用 Pull Up Method 将所有原函数逐一上移至超类。在超类中将那些代表各种不同操作的函数定义为抽象函数</li>
+<li>编译，测试</li>
+<li>一处其他子类中的原函数，每删除一个，编译并测试</li>
+</ul>
+<h2 id="以委托取代继承（Replace-Inheritance-with-Delegation）"><a href="#以委托取代继承（Replace-Inheritance-with-Delegation）" class="headerlink" title="以委托取代继承（Replace Inheritance with Delegation）"></a>以委托取代继承（Replace Inheritance with Delegation）</h2><p>某个子类只使用超类接口中的一部分，或是根本不需要继承而来的数据。在子类中新建一个字段用以保存超类；调整子类函数，令它改而委托超类；然后去掉两者之间的继承关系</p>
+<p><img src="%E5%A7%94%E6%89%98%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF.png" alt="image"></p>
+<h3 id="动机-4"><a href="#动机-4" class="headerlink" title="动机"></a>动机</h3><p>一开始继承了一个类，随后发现超类中的许多操作并不适用于子类。所拥有的接口并未真正反映出子类的功能。或者从超类中继承了一大堆子类不需要的数据，又或者超类中的某些protected函数对子类没什么意义</p>
+<p>这样的结果是：代码传达的信息与你的意图南辕北辙</p>
+<p>委托取代继承可以更清楚地表明：只需要受委托类的一部分功能。</p>
+<h3 id="做法-4"><a href="#做法-4" class="headerlink" title="做法"></a>做法</h3><ul>
+<li>在子类中新建一个字段，使其引用超类的一个实例，并将它初始化为this</li>
+<li>修改子类内的所有函数，让它们不再使用超类，转而使用上述那个受托字段。每次修改后，编译并测试<ul>
+<li>不能这样修改子类中通过super调用超类函数的代码，否则会陷入无限递归。这种函数只有在继承关系被打破后才能修改</li>
+</ul>
+</li>
+<li>去除两个类之间的继承关系。新建一个受拖类的对象赋给受托字段</li>
+<li>针对客户端所用的每一个超类函数，为它添加一个简单的委托函数</li>
+<li>编译，测试</li>
+</ul>
+<h2 id="以继承取代委托（Replace-Delegation-with-Inheritance）"><a href="#以继承取代委托（Replace-Delegation-with-Inheritance）" class="headerlink" title="以继承取代委托（Replace Delegation with Inheritance）"></a>以继承取代委托（Replace Delegation with Inheritance）</h2><p>在两个类之间使用委托关系，并经常为整个接口编写许多极简单的委托函数，让委托类集成受托类</p>
+<p><img src="%E7%BB%A7%E6%89%BF%E5%8F%96%E4%BB%A3%E5%A7%94%E6%89%98.png" alt="image"></p>
+<h3 id="动机-5"><a href="#动机-5" class="headerlink" title="动机"></a>动机</h3><p>发现自己需要使用受托类中的所有函数，并且花费很大力气编写所有极简的委托函数，本重构可以帮助用回继承</p>
+<p>如果没有使用受托类的所有函数，就不该使用本重构手法，因为子类应该总是遵循超类的接口</p>
+<p>受托对象被不止一个其他对象共享，而且受托对象是可变的，不能将委托关系替换为继承关系，因为这样就无法再共享数据了</p>
+<h3 id="做法-5"><a href="#做法-5" class="headerlink" title="做法"></a>做法</h3><ul>
+<li>让委托段成为受托端的一个子类</li>
+<li>编译<ul>
+<li>此时某些函数可能会发生冲突：它们可能有相同的名称，但在返回类型、异常指定或可见成都方面有所擦汗有，可以使用 Rename Method 解决此类问题</li>
+</ul>
+</li>
+<li>将受托字段设为该字段所处对象本身</li>
+<li>去掉简单的委托函数</li>
+<li>编译并测试</li>
+<li>将所有其他设计委托关系的代码，改为调用对象自身</li>
+<li>移除受托字段</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%87%8D%E6%9E%84/" rel="tag"># 重构</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/12/28/%E7%AE%80%E5%8C%96%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="prev" title="简化条件表达式">
+      <i class="fa fa-chevron-left"></i> 简化条件表达式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/06/15/AWS%20IoT%20KeepAlive%20%E5%BF%83%E8%B7%B3%E6%B5%81%E7%A8%8B/" rel="next" title="AWS IoT KeepAlive 心跳流程">
+      AWS IoT KeepAlive 心跳流程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#提炼超类（Extract-Superclass）"><span class="nav-number">1.</span> <span class="nav-text">提炼超类（Extract Superclass）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机"><span class="nav-number">1.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法"><span class="nav-number">1.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提炼接口（Extract-Interface）"><span class="nav-number">2.</span> <span class="nav-text">提炼接口（Extract Interface）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-1"><span class="nav-number">2.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-1"><span class="nav-number">2.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#折叠继承体系（Collapse-Hierarchy）"><span class="nav-number">3.</span> <span class="nav-text">折叠继承体系（Collapse Hierarchy）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-2"><span class="nav-number">3.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-2"><span class="nav-number">3.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#塑造模板函数（Form-TemPlate-Method）"><span class="nav-number">4.</span> <span class="nav-text">塑造模板函数（Form TemPlate Method）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-3"><span class="nav-number">4.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-3"><span class="nav-number">4.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以委托取代继承（Replace-Inheritance-with-Delegation）"><span class="nav-number">5.</span> <span class="nav-text">以委托取代继承（Replace Inheritance with Delegation）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-4"><span class="nav-number">5.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-4"><span class="nav-number">5.2.</span> <span class="nav-text">做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以继承取代委托（Replace-Delegation-with-Inheritance）"><span class="nav-number">6.</span> <span class="nav-text">以继承取代委托（Replace Delegation with Inheritance）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机-5"><span class="nav-number">6.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法-5"><span class="nav-number">6.2.</span> <span class="nav-text">做法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ray</p>
+  <div class="site-description" itemprop="description">我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ray945" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ray945" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ray945@outlook.com" title="E-Mail → mailto:ray945@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/594ray" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;594ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ray</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

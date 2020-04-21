@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="概览定义Starting Window：TYPE 类型为 TYPE_APPLICATION_STARTING 的 Window，且每个 Activity 最多只能有一个 Starting Window 实际上就是在点开 app 之后的一个启动页面，默认是一个空白，但实际上三方 app 会在 Starting Window 上展示 logo 或者加入一些推广广告之类的，主要是为了给window加载一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WMS Starting Window">
+<meta property="og:url" content="http://funnyray.plus/2020/04/18/WMS%20Starting%20Window/index.html">
+<meta property="og:site_name" content="但愿人长久有趣的Ray">
+<meta property="og:description" content="概览定义Starting Window：TYPE 类型为 TYPE_APPLICATION_STARTING 的 Window，且每个 Activity 最多只能有一个 Starting Window 实际上就是在点开 app 之后的一个启动页面，默认是一个空白，但实际上三方 app 会在 Starting Window 上展示 logo 或者加入一些推广广告之类的，主要是为了给window加载一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-18T13:21:36.000Z">
+<meta property="article:modified_time" content="2020-04-21T14:11:52.814Z">
+<meta property="article:author" content="Ray">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Framework">
+<meta property="article:tag" content="WMS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://funnyray.plus/2020/04/18/WMS%20Starting%20Window/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>WMS Starting Window | 但愿人长久有趣的Ray</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">但愿人长久有趣的Ray</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Funny Ray</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2020/04/18/WMS%20Starting%20Window/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Ray">
+      <meta itemprop="description" content="我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="但愿人长久有趣的Ray">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WMS Starting Window
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-18 21:21:36" itemprop="dateCreated datePublished" datetime="2020-04-18T21:21:36+08:00">2020-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-21 22:11:52" itemprop="dateModified" datetime="2020-04-21T22:11:52+08:00">2020-04-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><strong>Starting Window</strong>：TYPE 类型为 TYPE_APPLICATION_STARTING 的 Window，且每个 Activity 最多只能有一个 Starting Window</p>
+<p>实际上就是在点开 app 之后的一个启动页面，默认是一个空白，但实际上三方 app 会在 Starting Window 上展示 logo 或者加入一些推广广告之类的，主要是为了给window加载一个缓冲时间</p>
+<a id="more"></a>
+
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>从 AMS 启动/重启 一个 Activity 到 Activity 的任意一个窗口绘制完成</p>
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
+<li><p>STARTING_WINDOW_TYPE_NONE</p>
+</li>
+<li><p>STARTING_WINDOW_TYPE_SNAPSHOT</p>
+<ul>
+<li>使用应用退出时候的快照</li>
+<li>热启动</li>
+</ul>
+</li>
+<li><p>STARTING_WINDOW_TYPE_SPLASH_SCREEN</p>
+<ul>
+<li>使用 app theme 里配置的背景</li>
+<li>冷启动或内存较低</li>
+</ul>
+</li>
+</ul>
+<h2 id="添加-Starting-Window"><a href="#添加-Starting-Window" class="headerlink" title="添加 Starting Window"></a>添加 Starting Window</h2><h3 id="入口：showStartingWindow"><a href="#入口：showStartingWindow" class="headerlink" title="入口：showStartingWindow"></a>入口：showStartingWindow</h3><p>在启动 Activity 的过程中，会通过 <strong>ActivityRecord.showStartingWindow()</strong> 开始添加 Starting Window</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showStartingWindow</span><span class="params">(ActivityRecord prev, <span class="keyword">boolean</span> newTask, <span class="keyword">boolean</span> taskSwitch)</span> </span>&#123;</span><br><span class="line">    showStartingWindow(prev, newTask, taskSwitch, <span class="keyword">false</span> <span class="comment">/* fromRecents */</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showStartingWindow</span><span class="params">(ActivityRecord prev, <span class="keyword">boolean</span> newTask, <span class="keyword">boolean</span> taskSwitch,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">boolean</span> fromRecents)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mAppWindowToken == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (mTaskOverlay) &#123;</span><br><span class="line">        <span class="comment">// We don't show starting window for overlay activities.</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (pendingOptions != <span class="keyword">null</span></span><br><span class="line">            &amp;&amp; pendingOptions.getAnimationType() == ActivityOptions.ANIM_SCENE_TRANSITION) &#123;</span><br><span class="line">        <span class="comment">// Don't show starting window when using shared element transition.</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> CompatibilityInfo compatInfo =</span><br><span class="line">            mAtmService.compatibilityInfoForPackageLocked(info.applicationInfo);</span><br><span class="line">    <span class="comment">// 添加StartingWindow，返回结果</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> shown = addStartingWindow(packageName, theme,</span><br><span class="line">            compatInfo, nonLocalizedLabel, labelRes, icon, logo, windowFlags,</span><br><span class="line">            prev != <span class="keyword">null</span> ? prev.appToken : <span class="keyword">null</span>, newTask, taskSwitch, isProcessRunning(),</span><br><span class="line">            allowTaskSnapshot(),</span><br><span class="line">            mState.ordinal() &gt;= RESUMED.ordinal() &amp;&amp; mState.ordinal() &lt;= STOPPED.ordinal(),</span><br><span class="line">            fromRecents);</span><br><span class="line">    <span class="comment">// 添加成功后把状态置为STARTING_WINDOW_SHOWN</span></span><br><span class="line">    <span class="keyword">if</span> (shown) &#123;</span><br><span class="line">        mStartingWindowState = STARTING_WINDOW_SHOWN;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ActivityRecord.addStartingWindow()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">addStartingWindow</span><span class="params">(String pkg, <span class="keyword">int</span> theme, CompatibilityInfo compatInfo,</span></span></span><br><span class="line"><span class="function"><span class="params">        CharSequence nonLocalizedLabel, <span class="keyword">int</span> labelRes, <span class="keyword">int</span> icon, <span class="keyword">int</span> logo, <span class="keyword">int</span> windowFlags,</span></span></span><br><span class="line"><span class="function"><span class="params">        IBinder transferFrom, <span class="keyword">boolean</span> newTask, <span class="keyword">boolean</span> taskSwitch, <span class="keyword">boolean</span> processRunning,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">boolean</span> allowTaskSnapshot, <span class="keyword">boolean</span> activityCreated, <span class="keyword">boolean</span> fromRecents)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (DEBUG_STARTING_WINDOW) &#123;</span><br><span class="line">        Slog.v(TAG, <span class="string">"setAppStartingWindow: token="</span> + appToken</span><br><span class="line">                + <span class="string">" pkg="</span> + pkg + <span class="string">" transferFrom="</span> + transferFrom + <span class="string">" newTask="</span> + newTask</span><br><span class="line">                + <span class="string">" taskSwitch="</span> + taskSwitch + <span class="string">" processRunning="</span> + processRunning</span><br><span class="line">                + <span class="string">" allowTaskSnapshot="</span> + allowTaskSnapshot);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (mAppWindowToken == <span class="keyword">null</span>) &#123;</span><br><span class="line">        Slog.w(TAG_WM, <span class="string">"Attempted to set icon of non-existing app token: "</span> + appToken);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (mAppWindowToken.getTask() == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// Can be removed after unification of Task and TaskRecord.</span></span><br><span class="line">        Slog.w(TAG_WM, <span class="string">"Attempted to start a window to an app token not having attached to any"</span></span><br><span class="line">                + <span class="string">" task: "</span> + appToken);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mAppWindowToken.addStartingWindow(pkg, theme, compatInfo, nonLocalizedLabel,</span><br><span class="line">            labelRes, icon, logo, windowFlags, transferFrom, newTask, taskSwitch,</span><br><span class="line">            processRunning, allowTaskSnapshot, activityCreated, fromRecents);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="addStartingWindow"><a href="#addStartingWindow" class="headerlink" title="addStartingWindow"></a>addStartingWindow</h3><p>同样也是处理一些异常情况做 return，然后调用到 <strong>WindowAppToken.addStartingWindow()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">addStartingWindow</span><span class="params">(String pkg, <span class="keyword">int</span> theme, CompatibilityInfo compatInfo,</span></span></span><br><span class="line"><span class="function"><span class="params">        CharSequence nonLocalizedLabel, <span class="keyword">int</span> labelRes, <span class="keyword">int</span> icon, <span class="keyword">int</span> logo, <span class="keyword">int</span> windowFlags,</span></span></span><br><span class="line"><span class="function"><span class="params">        IBinder transferFrom, <span class="keyword">boolean</span> newTask, <span class="keyword">boolean</span> taskSwitch, <span class="keyword">boolean</span> processRunning,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">boolean</span> allowTaskSnapshot, <span class="keyword">boolean</span> activityCreated, <span class="keyword">boolean</span> fromRecents)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// If the display is frozen, we won't do anything until the actual window is</span></span><br><span class="line">    <span class="comment">// displayed so there is no reason to put in the starting window.</span></span><br><span class="line">    <span class="keyword">if</span> (!okToDisplay()) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mStartingData != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果能找到一个主窗口并且正在显示动画，说明已经有了可以显示的window，就不再需要StartingWindow了</span></span><br><span class="line">    <span class="keyword">final</span> WindowState mainWin = findMainWindow();</span><br><span class="line">    <span class="keyword">if</span> (mainWin != <span class="keyword">null</span> &amp;&amp; mainWin.mWinAnimator.getShown()) &#123;</span><br><span class="line">        <span class="comment">// App already has a visible window...why would you want a starting window?</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建任务快照类型窗口</span></span><br><span class="line">    <span class="keyword">final</span> ActivityManager.TaskSnapshot snapshot =</span><br><span class="line">            mWmService.mTaskSnapshotController.getSnapshot(</span><br><span class="line">                    getTask().mTaskId, getTask().mUserId,</span><br><span class="line">                    <span class="keyword">false</span> <span class="comment">/* restoreFromDisk */</span>, <span class="keyword">false</span> <span class="comment">/* reducedResolution */</span>);</span><br><span class="line">    <span class="comment">//  获取启动窗口类型</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> type = getStartingWindowType(newTask, taskSwitch, processRunning,</span><br><span class="line">            allowTaskSnapshot, activityCreated, fromRecents, snapshot);</span><br><span class="line">    <span class="comment">// 如果是任务快照类型窗口则走createSnapshot</span></span><br><span class="line">    <span class="keyword">if</span> (type == STARTING_WINDOW_TYPE_SNAPSHOT) &#123;</span><br><span class="line">        <span class="keyword">return</span> createSnapshot(snapshot);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If this is a translucent window, then don't show a starting window -- the current</span></span><br><span class="line">    <span class="comment">// effect (a full-screen opaque starting window that fades away to the real contents</span></span><br><span class="line">    <span class="comment">// when it is ready) does not work for this.</span></span><br><span class="line">    <span class="keyword">if</span> (DEBUG_STARTING_WINDOW) &#123;</span><br><span class="line">        Slog.v(TAG, <span class="string">"Checking theme of starting window: 0x"</span> + Integer.toHexString(theme));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (theme != <span class="number">0</span>) &#123;</span><br><span class="line">        AttributeCache.Entry ent = AttributeCache.instance().get(pkg, theme,</span><br><span class="line">                com.android.internal.R.styleable.Window,</span><br><span class="line">                mWmService.mCurrentUserId);</span><br><span class="line">        <span class="keyword">if</span> (ent == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// Whoops!  App doesn't exist. Um. Okay. We'll just pretend like we didn't</span></span><br><span class="line">            <span class="comment">// see that.</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> windowIsTranslucent = ent.array.getBoolean(</span><br><span class="line">                com.android.internal.R.styleable.Window_windowIsTranslucent, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> windowIsFloating = ent.array.getBoolean(</span><br><span class="line">                com.android.internal.R.styleable.Window_windowIsFloating, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> windowShowWallpaper = ent.array.getBoolean(</span><br><span class="line">                com.android.internal.R.styleable.Window_windowShowWallpaper, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> windowDisableStarting = ent.array.getBoolean(</span><br><span class="line">                com.android.internal.R.styleable.Window_windowDisablePreview, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">if</span> (DEBUG_STARTING_WINDOW) &#123;</span><br><span class="line">            Slog.v(TAG, <span class="string">"Translucent="</span> + windowIsTranslucent</span><br><span class="line">                    + <span class="string">" Floating="</span> + windowIsFloating</span><br><span class="line">                    + <span class="string">" ShowWallpaper="</span> + windowShowWallpaper);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (windowIsTranslucent) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (windowIsFloating || windowDisableStarting) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (windowShowWallpaper) &#123;</span><br><span class="line">            <span class="keyword">if</span> (getDisplayContent().mWallpaperController</span><br><span class="line">                    .getWallpaperTarget() == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">// If this theme is requesting a wallpaper, and the wallpaper</span></span><br><span class="line">                <span class="comment">// is not currently visible, then this effectively serves as</span></span><br><span class="line">                <span class="comment">// an opaque window and our starting window transition animation</span></span><br><span class="line">                <span class="comment">// can still work.  We just need to make sure the starting window</span></span><br><span class="line">                <span class="comment">// is also showing the wallpaper.</span></span><br><span class="line">                windowFlags |= FLAG_SHOW_WALLPAPER;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (transferStartingWindow(transferFrom)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// There is no existing starting window, and we don't want to create a splash screen, so</span></span><br><span class="line">    <span class="comment">// that's it!</span></span><br><span class="line">    <span class="keyword">if</span> (type != STARTING_WINDOW_TYPE_SPLASH_SCREEN) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (DEBUG_STARTING_WINDOW) Slog.v(TAG_WM, <span class="string">"Creating SplashScreenStartingData"</span>);</span><br><span class="line">    <span class="comment">// Starting Window数据封装SplashScreenStartingData</span></span><br><span class="line">    mStartingData = <span class="keyword">new</span> SplashScreenStartingData(mWmService, pkg,</span><br><span class="line">            theme, compatInfo, nonLocalizedLabel, labelRes, icon, logo, windowFlags,</span><br><span class="line">            getMergedOverrideConfiguration());</span><br><span class="line">    <span class="comment">// 准备添加</span></span><br><span class="line">    scheduleAddStartingWindow();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们来挨个看看这些方法的实现</p>
+<h3 id="findMainWindow"><a href="#findMainWindow" class="headerlink" title="findMainWindow"></a>findMainWindow</h3><p><strong>AppWindowToken.findMainWindow()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">WindowState <span class="title">findMainWindow</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> findMainWindow(<span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">WindowState <span class="title">findMainWindow</span><span class="params">(<span class="keyword">boolean</span> includeStartingApp)</span> </span>&#123;</span><br><span class="line">    WindowState candidate = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = mChildren.size() - <span class="number">1</span>; j &gt;= <span class="number">0</span>; --j) &#123;</span><br><span class="line">        <span class="keyword">final</span> WindowState win = mChildren.get(j);</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> type = win.mAttrs.type;</span><br><span class="line">        <span class="comment">// No need to loop through child window as base application and starting types can't be</span></span><br><span class="line">        <span class="comment">// child windows.</span></span><br><span class="line">        <span class="keyword">if</span> (type == TYPE_BASE_APPLICATION</span><br><span class="line">                || (includeStartingApp &amp;&amp; type == TYPE_APPLICATION_STARTING)) &#123;</span><br><span class="line">            <span class="comment">// In cases where there are multiple windows, we prefer the non-exiting window. This</span></span><br><span class="line">            <span class="comment">// happens for example when replacing windows during an activity relaunch. When</span></span><br><span class="line">            <span class="comment">// constructing the animation, we want the new window, not the exiting one.</span></span><br><span class="line">            <span class="comment">// 正在执行退出动画</span></span><br><span class="line">            <span class="keyword">if</span> (win.mAnimatingExit) &#123;</span><br><span class="line">                candidate = win;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> win;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> candidate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此方法优先寻找当前AppWindowToken下的所有（非子窗口）类型为TYPE_BASE_APPLICATION或者TYPE_APPLICATION_STARTING的窗口中，没有在执行退出动画（mAnimatingExit为false）的窗口；如果没有mAnimatingExit为false的窗口，则就可以返回mAnimatingExit为true的</p>
+<h3 id="getStartingWindowType"><a href="#getStartingWindowType" class="headerlink" title="getStartingWindowType"></a>getStartingWindowType</h3><p><strong>AppWindowToken.getStartingWindowType()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getStartingWindowType</span><span class="params">(<span class="keyword">boolean</span> newTask, <span class="keyword">boolean</span> taskSwitch, <span class="keyword">boolean</span> processRunning,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">boolean</span> allowTaskSnapshot, <span class="keyword">boolean</span> activityCreated, <span class="keyword">boolean</span> fromRecents,</span></span></span><br><span class="line"><span class="function"><span class="params">        ActivityManager.TaskSnapshot snapshot)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (getDisplayContent().mAppTransition.getAppTransition()</span><br><span class="line">            == TRANSIT_DOCK_TASK_FROM_RECENTS) &#123;</span><br><span class="line">    	<span class="comment">// 当前正在进行最近任务栏相关的过渡动画</span></span><br><span class="line">        <span class="comment">// TODO(b/34099271): Remove this statement to add back the starting window and figure</span></span><br><span class="line">        <span class="comment">// out why it causes flickering, the starting window appears over the thumbnail while</span></span><br><span class="line">        <span class="comment">// the docked from recents transition occurs</span></span><br><span class="line">        <span class="keyword">return</span> STARTING_WINDOW_TYPE_NONE;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (newTask || !processRunning || (taskSwitch &amp;&amp; !activityCreated)) &#123;</span><br><span class="line">        <span class="comment">// 如果在一个新task启动，或者此Activity所在的进程还未运行，</span></span><br><span class="line">        <span class="comment">// 或者此Activity的task和启动它的Activity不在同一个task并且此Activity还未创建，满足其中一个条件说明需要启动窗口</span></span><br><span class="line">        <span class="keyword">return</span> STARTING_WINDOW_TYPE_SPLASH_SCREEN;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (taskSwitch &amp;&amp; allowTaskSnapshot) &#123;</span><br><span class="line">        <span class="comment">// 此Activity的task和启动它的Activity不在同一个task并且允许创建任务快照窗口</span></span><br><span class="line">        <span class="keyword">if</span> (mWmService.mLowRamTaskSnapshotsAndRecents) &#123;</span><br><span class="line">            <span class="comment">// 在低RAM设备上使用SPLASH_SCREEN窗口代替SNAPSHOT窗口</span></span><br><span class="line">            <span class="keyword">return</span> STARTING_WINDOW_TYPE_SPLASH_SCREEN;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> snapshot == <span class="keyword">null</span> ? STARTING_WINDOW_TYPE_NONE</span><br><span class="line">                : snapshotOrientationSameAsTask(snapshot) || fromRecents</span><br><span class="line">                        ? STARTING_WINDOW_TYPE_SNAPSHOT : STARTING_WINDOW_TYPE_SPLASH_SCREEN;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 不需要starting window</span></span><br><span class="line">        <span class="keyword">return</span> STARTING_WINDOW_TYPE_NONE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有三种情况会为启动的Activity添加starting窗口：</p>
+<ol>
+<li>在一个新task中启动此Activity</li>
+<li>此Activity所在的进程还未运行</li>
+<li>此Activity的task和启动它的Activity不在同一个task并且此Activity还未创建</li>
+</ol>
+<p>最常见的添加启动窗口的情况就是在Launcher上点击一个应用启动</p>
+<h3 id="createSnapshot"><a href="#createSnapshot" class="headerlink" title="createSnapshot"></a>createSnapshot</h3><p><strong>AppWindowToken.createSnapshot()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">createSnapshot</span><span class="params">(ActivityManager.TaskSnapshot snapshot)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (snapshot == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (DEBUG_STARTING_WINDOW) Slog.v(TAG_WM, <span class="string">"Creating SnapshotStartingData"</span>);</span><br><span class="line">    mStartingData = <span class="keyword">new</span> SnapshotStartingData(mWmService, snapshot);</span><br><span class="line">    scheduleAddStartingWindow();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后也还是通过 scheduleAddStartingWindow() 进行 Starting Window 的创建</p>
+<h3 id="scheduleAddStartingWindow"><a href="#scheduleAddStartingWindow" class="headerlink" title="scheduleAddStartingWindow"></a>scheduleAddStartingWindow</h3><p><strong>AppWindowToken.scheduleAddStartingWindow()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">scheduleAddStartingWindow</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Note: we really want to do sendMessageAtFrontOfQueue() because we</span></span><br><span class="line">    <span class="comment">// want to process the message ASAP, before any other queued</span></span><br><span class="line">    <span class="comment">// messages.</span></span><br><span class="line">    <span class="keyword">if</span> (!mWmService.mAnimationHandler.hasCallbacks(mAddStartingWindow)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG_STARTING_WINDOW) Slog.v(TAG, <span class="string">"Enqueueing ADD_STARTING"</span>);</span><br><span class="line">        mWmService.mAnimationHandler.postAtFrontOfQueue(mAddStartingWindow);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>AppWindowToken.mAddStartingWindow</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Runnable mAddStartingWindow = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Can be accessed without holding the global lock</span></span><br><span class="line">        <span class="keyword">final</span> StartingData startingData;</span><br><span class="line">        <span class="keyword">synchronized</span> (mWmService.mGlobalLock) &#123;</span><br><span class="line">            <span class="comment">// There can only be one adding request, silly caller!</span></span><br><span class="line">            mWmService.mAnimationHandler.removeCallbacks(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (mStartingData == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">// Animation has been canceled... do nothing.</span></span><br><span class="line">                <span class="keyword">if</span> (DEBUG_STARTING_WINDOW) &#123;</span><br><span class="line">                    Slog.v(TAG, <span class="string">"startingData was nulled out before handling"</span></span><br><span class="line">                            + <span class="string">" mAddStartingWindow: "</span> + AppWindowToken.<span class="keyword">this</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            startingData = mStartingData;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (DEBUG_STARTING_WINDOW) &#123;</span><br><span class="line">            Slog.v(TAG, <span class="string">"Add starting "</span> + <span class="keyword">this</span> + <span class="string">": startingData="</span> + startingData);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        WindowManagerPolicy.StartingSurface surface = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// createStartingSurface是这里的重点</span></span><br><span class="line">            surface = startingData.createStartingSurface(AppWindowToken.<span class="keyword">this</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            Slog.w(TAG, <span class="string">"Exception when adding starting window"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (surface != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">boolean</span> abort = <span class="keyword">false</span>;</span><br><span class="line">            <span class="keyword">synchronized</span> (mWmService.mGlobalLock) &#123;</span><br><span class="line">                <span class="comment">// If the window was successfully added, then</span></span><br><span class="line">                <span class="comment">// we need to remove it.</span></span><br><span class="line">                <span class="keyword">if</span> (removed || mStartingData == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (DEBUG_STARTING_WINDOW) &#123;</span><br><span class="line">                        Slog.v(TAG, <span class="string">"Aborted starting "</span> + AppWindowToken.<span class="keyword">this</span></span><br><span class="line">                                + <span class="string">": removed="</span> + removed + <span class="string">" startingData="</span> + mStartingData);</span><br><span class="line">                    &#125;</span><br><span class="line">                    startingWindow = <span class="keyword">null</span>;</span><br><span class="line">                    mStartingData = <span class="keyword">null</span>;</span><br><span class="line">                    abort = <span class="keyword">true</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    startingSurface = surface;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (DEBUG_STARTING_WINDOW &amp;&amp; !abort) &#123;</span><br><span class="line">                    Slog.v(TAG,</span><br><span class="line">                            <span class="string">"Added starting "</span> + AppWindowToken.<span class="keyword">this</span> + <span class="string">": startingWindow="</span></span><br><span class="line">                                    + startingWindow + <span class="string">" startingView="</span> + startingSurface);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (abort) &#123;</span><br><span class="line">                surface.remove();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (DEBUG_STARTING_WINDOW) &#123;</span><br><span class="line">            Slog.v(TAG, <span class="string">"Surface returned was null: "</span> + AppWindowToken.<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="createStartingSurface"><a href="#createStartingSurface" class="headerlink" title="createStartingSurface"></a>createStartingSurface</h3><p><strong>SplashScreenStartingData.createStartingSurface()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function">StartingSurface <span class="title">createStartingSurface</span><span class="params">(AppWindowToken atoken)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mService.mPolicy.addSplashScreen(atoken.token, mPkg, mTheme, mCompatInfo,</span><br><span class="line">            mNonLocalizedLabel, mLabelRes, mIcon, mLogo, mWindowFlags,</span><br><span class="line">            mMergedOverrideConfiguration, atoken.getDisplayContent().getDisplayId());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="addSplashScreen"><a href="#addSplashScreen" class="headerlink" title="addSplashScreen"></a>addSplashScreen</h3><p><strong>PhoneWindowManager.addSplashScreen()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> StartingSurface <span class="title">addSplashScreen</span><span class="params">(IBinder appToken, String packageName, <span class="keyword">int</span> theme,</span></span></span><br><span class="line"><span class="function"><span class="params">        CompatibilityInfo compatInfo, CharSequence nonLocalizedLabel, <span class="keyword">int</span> labelRes, <span class="keyword">int</span> icon,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int</span> logo, <span class="keyword">int</span> windowFlags, Configuration overrideConfig, <span class="keyword">int</span> displayId)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!SHOW_SPLASH_SCREENS) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (packageName == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    WindowManager wm = <span class="keyword">null</span>;</span><br><span class="line">    View view = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Context context = mContext;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG_SPLASH_SCREEN) Slog.d(TAG, <span class="string">"addSplashScreen "</span> + packageName</span><br><span class="line">                + <span class="string">": nonLocalizedLabel="</span> + nonLocalizedLabel + <span class="string">" theme="</span></span><br><span class="line">                + Integer.toHexString(theme));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Obtain proper context to launch on the right display.</span></span><br><span class="line">        <span class="keyword">final</span> Context displayContext = getDisplayContext(context, displayId);</span><br><span class="line">        <span class="keyword">if</span> (displayContext == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// Can't show splash screen on requested display, so skip showing at all.</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        context = displayContext;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (theme != context.getThemeResId() || labelRes != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                context = context.createPackageContext(packageName, CONTEXT_RESTRICTED);</span><br><span class="line">                context.setTheme(theme);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (PackageManager.NameNotFoundException e) &#123;</span><br><span class="line">                <span class="comment">// Ignore</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (overrideConfig != <span class="keyword">null</span> &amp;&amp; !overrideConfig.equals(EMPTY)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (DEBUG_SPLASH_SCREEN) Slog.d(TAG, <span class="string">"addSplashScreen: creating context based"</span></span><br><span class="line">                    + <span class="string">" on overrideConfig"</span> + overrideConfig + <span class="string">" for splash screen"</span>);</span><br><span class="line">            <span class="keyword">final</span> Context overrideContext = context.createConfigurationContext(overrideConfig);</span><br><span class="line">            overrideContext.setTheme(theme);</span><br><span class="line">            <span class="keyword">final</span> TypedArray typedArray = overrideContext.obtainStyledAttributes(</span><br><span class="line">                    com.android.internal.R.styleable.Window);</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">int</span> resId = typedArray.getResourceId(R.styleable.Window_windowBackground, <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span> (resId != <span class="number">0</span> &amp;&amp; overrideContext.getDrawable(resId) != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">// We want to use the windowBackground for the override context if it is</span></span><br><span class="line">                <span class="comment">// available, otherwise we use the default one to make sure a themed starting</span></span><br><span class="line">                <span class="comment">// window is displayed for the app.</span></span><br><span class="line">                <span class="keyword">if</span> (DEBUG_SPLASH_SCREEN) Slog.d(TAG, <span class="string">"addSplashScreen: apply overrideConfig"</span></span><br><span class="line">                        + overrideConfig + <span class="string">" to starting window resId="</span> + resId);</span><br><span class="line">                context = overrideContext;</span><br><span class="line">            &#125;</span><br><span class="line">            typedArray.recycle();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建PhoneWindow</span></span><br><span class="line">        <span class="keyword">final</span> PhoneWindow win = <span class="keyword">new</span> PhoneWindow(context);</span><br><span class="line">        <span class="comment">// 告诉PhoneWindow它是一个启动窗口类型</span></span><br><span class="line">        win.setIsStartingWindow(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">        CharSequence label = context.getResources().getText(labelRes, <span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">// Only change the accessibility title if the label is localized</span></span><br><span class="line">        <span class="keyword">if</span> (label != <span class="keyword">null</span>) &#123;</span><br><span class="line">            win.setTitle(label, <span class="keyword">true</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            win.setTitle(nonLocalizedLabel, <span class="keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置窗口类型为TYPE_APPLICATION_STARTING</span></span><br><span class="line">        win.setType(</span><br><span class="line">            WindowManager.LayoutParams.TYPE_APPLICATION_STARTING);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">synchronized</span> (mWindowManagerFuncs.getWindowManagerLock()) &#123;</span><br><span class="line">            <span class="comment">// Assumes it's safe to show starting windows of launched apps while</span></span><br><span class="line">            <span class="comment">// the keyguard is being hidden. This is okay because starting windows never show</span></span><br><span class="line">            <span class="comment">// secret information.</span></span><br><span class="line">            <span class="comment">// TODO(b/113840485): Occluded may not only happen on default display</span></span><br><span class="line">            <span class="keyword">if</span> (displayId == DEFAULT_DISPLAY &amp;&amp; mKeyguardOccluded) &#123;</span><br><span class="line">                windowFlags |= FLAG_SHOW_WHEN_LOCKED;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Force the window flags: this is a fake window, so it is not really</span></span><br><span class="line">        <span class="comment">// touchable or focusable by the user.  We also add in the ALT_FOCUSABLE_IM</span></span><br><span class="line">        <span class="comment">// flag because we do know that the next window will take input</span></span><br><span class="line">        <span class="comment">// focus, so we want to get the IME window up on top of us right away.</span></span><br><span class="line">        <span class="comment">// 设置各种flag，不能获取焦点，不能接收事件等</span></span><br><span class="line">        win.setFlags(</span><br><span class="line">            windowFlags|</span><br><span class="line">            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|</span><br><span class="line">            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|</span><br><span class="line">            WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,</span><br><span class="line">            windowFlags|</span><br><span class="line">            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|</span><br><span class="line">            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|</span><br><span class="line">            WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置图标logo</span></span><br><span class="line">        win.setDefaultIcon(icon);</span><br><span class="line">        win.setDefaultLogo(logo);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置宽高为MATCH_PARENT</span></span><br><span class="line">        win.setLayout(WindowManager.LayoutParams.MATCH_PARENT,</span><br><span class="line">                WindowManager.LayoutParams.MATCH_PARENT);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> WindowManager.LayoutParams params = win.getAttributes();</span><br><span class="line">        params.token = appToken;</span><br><span class="line">        params.packageName = packageName;</span><br><span class="line">        params.windowAnimations = win.getWindowStyle().getResourceId(</span><br><span class="line">                com.android.internal.R.styleable.Window_windowAnimationStyle, <span class="number">0</span>);</span><br><span class="line">        params.privateFlags |=</span><br><span class="line">                WindowManager.LayoutParams.PRIVATE_FLAG_FAKE_HARDWARE_ACCELERATED;</span><br><span class="line">        params.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!compatInfo.supportsScreen()) &#123;</span><br><span class="line">            params.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_COMPATIBLE_WINDOW;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置title为Splash Screen+包名，经常看log的应该对这句log很熟悉</span></span><br><span class="line">        <span class="comment">// 当我们从launcher启动Activity时log中很容易发现这句话，这就是启动窗口的标志</span></span><br><span class="line">        params.setTitle(<span class="string">"Splash Screen "</span> + packageName);</span><br><span class="line">        <span class="comment">// 此方法中会给启动窗口设置资源文件，并调用setContentView设置到PhoneWindow的DecorView中</span></span><br><span class="line">        addSplashscreenContent(win, context);</span><br><span class="line"></span><br><span class="line">        wm = (WindowManager) context.getSystemService(WINDOW_SERVICE);</span><br><span class="line">        view = win.getDecorView();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (DEBUG_SPLASH_SCREEN) Slog.d(TAG, <span class="string">"Adding splash screen window for "</span></span><br><span class="line">            + packageName + <span class="string">" / "</span> + appToken + <span class="string">": "</span> + (view.getParent() != <span class="keyword">null</span> ? view : <span class="keyword">null</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 添加到WMS中</span></span><br><span class="line">        wm.addView(view, params);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Only return the view if it was successfully added to the</span></span><br><span class="line">        <span class="comment">// window manager... which we can tell by it having a parent.</span></span><br><span class="line">        <span class="keyword">return</span> view.getParent() != <span class="keyword">null</span> ? <span class="keyword">new</span> SplashScreenSurface(view, appToken) : <span class="keyword">null</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (WindowManager.BadTokenException e) &#123;</span><br><span class="line">        <span class="comment">// ignore</span></span><br><span class="line">        Log.w(TAG, appToken + <span class="string">" already running, starting window not displayed. "</span> +</span><br><span class="line">                e.getMessage());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (RuntimeException e) &#123;</span><br><span class="line">        <span class="comment">// don't crash if something else bad happens, for example a</span></span><br><span class="line">        <span class="comment">// failure loading resources because we are loading from an app</span></span><br><span class="line">        <span class="comment">// on external storage that has been unmounted.</span></span><br><span class="line">        Log.w(TAG, appToken + <span class="string">" failed creating starting window"</span>, e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (view != <span class="keyword">null</span> &amp;&amp; view.getParent() == <span class="keyword">null</span>) &#123;</span><br><span class="line">            Log.w(TAG, <span class="string">"view not successfully added to wm, removing view"</span>);</span><br><span class="line">            wm.removeViewImmediate(view);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>wm.addView 后面就是添加窗口的流程了，这里不再多说。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/Framework/" rel="tag"># Framework</a>
+              <a href="/tags/WMS/" rel="tag"># WMS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/17/WMS%20Orientation&Rotation/" rel="prev" title="WMS Orientation & Rotation">
+      <i class="fa fa-chevron-left"></i> WMS Orientation & Rotation
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/21/WMS%20Window%20Animation/" rel="next" title="WMS Window Animation">
+      WMS Window Animation <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概览"><span class="nav-number">1.</span> <span class="nav-text">概览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期"><span class="nav-number">1.2.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型"><span class="nav-number">1.3.</span> <span class="nav-text">类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加-Starting-Window"><span class="nav-number">2.</span> <span class="nav-text">添加 Starting Window</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#入口：showStartingWindow"><span class="nav-number">2.1.</span> <span class="nav-text">入口：showStartingWindow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#addStartingWindow"><span class="nav-number">2.2.</span> <span class="nav-text">addStartingWindow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#findMainWindow"><span class="nav-number">2.3.</span> <span class="nav-text">findMainWindow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getStartingWindowType"><span class="nav-number">2.4.</span> <span class="nav-text">getStartingWindowType</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createSnapshot"><span class="nav-number">2.5.</span> <span class="nav-text">createSnapshot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scheduleAddStartingWindow"><span class="nav-number">2.6.</span> <span class="nav-text">scheduleAddStartingWindow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createStartingSurface"><span class="nav-number">2.7.</span> <span class="nav-text">createStartingSurface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#addSplashScreen"><span class="nav-number">2.8.</span> <span class="nav-text">addSplashScreen</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ray</p>
+  <div class="site-description" itemprop="description">我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ray945" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ray945" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ray945@outlook.com" title="E-Mail → mailto:ray945@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/594ray" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;594ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ray</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

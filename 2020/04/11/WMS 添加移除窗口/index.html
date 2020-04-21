@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="添加窗口客户端添加窗口需要通过 IWindowManager.addToDisplay() 或 IWindowManager.addToDisplayWithoutInputChannel() 这两个方法，这两个入口本质上都是调用了 WindowManagerService 的 addWindow() 方法 Session.addToDisplay() &#x2F; Session.addToDisplay">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WMS 添加&#x2F;移除窗口">
+<meta property="og:url" content="http://funnyray.plus/2020/04/11/WMS%20%E6%B7%BB%E5%8A%A0%E7%A7%BB%E9%99%A4%E7%AA%97%E5%8F%A3/index.html">
+<meta property="og:site_name" content="但愿人长久有趣的Ray">
+<meta property="og:description" content="添加窗口客户端添加窗口需要通过 IWindowManager.addToDisplay() 或 IWindowManager.addToDisplayWithoutInputChannel() 这两个方法，这两个入口本质上都是调用了 WindowManagerService 的 addWindow() 方法 Session.addToDisplay() &#x2F; Session.addToDisplay">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-11T14:34:19.000Z">
+<meta property="article:modified_time" content="2020-04-11T14:37:12.612Z">
+<meta property="article:author" content="Ray">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="WMS">
+<meta property="article:tag" content="FrameWork">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://funnyray.plus/2020/04/11/WMS%20%E6%B7%BB%E5%8A%A0%E7%A7%BB%E9%99%A4%E7%AA%97%E5%8F%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>WMS 添加/移除窗口 | 但愿人长久有趣的Ray</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">但愿人长久有趣的Ray</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Funny Ray</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2020/04/11/WMS%20%E6%B7%BB%E5%8A%A0%E7%A7%BB%E9%99%A4%E7%AA%97%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Ray">
+      <meta itemprop="description" content="我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="但愿人长久有趣的Ray">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WMS 添加/移除窗口
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-04-11 22:34:19 / 修改时间：22:37:12" itemprop="dateCreated datePublished" datetime="2020-04-11T22:34:19+08:00">2020-04-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="添加窗口"><a href="#添加窗口" class="headerlink" title="添加窗口"></a>添加窗口</h2><p>客户端添加窗口需要通过 IWindowManager.addToDisplay() 或 IWindowManager.addToDisplayWithoutInputChannel() 这两个方法，这两个入口本质上都是调用了 WindowManagerService 的 addWindow() 方法</p>
+<p><strong>Session.addToDisplay() / Session.addToDisplayWithoutInputChannel()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">addToDisplay</span><span class="params">(IWindow window, <span class="keyword">int</span> seq, WindowManager.LayoutParams attrs,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int</span> viewVisibility, <span class="keyword">int</span> displayId, Rect outFrame, Rect outContentInsets,</span></span></span><br><span class="line"><span class="function"><span class="params">        Rect outStableInsets, Rect outOutsets,</span></span></span><br><span class="line"><span class="function"><span class="params">        DisplayCutout.ParcelableWrapper outDisplayCutout, InputChannel outInputChannel,</span></span></span><br><span class="line"><span class="function"><span class="params">        InsetsState outInsetsState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mService.addWindow(<span class="keyword">this</span>, window, seq, attrs, viewVisibility, displayId, outFrame,</span><br><span class="line">        outContentInsets, outStableInsets, outOutsets, outDisplayCutout, outInputChannel,</span><br><span class="line">        outInsetsState);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">addToDisplayWithoutInputChannel</span><span class="params">(IWindow window, <span class="keyword">int</span> seq, WindowManager.LayoutParams attrs,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int</span> viewVisibility, <span class="keyword">int</span> displayId, Rect outContentInsets, Rect outStableInsets,</span></span></span><br><span class="line"><span class="function"><span class="params">        InsetsState outInsetsState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mService.addWindow(<span class="keyword">this</span>, window, seq, attrs, viewVisibility, displayId,</span><br><span class="line">            <span class="keyword">new</span> Rect() <span class="comment">/* outFrame */</span>, outContentInsets, outStableInsets, <span class="keyword">null</span> <span class="comment">/* outOutsets */</span>,</span><br><span class="line">            <span class="keyword">new</span> DisplayCutout.ParcelableWrapper() <span class="comment">/* cutout */</span>, <span class="keyword">null</span> <span class="comment">/* outInputChannel */</span>,</span><br><span class="line">            outInsetsState);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p><strong>WindowManagerService.addWindow()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">addWindow</span><span class="params">(Session session, IWindow client, <span class="keyword">int</span> seq,</span></span></span><br><span class="line"><span class="function"><span class="params">        LayoutParams attrs, <span class="keyword">int</span> viewVisibility, <span class="keyword">int</span> displayId, Rect outFrame,</span></span></span><br><span class="line"><span class="function"><span class="params">        Rect outContentInsets, Rect outStableInsets, Rect outOutsets,</span></span></span><br><span class="line"><span class="function"><span class="params">        DisplayCutout.ParcelableWrapper outDisplayCutout, InputChannel outInputChannel,</span></span></span><br><span class="line"><span class="function"><span class="params">        InsetsState outInsetsState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] appOp = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">    <span class="comment">// 根据attrs.type检查权限，可以添加窗口的话会返回ADD_OKAY</span></span><br><span class="line">    <span class="keyword">int</span> res = mPolicy.checkAddPermission(attrs, appOp);</span><br><span class="line">    <span class="keyword">if</span> (res != WindowManagerGlobal.ADD_OKAY) &#123;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> reportNewConfig = <span class="keyword">false</span>;</span><br><span class="line">    <span class="comment">// 当为某个窗口添加子窗口时，parentWindow用来保存父窗口的实例</span></span><br><span class="line">    WindowState parentWindow = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">long</span> origId;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> callingUid = Binder.getCallingUid();</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> type = attrs.type;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">synchronized</span> (mGlobalLock) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!mDisplayReady) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Display has not been initialialized"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取或创建窗口要添加的DisplayContent</span></span><br><span class="line">        <span class="keyword">final</span> DisplayContent displayContent = getDisplayContentOrCreate(displayId, attrs.token);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (displayContent == <span class="keyword">null</span>) &#123;</span><br><span class="line">            Slog.w(TAG_WM, <span class="string">"Attempted to add window to a display that does not exist: "</span></span><br><span class="line">                    + displayId + <span class="string">".  Aborting."</span>);</span><br><span class="line">            <span class="keyword">return</span> WindowManagerGlobal.ADD_INVALID_DISPLAY;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 子窗口必须有父窗口，且父窗口不能是一个子窗口</span></span><br><span class="line">        <span class="keyword">if</span> (type &gt;= FIRST_SUB_WINDOW &amp;&amp; type &lt;= LAST_SUB_WINDOW) &#123;</span><br><span class="line">            parentWindow = windowForClientLocked(<span class="keyword">null</span>, attrs.token, <span class="keyword">false</span>);</span><br><span class="line">            <span class="keyword">if</span> (parentWindow == <span class="keyword">null</span>) &#123;</span><br><span class="line">                Slog.w(TAG_WM, <span class="string">"Attempted to add window with token that is not a window: "</span></span><br><span class="line">                      + attrs.token + <span class="string">".  Aborting."</span>);</span><br><span class="line">                <span class="keyword">return</span> WindowManagerGlobal.ADD_BAD_SUBWINDOW_TOKEN;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (parentWindow.mAttrs.type &gt;= FIRST_SUB_WINDOW</span><br><span class="line">                    &amp;&amp; parentWindow.mAttrs.type &lt;= LAST_SUB_WINDOW) &#123;</span><br><span class="line">                Slog.w(TAG_WM, <span class="string">"Attempted to add window with token that is a sub-window: "</span></span><br><span class="line">                        + attrs.token + <span class="string">".  Aborting."</span>);</span><br><span class="line">                <span class="keyword">return</span> WindowManagerGlobal.ADD_BAD_SUBWINDOW_TOKEN;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line">        AppWindowToken atoken = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> hasParent = parentWindow != <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">// 这个方法实际上就是通过attrs.token从mTokenMap取出已注册的WindowToken</span></span><br><span class="line">        WindowToken token = displayContent.getWindowToken(</span><br><span class="line">                hasParent ? parentWindow.mAttrs.token : attrs.token);</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> rootType = hasParent ? parentWindow.mAttrs.type : type;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">boolean</span> addToastWindowRequiresToken = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (token == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 以下类型的窗口，必须指定一个已经添加至WMS的WindowToken，省略一部分</span></span><br><span class="line">            <span class="keyword">if</span> (rootType &gt;= FIRST_APPLICATION_WINDOW &amp;&amp; rootType &lt;= LAST_APPLICATION_WINDOW) &#123;</span><br><span class="line">                Slog.w(TAG_WM, <span class="string">"Attempted to add application window with unknown token "</span></span><br><span class="line">                      + attrs.token + <span class="string">".  Aborting."</span>);</span><br><span class="line">                <span class="keyword">return</span> WindowManagerGlobal.ADD_BAD_APP_TOKEN;</span><br><span class="line">            &#125;</span><br><span class="line">            ......</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// WMS会为其他类型的窗口隐式地创建一个WindowToken</span></span><br><span class="line">            <span class="comment">// 在创建过程中就会把token自己添加到mTokenMap</span></span><br><span class="line">            <span class="keyword">final</span> IBinder binder = attrs.token != <span class="keyword">null</span> ? attrs.token : client.asBinder();</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">boolean</span> isRoundedCornerOverlay =</span><br><span class="line">                    (attrs.privateFlags &amp; PRIVATE_FLAG_IS_ROUNDED_CORNERS_OVERLAY) != <span class="number">0</span>;</span><br><span class="line">            token = <span class="keyword">new</span> WindowToken(<span class="keyword">this</span>, binder, type, <span class="keyword">false</span>, displayContent,</span><br><span class="line">                    session.mCanAddInternalSystemWindow, isRoundedCornerOverlay);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (rootType &gt;= FIRST_APPLICATION_WINDOW &amp;&amp; rootType &lt;= LAST_APPLICATION_WINDOW) &#123;</span><br><span class="line">            <span class="comment">// 对于APPLICATION类型的窗口，要求对应的WindowToken类型也为APPLICATION</span></span><br><span class="line">            <span class="comment">// 并且是WindowToken的子类：AppWindowToken</span></span><br><span class="line">            atoken = token.asAppWindowToken();</span><br><span class="line">            <span class="keyword">if</span> (atoken == <span class="keyword">null</span>) &#123;</span><br><span class="line">                Slog.w(TAG_WM, <span class="string">"Attempted to add window with non-application token "</span></span><br><span class="line">                      + token + <span class="string">".  Aborting."</span>);</span><br><span class="line">                <span class="keyword">return</span> WindowManagerGlobal.ADD_NOT_APP_TOKEN;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (atoken.removed) &#123;</span><br><span class="line">                Slog.w(TAG_WM, <span class="string">"Attempted to add window with exiting application token "</span></span><br><span class="line">                      + token + <span class="string">".  Aborting."</span>);</span><br><span class="line">                <span class="keyword">return</span> WindowManagerGlobal.ADD_APP_EXITING;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == TYPE_APPLICATION_STARTING &amp;&amp; atoken.startingWindow != <span class="keyword">null</span>) &#123;</span><br><span class="line">                Slog.w(TAG_WM, <span class="string">"Attempted to add starting window to token with already existing"</span></span><br><span class="line">                        + <span class="string">" starting window"</span>);</span><br><span class="line">                <span class="keyword">return</span> WindowManagerGlobal.ADD_DUPLICATE_ADD;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (rootType == TYPE_INPUT_METHOD) &#123;</span><br><span class="line">            <span class="comment">// 要求窗口类型需与WindowToken的类型一致，后续还有很多类似的，这里就省略了</span></span><br><span class="line">            <span class="keyword">if</span> (token.windowType != TYPE_INPUT_METHOD) &#123;</span><br><span class="line">                Slog.w(TAG_WM, <span class="string">"Attempted to add input method window with bad token "</span></span><br><span class="line">                        + attrs.token + <span class="string">".  Aborting."</span>);</span><br><span class="line">                  <span class="keyword">return</span> WindowManagerGlobal.ADD_BAD_APP_TOKEN;</span><br><span class="line">            &#125;</span><br><span class="line">            ...</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (token.asAppWindowToken() != <span class="keyword">null</span>) &#123;</span><br><span class="line">            Slog.w(TAG_WM, <span class="string">"Non-null appWindowToken for system window of rootType="</span> + rootType);</span><br><span class="line">            <span class="comment">// It is not valid to use an app token with other system types; we will</span></span><br><span class="line">            <span class="comment">// instead make a new token for it (as if null had been passed in for the token).</span></span><br><span class="line">            attrs.token = <span class="keyword">null</span>;</span><br><span class="line">            token = <span class="keyword">new</span> WindowToken(<span class="keyword">this</span>, client.asBinder(), type, <span class="keyword">false</span>, displayContent,</span><br><span class="line">                    session.mCanAddInternalSystemWindow);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// WMS为要添加的窗口创建了一个WindowState对象</span></span><br><span class="line">        <span class="comment">// 这个对象维护了一个窗口的所有状态信息</span></span><br><span class="line">        <span class="comment">// 构造方法中还会根据窗口类型初始化mBaseLayer和mSubLayer</span></span><br><span class="line">        <span class="keyword">final</span> WindowState win = <span class="keyword">new</span> WindowState(<span class="keyword">this</span>, session, client, token, parentWindow,</span><br><span class="line">                appOp[<span class="number">0</span>], seq, attrs, viewVisibility, session.mUid,</span><br><span class="line">                session.mCanAddInternalSystemWindow);</span><br><span class="line">        </span><br><span class="line">        ......</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// DisplayPolicy调整LayoutParams的一些成员的取值</span></span><br><span class="line">        <span class="keyword">final</span> DisplayPolicy displayPolicy = displayContent.getDisplayPolicy();</span><br><span class="line">        displayPolicy.adjustWindowParamsLw(win, win.mAttrs, Binder.getCallingPid(),</span><br><span class="line">                Binder.getCallingUid());</span><br><span class="line">        win.setShowToOwnerOnlyLocked(mPolicy.checkShowToOwnerOnly(attrs));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 确保STATUS_BAR,NAVIGATION_BAR为单例</span></span><br><span class="line">        <span class="comment">// 需要返回ADD_OKAY后才能添加窗口</span></span><br><span class="line">        res = displayPolicy.prepareAddWindowLw(win, attrs);</span><br><span class="line">        <span class="keyword">if</span> (res != WindowManagerGlobal.ADD_OKAY) &#123;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 打开InputChannel并注册到IMS</span></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> openInputChannels = (outInputChannel != <span class="keyword">null</span></span><br><span class="line">                &amp;&amp; (attrs.inputFeatures &amp; INPUT_FEATURE_NO_INPUT_CHANNEL) == <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span>  (openInputChannels) &#123;</span><br><span class="line">            win.openInputChannel(outInputChannel);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通知IWindowSession窗口添加，准备SurfaceSession</span></span><br><span class="line">        win.attach();</span><br><span class="line">        <span class="comment">// 将WindowState添加到mWindowMap中</span></span><br><span class="line">        mWindowMap.put(client.asBinder(), win);</span><br><span class="line"></span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 一个token下可能会有多个win state</span></span><br><span class="line">        <span class="comment">// 按顺序将WindowState添加到WindowToken</span></span><br><span class="line">        win.mToken.addWindow(win);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (type == TYPE_INPUT_METHOD) &#123;</span><br><span class="line">            <span class="comment">// 为display保存输入法窗口到mInputMethodWindow，</span></span><br><span class="line">            <span class="comment">// 并调用computeImeTarget设置一个最合适的IME target</span></span><br><span class="line">            <span class="comment">// IME target:可以添加输入法的目标窗口</span></span><br><span class="line">            displayContent.setInputMethodWindowLocked(win);</span><br><span class="line">            imMayMove = <span class="keyword">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == TYPE_INPUT_METHOD_DIALOG) &#123;</span><br><span class="line">            <span class="comment">// 设置/更新IMEI target</span></span><br><span class="line">            displayContent.computeImeTarget(<span class="keyword">true</span> <span class="comment">/* updateImeTarget */</span>);</span><br><span class="line">            imMayMove = <span class="keyword">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (type == TYPE_WALLPAPER) &#123;</span><br><span class="line">                displayContent.mWallpaperController.clearLastWallpaperTimeoutTime();</span><br><span class="line">                displayContent.pendingLayoutChanges |= FINISH_LAYOUT_REDO_WALLPAPER;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> ((attrs.flags&amp;FLAG_SHOW_WALLPAPER) != <span class="number">0</span>) &#123;</span><br><span class="line">                displayContent.pendingLayoutChanges |= FINISH_LAYOUT_REDO_WALLPAPER;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (displayContent.mWallpaperController.isBelowWallpaperTarget(win)) &#123;</span><br><span class="line">                <span class="comment">// If there is currently a wallpaper being shown, and</span></span><br><span class="line">                <span class="comment">// the base layer of the new window is below the current</span></span><br><span class="line">                <span class="comment">// layer of the target window, then adjust the wallpaper.</span></span><br><span class="line">                <span class="comment">// This is to avoid a new window being placed between the</span></span><br><span class="line">                <span class="comment">// wallpaper and its target.</span></span><br><span class="line">                displayContent.pendingLayoutChanges |= FINISH_LAYOUT_REDO_WALLPAPER;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果该window被添加到一个需要为IME做调整的stack，那么该window也需要做调整</span></span><br><span class="line">        win.applyAdjustForImeIfNeeded();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (type == TYPE_DOCK_DIVIDER) &#123;</span><br><span class="line">            mRoot.getDisplayContent(displayId).getDockedDividerController().setWindow(win);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> WindowStateAnimator winAnimator = win.mWinAnimator;</span><br><span class="line">        winAnimator.mEnterAnimationPending = <span class="keyword">true</span>;</span><br><span class="line">        winAnimator.mEnteringAnimation = <span class="keyword">true</span>;</span><br><span class="line">        <span class="comment">// Check if we need to prepare a transition for replacing window first.</span></span><br><span class="line">        <span class="keyword">if</span> (atoken != <span class="keyword">null</span> &amp;&amp; atoken.isVisible()</span><br><span class="line">                &amp;&amp; !prepareWindowReplacementTransition(atoken)) &#123;</span><br><span class="line">            <span class="comment">// If not, check if need to set up a dummy transition during display freeze</span></span><br><span class="line">            <span class="comment">// so that the unfreeze wait for the apps to draw. This might be needed if</span></span><br><span class="line">            <span class="comment">// the app is relaunching.</span></span><br><span class="line">            prepareNoneTransitionForRelaunching(atoken);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> DisplayFrames displayFrames = displayContent.mDisplayFrames;</span><br><span class="line">        <span class="comment">// <span class="doctag">TODO:</span> Not sure if onDisplayInfoUpdated() call is needed.</span></span><br><span class="line">        <span class="keyword">final</span> DisplayInfo displayInfo = displayContent.getDisplayInfo();</span><br><span class="line">        displayFrames.onDisplayInfoUpdated(displayInfo,</span><br><span class="line">                displayContent.calculateDisplayCutoutForRotation(displayInfo.rotation));</span><br><span class="line">        <span class="keyword">final</span> Rect taskBounds;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> floatingStack;</span><br><span class="line">        <span class="keyword">if</span> (atoken != <span class="keyword">null</span> &amp;&amp; atoken.getTask() != <span class="keyword">null</span>) &#123;</span><br><span class="line">            taskBounds = mTmpRect;</span><br><span class="line">            atoken.getTask().getBounds(mTmpRect);</span><br><span class="line">            floatingStack = atoken.getTask().isFloating();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            taskBounds = <span class="keyword">null</span>;</span><br><span class="line">            floatingStack = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (displayPolicy.getLayoutHintLw(win.mAttrs, taskBounds, displayFrames, floatingStack,</span><br><span class="line">                outFrame, outContentInsets, outStableInsets, outOutsets, outDisplayCutout)) &#123;</span><br><span class="line">            res |= WindowManagerGlobal.ADD_FLAG_ALWAYS_CONSUME_SYSTEM_BARS;</span><br><span class="line">        &#125;</span><br><span class="line">        outInsetsState.set(displayContent.getInsetsStateController().getInsetsForDispatch(win));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (mInTouchMode) &#123;</span><br><span class="line">            res |= WindowManagerGlobal.ADD_FLAG_IN_TOUCH_MODE;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (win.mAppToken == <span class="keyword">null</span> || !win.mAppToken.isClientHidden()) &#123;</span><br><span class="line">            res |= WindowManagerGlobal.ADD_FLAG_APP_VISIBLE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        displayContent.getInputMonitor().setUpdateInputWindowsNeededLw();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 更新FocusedWindow</span></span><br><span class="line">        <span class="keyword">boolean</span> focusChanged = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (win.canReceiveKeys()) &#123;</span><br><span class="line">            focusChanged = updateFocusedWindowLocked(UPDATE_FOCUS_WILL_ASSIGN_LAYERS,</span><br><span class="line">                    <span class="keyword">false</span> <span class="comment">/*updateInputWindows*/</span>);</span><br><span class="line">            <span class="keyword">if</span> (focusChanged) &#123;</span><br><span class="line">                imMayMove = <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (imMayMove) &#123;</span><br><span class="line">            displayContent.computeImeTarget(<span class="keyword">true</span> <span class="comment">/* updateImeTarget */</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Don't do layout here, the window must call</span></span><br><span class="line">        <span class="comment">// relayout to be displayed, so we'll do it there.</span></span><br><span class="line">        <span class="comment">// 为子窗口调整Z-Order</span></span><br><span class="line">        win.getParent().assignChildLayers();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// FocusedWindow改变的话通知IMS</span></span><br><span class="line">        <span class="keyword">if</span> (focusChanged) &#123;</span><br><span class="line">            displayContent.getInputMonitor().setInputFocusLw(displayContent.mCurrentFocus,</span><br><span class="line">                    <span class="keyword">false</span> <span class="comment">/*updateInputWindows*/</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        displayContent.getInputMonitor().updateInputWindowsLw(<span class="keyword">false</span> <span class="comment">/*force*/</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (localLOGV || DEBUG_ADD_REMOVE) Slog.v(TAG_WM, <span class="string">"addWindow: New client "</span></span><br><span class="line">                + client.asBinder() + <span class="string">": window="</span> + win + <span class="string">" Callers="</span> + Debug.getCallers(<span class="number">5</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (win.isVisibleOrAdding() &amp;&amp; displayContent.updateOrientationFromAppTokens()) &#123;</span><br><span class="line">            reportNewConfig = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (reportNewConfig) &#123;</span><br><span class="line">        sendNewConfiguration(displayId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Binder.restoreCallingIdentity(origId);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="流程小结"><a href="#流程小结" class="headerlink" title="流程小结"></a>流程小结</h3><ol>
+<li><p>获取或创建窗口要添加的 DisplayContent</p>
+</li>
+<li><p>从 mTokenMap 取出已注册的 WindowToken，没有的话隐式创建一个</p>
+</li>
+<li><p>DisplayPolicy 调整 LayoutParams 的一些成员的取值</p>
+</li>
+<li><p>WMS为要添加的窗口创建一个WindowState对象，创建过程中根据窗口类型初始化 BaseLayer，SubLayer</p>
+</li>
+<li><p>DisplayPolicy 为添加窗口做一些准备</p>
+<ul>
+<li><p>确保 STATUS_BAR,NAVIGATION_BAR 为单例</p>
+</li>
+<li><p>需要返回 ADD_OKAY 后才能添加窗口</p>
+</li>
+</ul>
+</li>
+<li><p>打开 InputChannel 并注册到 IMS</p>
+</li>
+<li><p>通知 IWindowSession 窗口添加，准备 SurfaceSession</p>
+</li>
+<li><p>将 WindowState 添加到 mWindowMap 中</p>
+</li>
+<li><p>按顺序将 WindowState 添加到 WindowToken</p>
+</li>
+<li><p>如果 Window Type 为的话，设置/更新IMEI target</p>
+</li>
+<li><p>更新 FocusedWindow，FocusedWindow 改变的话通知 IMS</p>
+</li>
+<li><p>为子窗口调整Z-Order</p>
+</li>
+<li><p>需要的话设置/更新IMEI target</p>
+</li>
+</ol>
+<h2 id="移除窗口"><a href="#移除窗口" class="headerlink" title="移除窗口"></a>移除窗口</h2><p><strong>WindowManagerService.removeWindow()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">removeWindow</span><span class="params">(Session session, IWindow client)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (mGlobalLock) &#123;</span><br><span class="line">        <span class="comment">// 获取Window对应的WindowState</span></span><br><span class="line">        WindowState win = windowForClientLocked(session, client, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">if</span> (win == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        win.removeIfPossible();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>WindowState.removeIfPossible()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">removeIfPossible</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.removeIfPossible();</span><br><span class="line">    removeIfPossible(<span class="keyword">false</span> <span class="comment">/*keepVisibleDeadWindow*/</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">removeIfPossible</span><span class="params">(<span class="keyword">boolean</span> keepVisibleDeadWindow)</span> </span>&#123;</span><br><span class="line">    mWindowRemovalAllowed = <span class="keyword">true</span>;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 销毁InputChannel</span></span><br><span class="line">        disposeInputChannel();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 条件判断过滤，动画在运行的话就推迟移除</span></span><br><span class="line">        <span class="keyword">if</span> (mHasSurface &amp;&amp; mToken.okToAnimate()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mWillReplaceWindow) &#123;</span><br><span class="line">                <span class="comment">// This window is going to be replaced. We need to keep it around until the new one</span></span><br><span class="line">                <span class="comment">// gets added, then we will get rid of this one.</span></span><br><span class="line">                <span class="keyword">if</span> (DEBUG_ADD_REMOVE) Slog.v(TAG_WM,</span><br><span class="line">                        <span class="string">"Preserving "</span> + <span class="keyword">this</span> + <span class="string">" until the new one is "</span> + <span class="string">"added"</span>);</span><br><span class="line">                <span class="comment">// <span class="doctag">TODO:</span> We are overloading mAnimatingExit flag to prevent the window state from</span></span><br><span class="line">                <span class="comment">// been removed. We probably need another flag to indicate that window removal</span></span><br><span class="line">                <span class="comment">// should be deffered vs. overloading the flag that says we are playing an exit</span></span><br><span class="line">                <span class="comment">// animation.</span></span><br><span class="line">                mAnimatingExit = <span class="keyword">true</span>;</span><br><span class="line">                mReplacingRemoveRequested = <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// If we are not currently running the exit animation, we need to see about starting one</span></span><br><span class="line">            wasVisible = isWinVisibleLw();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (keepVisibleDeadWindow) &#123;</span><br><span class="line">                <span class="keyword">if</span> (DEBUG_ADD_REMOVE) Slog.v(TAG_WM,</span><br><span class="line">                        <span class="string">"Not removing "</span> + <span class="keyword">this</span> + <span class="string">" because app died while it's visible"</span>);</span><br><span class="line"></span><br><span class="line">                mAppDied = <span class="keyword">true</span>;</span><br><span class="line">                setDisplayLayoutNeeded();</span><br><span class="line">                mWmService.mWindowPlacerLocked.performSurfacePlacement();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Set up a replacement input channel since the app is now dead.</span></span><br><span class="line">                <span class="comment">// We need to catch tapping on the dead window to restart the app.</span></span><br><span class="line">                openInputChannel(<span class="keyword">null</span>);</span><br><span class="line">                getDisplayContent().getInputMonitor().updateInputWindowsLw(<span class="keyword">true</span> <span class="comment">/*force*/</span>);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (wasVisible) &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">int</span> transit = (!startingWindow) ? TRANSIT_EXIT : TRANSIT_PREVIEW_DONE;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Try starting an animation.</span></span><br><span class="line">                <span class="keyword">if</span> (mWinAnimator.applyAnimationLocked(transit, <span class="keyword">false</span>)) &#123;</span><br><span class="line">                    mAnimatingExit = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// mAnimatingExit affects canAffectSystemUiFlags(). Run layout such that</span></span><br><span class="line">                    <span class="comment">// any change from that is performed immediately.</span></span><br><span class="line">                    setDisplayLayoutNeeded();</span><br><span class="line">                    mWmService.requestTraversal();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (mWmService.mAccessibilityController != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    mWmService.mAccessibilityController.onWindowTransitionLocked(<span class="keyword">this</span>, transit);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">boolean</span> isAnimating = isAnimating() &amp;&amp; </span><br><span class="line">                    (mAppToken == <span class="keyword">null</span> || !mAppToken.isWaitingForTransitionStart());</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">boolean</span> lastWindowIsStartingWindow = startingWindow &amp;&amp; mAppToken != <span class="keyword">null</span></span><br><span class="line">                    &amp;&amp; mAppToken.isLastWindow(<span class="keyword">this</span>);</span><br><span class="line">            <span class="comment">// We delay the removal of a window if it has a showing surface that can be used to run</span></span><br><span class="line">            <span class="comment">// exit animation and it is marked as exiting.</span></span><br><span class="line">            <span class="comment">// Also, If isn't the an animating starting window that is the last window in the app.</span></span><br><span class="line">            <span class="comment">// We allow the removal of the non-animating starting window now as there is no</span></span><br><span class="line">            <span class="comment">// additional window or animation that will trigger its removal.</span></span><br><span class="line">            <span class="keyword">if</span> (mWinAnimator.getShown() &amp;&amp; mAnimatingExit</span><br><span class="line">                &amp;&amp; (!lastWindowIsStartingWindow || isAnimating)) &#123;</span><br><span class="line">                <span class="comment">// The exit animation is running or should run... wait for it!</span></span><br><span class="line">                <span class="keyword">if</span> (DEBUG_ADD_REMOVE) Slog.v(TAG_WM,</span><br><span class="line">                                             <span class="string">"Not removing "</span> + <span class="keyword">this</span> + <span class="string">" due to exit animation "</span>);</span><br><span class="line">                setupWindowForRemoveOnExit();</span><br><span class="line">                <span class="keyword">if</span> (mAppToken != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    mAppToken.updateReportedVisibilityLocked();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">                <span class="comment">/// M: if don't start animation, set it as false.</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                mAnimatingExit = <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">/// M: @&#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 开始移除窗口</span></span><br><span class="line">        removeImmediately();</span><br><span class="line">        <span class="comment">// Removing a visible window will effect the computed orientation</span></span><br><span class="line">        <span class="comment">// So just update orientation if needed.</span></span><br><span class="line">        <span class="keyword">if</span> (wasVisible) &#123;</span><br><span class="line">            <span class="keyword">final</span> DisplayContent displayContent = getDisplayContent();</span><br><span class="line">            <span class="keyword">if</span> (displayContent.updateOrientationFromAppTokens()) &#123;</span><br><span class="line">                displayContent.sendNewConfiguration();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 更新Focused Window和IME Window</span></span><br><span class="line">        mWmService.updateFocusedWindowLocked(isFocused() ? UPDATE_FOCUS_REMOVING_FOCUS </span><br><span class="line">                : UPDATE_FOCUS_NORMAL,</span><br><span class="line">                <span class="keyword">true</span> <span class="comment">/*updateInputWindows*/</span>);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        Binder.restoreCallingIdentity(origId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>WindowState.removeImmediately()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">removeImmediately</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.removeImmediately();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 防止重复删除操作</span></span><br><span class="line">    <span class="keyword">if</span> (mRemoved) &#123;</span><br><span class="line">        <span class="comment">// Nothing to do.</span></span><br><span class="line">        <span class="keyword">if</span> (DEBUG_ADD_REMOVE) Slog.v(TAG_WM,</span><br><span class="line">                <span class="string">"WS.removeImmediately: "</span> + <span class="keyword">this</span> + <span class="string">" Already removed..."</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mRemoved = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">        </span><br><span class="line">    <span class="comment">// 更新IME Target</span></span><br><span class="line">    <span class="keyword">final</span> DisplayContent dc = getDisplayContent();</span><br><span class="line">    <span class="keyword">if</span> (isInputMethodTarget()) &#123;</span><br><span class="line">        dc.computeImeTarget(<span class="keyword">true</span> <span class="comment">/* updateImeTarget */</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通知DisplayPolicy移除window</span></span><br><span class="line">    <span class="comment">// 如果当前要删除的Window是StatusBar或者NavigationBar,将这个Window从对应的控制器中删除</span></span><br><span class="line">    dc.getDisplayPolicy().removeWindowLw(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    disposeInputChannel();</span><br><span class="line"></span><br><span class="line">    mWinAnimator.destroyDeferredSurfaceLocked();</span><br><span class="line">    mWinAnimator.destroySurfaceLocked();</span><br><span class="line">    <span class="comment">// 将对应的Session从mSessions中删除并清除Session对应的SurfaceSession资源</span></span><br><span class="line">    mSession.windowRemovedLocked();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        mClient.asBinder().unlinkToDeath(mDeathRecipient, <span class="number">0</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (RuntimeException e) &#123;</span><br><span class="line">        <span class="comment">// Ignore if it has already been removed (usually because</span></span><br><span class="line">        <span class="comment">// we are doing this as part of processing a death note.)</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 做一些清理工作，从各种map,list中移除</span></span><br><span class="line">    <span class="comment">// Remove WindowState  from mWindowMap,mPendingRemove…</span></span><br><span class="line">    <span class="comment">// Deal with WindowToken、AppWindowToken(remove from Stack and so on)</span></span><br><span class="line">    mWmService.postWindowRemoveCleanupLocked(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="流程小结-1"><a href="#流程小结-1" class="headerlink" title="流程小结"></a>流程小结</h3><ol>
+<li><p>获取 Window 对应的 WindowState</p>
+</li>
+<li><p>销毁 InputChannel</p>
+</li>
+<li><p>动画在运行的话就推迟移除窗口</p>
+</li>
+<li><p>开始移除窗口</p>
+</li>
+<li><p>更新 IME Target 窗口</p>
+</li>
+<li><p>通知 DisplayPolicy 移除 window</p>
+</li>
+<li><p>将对应的 Session 从 mSessions 中删除并清除 Session 对应的 SurfaceSession 资源</p>
+</li>
+<li><p>做一些清理工作，从各种map,list中移除</p>
+</li>
+<li><p>更新 Focused Window 和 IME Window</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/WMS/" rel="tag"># WMS</a>
+              <a href="/tags/FrameWork/" rel="tag"># FrameWork</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/07/WindowManagerService%20%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" rel="prev" title="WindowManagerService 启动流程">
+      <i class="fa fa-chevron-left"></i> WindowManagerService 启动流程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/13/WMS%20%E7%AA%97%E5%8F%A3%E7%9A%84%E6%98%BE%E7%A4%BA%E6%AC%A1%E5%BA%8F/" rel="next" title="WMS 窗口的显示次序">
+      WMS 窗口的显示次序 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加窗口"><span class="nav-number">1.</span> <span class="nav-text">添加窗口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#流程小结"><span class="nav-number">1.1.</span> <span class="nav-text">流程小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移除窗口"><span class="nav-number">2.</span> <span class="nav-text">移除窗口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#流程小结-1"><span class="nav-number">2.1.</span> <span class="nav-text">流程小结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ray</p>
+  <div class="site-description" itemprop="description">我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ray945" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ray945" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ray945@outlook.com" title="E-Mail → mailto:ray945@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/594ray" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;594ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ray</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

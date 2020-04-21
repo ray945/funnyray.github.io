@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"funnyray.plus","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Android 动画原理Animation 和 TransformAnimation 在给定了初始状态、结束状态、启动时间与持续时间后，可以为使用者计算其动画目标在任意时刻的变换（Transformation）  子类：TranslateAnimation，ScaleAnimation，RotateAnimation，AlphaAnimation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WMS Window Animation">
+<meta property="og:url" content="http://funnyray.plus/2020/04/21/WMS%20Window%20Animation/index.html">
+<meta property="og:site_name" content="但愿人长久有趣的Ray">
+<meta property="og:description" content="Android 动画原理Animation 和 TransformAnimation 在给定了初始状态、结束状态、启动时间与持续时间后，可以为使用者计算其动画目标在任意时刻的变换（Transformation）  子类：TranslateAnimation，ScaleAnimation，RotateAnimation，AlphaAnimation">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-21T14:12:36.000Z">
+<meta property="article:modified_time" content="2020-04-21T14:12:50.726Z">
+<meta property="article:author" content="Ray">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Framework">
+<meta property="article:tag" content="WMS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://funnyray.plus/2020/04/21/WMS%20Window%20Animation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>WMS Window Animation | 但愿人长久有趣的Ray</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">但愿人长久有趣的Ray</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Funny Ray</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://funnyray.plus/2020/04/21/WMS%20Window%20Animation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Ray">
+      <meta itemprop="description" content="我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="但愿人长久有趣的Ray">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WMS Window Animation
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-04-21 22:12:36 / 修改时间：22:12:50" itemprop="dateCreated datePublished" datetime="2020-04-21T22:12:36+08:00">2020-04-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Android-动画原理"><a href="#Android-动画原理" class="headerlink" title="Android 动画原理"></a>Android 动画原理</h2><h3 id="Animation-和-Transform"><a href="#Animation-和-Transform" class="headerlink" title="Animation 和 Transform"></a>Animation 和 Transform</h3><h4 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h4><ul>
+<li><p>在给定了初始状态、结束状态、启动时间与持续时间后，可以为使用者<strong>计算</strong>其动画目标在<strong>任意时刻</strong>的<strong>变换</strong>（Transformation）</p>
+</li>
+<li><p>子类：TranslateAnimation，ScaleAnimation，RotateAnimation，AlphaAnimation</p>
+</li>
+</ul>
+<a id="more"></a>
+
+<h4 id="Transformation"><a href="#Transformation" class="headerlink" title="Transformation"></a>Transformation</h4><ul>
+<li>描述了一个变换，包含两个分量：透明度和一个二维变换矩阵</li>
+</ul>
+<h4 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h4><ol>
+<li>Animation 首先将 currentTime 进行一个“标准化”操作，得到<strong>标准时间</strong></li>
+<li>根据一个现有的标准时间计算其对应的<strong>插值时间</strong></li>
+<li>Animation 使用插值事件调用由子类实现的 applyTransformation()，计算当前的变换</li>
+</ol>
+<p>综上，Animation 类仅仅根据时间戳计算变换</p>
+<h3 id="Choreographer"><a href="#Choreographer" class="headerlink" title="Choreographer"></a>Choreographer</h3><p>Choreographer 类似 Handler，处理回调的时机为屏幕的垂直同步（VSync）事件到来之时，其处理回调的过程被当作渲染下一帧的工作的一部分</p>
+<p><strong>postCallback(int callbackType, Runnable action, Object token)</strong></p>
+<p>在下一次 VSync 时执行 action 所指定的操作。</p>
+<p>callbackType 的取值：</p>
+<ul>
+<li>CALLBACK_INPUT：处理输入事件</li>
+<li>CALLBACK_ANIMATION：处理动画事</li>
+<li>CALLBACK_TRAVERSAL：处理布局</li>
+</ul>
+<p><strong>postCallbackDelayed(int callbackType, Runnable action, Object token, delayMillis)</strong></p>
+<p>比 postCallback 增加了一个延迟</p>
+<p><strong>postFrameCallback(FrameCallback callback)</strong></p>
+<p>在下一次 VSync 时执行 callback 指定的回调。</p>
+<p>与 postCallback 本质没有太大区别，其回调类型强制为 CALLBACK_ANIMATION</p>
+<p>FrameCallback 接口的定义函数为：doFrame(long frameTimeNanos)，参数是各纳秒级的时间戳</p>
+<p>这个函数是为处理动画帧所涉及的</p>
+<p><strong>postFrameCallbackDelayed(FrameCallback callback, int timeDelayed)</strong></p>
+<p>比postFrameCallback 增加了一个延迟</p>
+<h3 id="简单地实现一个动画"><a href="#简单地实现一个动画" class="headerlink" title="简单地实现一个动画"></a>简单地实现一个动画</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SampleAnimation</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Choreographaer是线程唯一的，通过getInstance()获取当前线程上的实例</span></span><br><span class="line">    Choreographer mChoreographer = Choreographer.getInstance();</span><br><span class="line">    <span class="comment">// 一个Animation</span></span><br><span class="line">    Animation mAnimation = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">startAnime</span><span class="params">(Animation anim)</span> </span>&#123;</span><br><span class="line">        mAnimation = anim;</span><br><span class="line">        scheduleNextFrame();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将负责执行渲染的mAnimationRunnable抛给Choreographer</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">scheduleNextFrame</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mChoreographer.postCallback(Choreographer.CALLBACK_ANIMATION, mAnimationRunnable, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这个Runnable实现了如何渲染一帧</span></span><br><span class="line">    Runnable mAnimationRunnable = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (SampleAnimation.<span class="keyword">this</span>) &#123;</span><br><span class="line">                <span class="comment">// 从这里开始正式渲染动画的一帧</span></span><br><span class="line">                <span class="keyword">if</span> (mAnimation != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// 获取当前时间</span></span><br><span class="line">                    <span class="keyword">long</span> time = SystemClock.uptimeMillis();</span><br><span class="line">                    <span class="comment">// 新建一个Transformation用以保存Animation的计算结果</span></span><br><span class="line">                    Transformation transform = <span class="keyword">new</span> Transformation();</span><br><span class="line">                    <span class="comment">// 计算出Transformation，返回值more表示动画是否需要继续执行</span></span><br><span class="line">                    <span class="keyword">boolean</span> more = mAnimation.getTransformation(time, transform);</span><br><span class="line">                    <span class="comment">// 使用Animation计算出的Transformation进行渲染</span></span><br><span class="line">                    PERFORM_RENDER_WITH_TRANSFORMATION(transform);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (more) &#123;</span><br><span class="line">                    scheduleNextFrame();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    mAnimation = <span class="keyword">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="WMS-的动画系统框架"><a href="#WMS-的动画系统框架" class="headerlink" title="WMS 的动画系统框架"></a>WMS 的动画系统框架</h2><h3 id="入口：scheduleAnimationLocked"><a href="#入口：scheduleAnimationLocked" class="headerlink" title="入口：scheduleAnimationLocked()"></a>入口：scheduleAnimationLocked()</h3><p><strong>WindowManagerService.scheduleAnimationLocked()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">scheduleAnimationLocked</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mAnimator != <span class="keyword">null</span>) &#123;</span><br><span class="line">        mAnimator.scheduleAnimation();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>WindowAnimator.scheduleAnimation()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">scheduleAnimation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!mAnimationFrameCallbackScheduled) &#123;</span><br><span class="line">        mAnimationFrameCallbackScheduled = <span class="keyword">true</span>;</span><br><span class="line">        mChoreographer.postFrameCallback(mAnimationFrameCallback);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里调用了 mChoreographer 的 postFrameCallback()，即在下一次 VSync 时会执行 mAnimationFrameCallback 这个 callback</p>
+<p>mAnimationFrameCallback 是在 WindowAnimator 中定义，并在 WindowAnimator 的构造方法中创建的</p>
+<p><strong>WindowAnimator.WindowAnimator()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">WindowAnimator(<span class="keyword">final</span> WindowManagerService service) &#123;</span><br><span class="line">    mService = service;</span><br><span class="line">    mContext = service.mContext;</span><br><span class="line">    mPolicy = service.mPolicy;</span><br><span class="line">    AnimationThread.getHandler().runWithScissors(</span><br><span class="line">            () -&gt; mChoreographer = Choreographer.getSfInstance(), <span class="number">0</span> <span class="comment">/* timeout */</span>);</span><br><span class="line"></span><br><span class="line">    mAnimationFrameCallback = frameTimeNs -&gt; &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (mService.mGlobalLock) &#123;</span><br><span class="line">            mAnimationFrameCallbackScheduled = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        animate(frameTimeNs);</span><br><span class="line">        Trace.traceEnd(Trace.TRACE_TAG_WINDOW_MANAGER);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里用到了一个 lambda 表达式，当 VSync 信号上来，会回调到这里，并调用 animate() 渲染一帧动画</p>
+<h3 id="WindowAnimator"><a href="#WindowAnimator" class="headerlink" title="WindowAnimator"></a>WindowAnimator</h3><h4 id="Animator-的类型"><a href="#Animator-的类型" class="headerlink" title="Animator 的类型"></a>Animator 的类型</h4><p><strong>DisplayContentAnimator</strong>：Android Q 上仅仅用于存储其屏幕上的 ScreenRotationAnimation</p>
+<p><strong>WindowStateAnimator</strong>：用于对一个窗口进行动画处理。它计算得出的 Transformation 将与 ScreenRotationAnimation 和父窗口的 WindowStateAnimator 的 Transformation 一并显示在 Surface 上。所以窗口的动画其实就是 Surface 的动画</p>
+<p><strong>ScreenRotationAnimation</strong>：用于处理转屏动画，由它计算出的 Transformation 将被用在其所属屏幕的所有窗口之上</p>
+<h4 id="WindowAnimator-animate"><a href="#WindowAnimator-animate" class="headerlink" title="WindowAnimator.animate()"></a>WindowAnimator.animate()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">animate</span><span class="params">(<span class="keyword">long</span> frameTimeNs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">synchronized</span> (mService.mGlobalLock) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!mInitialized) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 预约下一次animate，当VSNC触发后会执行下一次</span></span><br><span class="line">        scheduleAnimation();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">synchronized</span> (mService.mGlobalLock) &#123;</span><br><span class="line">        mCurrentTime = frameTimeNs / TimeUtils.NANOS_PER_MS;</span><br><span class="line">        mBulkUpdateParams = SET_ORIENTATION_CHANGE_COMPLETE;</span><br><span class="line">        mAnimating = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG_WINDOW_TRACE) &#123;</span><br><span class="line">            Slog.i(TAG, <span class="string">"!!! animate: entry time="</span> + mCurrentTime);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (SHOW_TRANSACTIONS) Slog.i(TAG, <span class="string">"&gt;&gt;&gt; OPEN TRANSACTION animate"</span>);</span><br><span class="line">        mService.openSurfaceTransaction();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">final</span> AccessibilityController accessibilityController =</span><br><span class="line">                    mService.mAccessibilityController;</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">int</span> numDisplays = mDisplayContentsAnimators.size();</span><br><span class="line">            <span class="comment">// 遍历DisplayContentsAnimator，处理其上的旋转动画和窗口动画</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numDisplays; i++) &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">int</span> displayId = mDisplayContentsAnimators.keyAt(i);</span><br><span class="line">                <span class="keyword">final</span> DisplayContent dc = mService.mRoot.getDisplayContent(displayId);</span><br><span class="line">                DisplayContentsAnimator displayAnimator = mDisplayContentsAnimators.valueAt(i);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 转屏动画</span></span><br><span class="line">                <span class="keyword">final</span> ScreenRotationAnimation screenRotationAnimation =</span><br><span class="line">                        displayAnimator.mScreenRotationAnimation;</span><br><span class="line">                <span class="keyword">if</span> (screenRotationAnimation != <span class="keyword">null</span> &amp;&amp; screenRotationAnimation.isAnimating()) &#123;</span><br><span class="line">                    <span class="comment">// 计算动画变换矩阵</span></span><br><span class="line">                    <span class="keyword">if</span> (screenRotationAnimation.stepAnimationLocked(mCurrentTime)) &#123;</span><br><span class="line">                        <span class="comment">// 标记animating为true</span></span><br><span class="line">                        setAnimating(<span class="keyword">true</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="comment">// 返回值为false表示这是动画的最后一帧，SET_UPDATE_ROTATION用来通知布局系统旋转动画完毕</span></span><br><span class="line">                        mBulkUpdateParams |= SET_UPDATE_ROTATION;</span><br><span class="line">                        screenRotationAnimation.kill();</span><br><span class="line">                        displayAnimator.mScreenRotationAnimation = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">                        <span class="comment">// display.</span></span><br><span class="line">                        <span class="keyword">if</span> (accessibilityController != <span class="keyword">null</span>) &#123;</span><br><span class="line">                            <span class="comment">// We just finished rotation animation which means we did not</span></span><br><span class="line">                            <span class="comment">// announce the rotation and waited for it to end, announce now.</span></span><br><span class="line">                            accessibilityController.onRotationChangedLocked(dc);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Update animations of all applications, including those</span></span><br><span class="line">                <span class="comment">// associated with exiting/removed apps</span></span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 对每个window开始窗口动画，drawState从READY_TO_SHOW变为HAS_DRAWN</span></span><br><span class="line">                dc.updateWindowsForAnimator();</span><br><span class="line">                <span class="comment">// 更新动画背景，先reset再设置，开始壁纸动画</span></span><br><span class="line">                dc.updateBackgroundForAnimator();</span><br><span class="line">                <span class="comment">// 渲染屏幕旋转的enter动画，然后计算窗口动画的变换矩阵和透明度并设置在Surface上</span></span><br><span class="line">                dc.prepareSurfaces();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 渲染屏幕旋转效果</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numDisplays; i++) &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">int</span> displayId = mDisplayContentsAnimators.keyAt(i);</span><br><span class="line">                <span class="keyword">final</span> DisplayContent dc = mService.mRoot.getDisplayContent(displayId);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 检查app里的所有window是否已经绘制好</span></span><br><span class="line">                dc.checkAppWindowsReadyToShow();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">final</span> ScreenRotationAnimation screenRotationAnimation =</span><br><span class="line">                    mDisplayContentsAnimators.valueAt(i).mScreenRotationAnimation;</span><br><span class="line">                <span class="keyword">if</span> (screenRotationAnimation != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// 渲染屏幕旋转exit动画,矩阵设置到surface</span></span><br><span class="line">                    screenRotationAnimation.updateSurfaces(mTransaction);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 根据mAnimatingForMinimizedDockedStack和mAnimatingForIme更新animating</span></span><br><span class="line">                orAnimating(dc.getDockedDividerController().animate(mCurrentTime));</span><br><span class="line">                <span class="keyword">if</span> (accessibilityController != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    accessibilityController.drawMagnifiedRegionBorderIfNeededLocked(displayId);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (!mAnimating) &#123;</span><br><span class="line">                cancelAnimation();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (mService.mWatermark != <span class="keyword">null</span>) &#123;</span><br><span class="line">                mService.mWatermark.drawIfNeeded();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            SurfaceControl.mergeToGlobalTransaction(mTransaction);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (RuntimeException e) &#123;</span><br><span class="line">            Slog.wtf(TAG, <span class="string">"Unhandled exception in Window Manager"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            mService.closeSurfaceTransaction(<span class="string">"WindowAnimator"</span>);</span><br><span class="line">            <span class="keyword">if</span> (SHOW_TRANSACTIONS) Slog.i(TAG, <span class="string">"&lt;&lt;&lt; CLOSE TRANSACTION animate"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">boolean</span> hasPendingLayoutChanges = mService.mRoot.hasPendingLayoutChanges(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">boolean</span> doRequest = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (mBulkUpdateParams != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// 通知到布局系统</span></span><br><span class="line">            doRequest = mService.mRoot.copyAnimToLayoutParams();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果有必要，重新布局</span></span><br><span class="line">        <span class="keyword">if</span> (hasPendingLayoutChanges || doRequest) &#123;</span><br><span class="line">            mService.mWindowPlacerLocked.requestTraversal();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> rootAnimating = mService.mRoot.isSelfOrChildAnimating();</span><br><span class="line">        <span class="keyword">if</span> (rootAnimating &amp;&amp; !mLastRootAnimating) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Usually app transitions but quite a load onto the system already (with all the</span></span><br><span class="line">            <span class="comment">// things happening in app), so pause task snapshot persisting to not increase the</span></span><br><span class="line">            <span class="comment">// load.</span></span><br><span class="line">            mService.mTaskSnapshotController.setPersisterPaused(<span class="keyword">true</span>);</span><br><span class="line">            Trace.asyncTraceBegin(Trace.TRACE_TAG_WINDOW_MANAGER, <span class="string">"animating"</span>, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//动画在这一帧停止，需要重新布局</span></span><br><span class="line">        <span class="keyword">if</span> (!rootAnimating &amp;&amp; mLastRootAnimating) &#123;</span><br><span class="line">            mService.mWindowPlacerLocked.requestTraversal();</span><br><span class="line">            mService.mTaskSnapshotController.setPersisterPaused(<span class="keyword">false</span>);</span><br><span class="line">            Trace.asyncTraceEnd(Trace.TRACE_TAG_WINDOW_MANAGER, <span class="string">"animating"</span>, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mLastRootAnimating = rootAnimating;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (mRemoveReplacedWindows) &#123;</span><br><span class="line">            mService.mRoot.removeReplacedWindows();</span><br><span class="line">            mRemoveReplacedWindows = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mService.destroyPreservedSurfaceLocked();</span><br><span class="line"></span><br><span class="line">        executeAfterPrepareSurfacesRunnables();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (DEBUG_WINDOW_TRACE) &#123;</span><br><span class="line">            Slog.i(TAG, <span class="string">"!!! animate: exit mAnimating="</span> + mAnimating</span><br><span class="line">                   + <span class="string">" mBulkUpdateParams="</span> + Integer.toHexString(mBulkUpdateParams)</span><br><span class="line">                   + <span class="string">" hasPendingLayoutChanges="</span> + hasPendingLayoutChanges);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>简单概括一下</p>
+<ul>
+<li>提前预约下一帧动画</li>
+<li>针对每个 DisplayContentAnimator，计算其屏幕旋转动画在当前事件所要求的变换</li>
+<li>针对每个 DisplayContent 下的每个窗口，计算其自身动画在当前时间所要求的变换</li>
+<li>针对么个 DisplayContent 下的每个窗口，将上述两个变换同时应用到窗口的 surface 上，实现窗口动画帧的渲染</li>
+<li>渲染屏幕旋转动画</li>
+</ul>
+<h2 id="窗口动画"><a href="#窗口动画" class="headerlink" title="窗口动画"></a>窗口动画</h2><h3 id="updateWindowsForAnimator"><a href="#updateWindowsForAnimator" class="headerlink" title="updateWindowsForAnimator"></a>updateWindowsForAnimator</h3><p>前面提到会调用 <strong>DisplayContent.updateWindowsForAnimator()</strong> 对每个窗口开始窗口动画</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">updateWindowsForAnimator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    forAllWindows(mUpdateWindowsForAnimator, <span class="keyword">true</span> <span class="comment">/* traverseTopToBottom */</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对所有窗口进行遍历，并分别对他们调用 <strong>mUpdateWindowsForAnimator</strong> 这个回调</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Consumer&lt;WindowState&gt; mUpdateWindowsForAnimator = w -&gt; &#123;</span><br><span class="line">    WindowStateAnimator winAnimator = w.mWinAnimator;</span><br><span class="line">    <span class="keyword">final</span> AppWindowToken atoken = w.mAppToken;</span><br><span class="line">    <span class="keyword">if</span> (winAnimator.mDrawState == READY_TO_SHOW) &#123;</span><br><span class="line">        <span class="keyword">if</span> (atoken == <span class="keyword">null</span> || atoken.canShowWindows()) &#123;</span><br><span class="line">            <span class="comment">// 调用WindowState.performShowLocked()</span></span><br><span class="line">            <span class="keyword">if</span> (w.performShowLocked()) &#123;</span><br><span class="line">                pendingLayoutChanges |= FINISH_LAYOUT_REDO_ANIM;</span><br><span class="line">                <span class="keyword">if</span> (DEBUG_LAYOUT_REPEATS) &#123;</span><br><span class="line">                    mWmService.mWindowPlacerLocked.debugLayoutRepeats(</span><br><span class="line">                            <span class="string">"updateWindowsAndWallpaperLocked 5"</span>, pendingLayoutChanges);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="动画的选择与设置"><a href="#动画的选择与设置" class="headerlink" title="动画的选择与设置"></a>动画的选择与设置</h3><p>可以看到，在窗口由不可见变为可见时，如果 mDrawState 为 READY_TO_SHOW，会调用 <strong>WindowState.performShowLocked()</strong>，其中会调用 <strong>WindowStateAnimator.applyEnterAnimationLocked()</strong> 这个方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">applyEnterAnimationLocked</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// If we are the new part of a window replacement transition and we have requested</span></span><br><span class="line">    <span class="comment">// not to animate, we instead want to make it seamless, so we don't want to apply</span></span><br><span class="line">    <span class="comment">// an enter transition.</span></span><br><span class="line">    <span class="keyword">if</span> (mWin.mSkipEnterAnimationForSeamlessReplacement) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> transit;</span><br><span class="line">    <span class="keyword">if</span> (mEnterAnimationPending) &#123;</span><br><span class="line">        mEnterAnimationPending = <span class="keyword">false</span>;</span><br><span class="line">        transit = WindowManagerPolicy.TRANSIT_ENTER;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        transit = WindowManagerPolicy.TRANSIT_SHOW;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// We don't apply animation for application main window here since this window type</span></span><br><span class="line">    <span class="comment">// should be controlled by AppWindowToken in general.</span></span><br><span class="line">    <span class="keyword">if</span> (mAttrType != TYPE_BASE_APPLICATION) &#123;</span><br><span class="line">        <span class="comment">// 调用applyAnimationLocked</span></span><br><span class="line">        applyAnimationLocked(transit, <span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mService.mAccessibilityController != <span class="keyword">null</span>) &#123;</span><br><span class="line">        mService.mAccessibilityController.onWindowTransitionLocked(mWin, transit);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>WindowStateAnimator.applyEnterAnimationLocked() 将会为当前窗口开始一个淡入淡出动画，将窗口显示出来。</p>
+<p>它调用了 WindowStateAnimator 中更为通用的 applyAnimationLocked</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">applyAnimationLocked</span><span class="params">(<span class="keyword">int</span> transit, <span class="keyword">boolean</span> isEntrance)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// transit用来指定动画的意图，WSA将根据意图寻找合适的动画资源</span></span><br><span class="line">    <span class="keyword">if</span> (mWin.isSelfAnimating() &amp;&amp; mAnimationIsEntrance == isEntrance) &#123;</span><br><span class="line">        <span class="comment">// If we are trying to apply an animation, but already running</span></span><br><span class="line">        <span class="comment">// an animation of the same type, then just leave that one alone.</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isEntrance &amp;&amp; mWin.mAttrs.type == TYPE_INPUT_METHOD) &#123;</span><br><span class="line">        mWin.getDisplayContent().adjustForImeIfNeeded();</span><br><span class="line">        mWin.setDisplayLayoutNeeded();</span><br><span class="line">        mService.mWindowPlacerLocked.requestTraversal();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Only apply an animation if the display isn't frozen.  If it is</span></span><br><span class="line">    <span class="comment">// frozen, there is no reason to animate and it can cause strange</span></span><br><span class="line">    <span class="comment">// artifacts when we unfreeze the display if some different animation</span></span><br><span class="line">    <span class="comment">// is running.</span></span><br><span class="line">    Trace.traceBegin(Trace.TRACE_TAG_WINDOW_MANAGER, <span class="string">"WSA#applyAnimationLocked"</span>);</span><br><span class="line">    <span class="keyword">if</span> (mWin.mToken.okToAnimate()) &#123;</span><br><span class="line">        <span class="comment">// 尝试通过WindowDisplayPolicy获取合适的动画资源 </span></span><br><span class="line">        <span class="keyword">int</span> anim = mWin.getDisplayContent().getDisplayPolicy().selectAnimationLw(mWin, transit);</span><br><span class="line">        <span class="keyword">int</span> attr = -<span class="number">1</span>;</span><br><span class="line">        Animation a = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (anim != <span class="number">0</span>) &#123;</span><br><span class="line">        	<span class="comment">// 如果能获取到WindowDisplayPolicy分配的动画资源，则选用此动画</span></span><br><span class="line">            a = anim != -<span class="number">1</span> ? AnimationUtils.loadAnimation(mContext, anim) : <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 否则根据transit选择默认的动画资源</span></span><br><span class="line">            <span class="keyword">switch</span> (transit) &#123;</span><br><span class="line">                ......</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (attr &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                a = mWin.getDisplayContent().mAppTransition.loadAnimationAttr(</span><br><span class="line">                        mWin.mAttrs, attr, TRANSIT_NONE);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG_ANIM) Slog.v(TAG,</span><br><span class="line">                <span class="string">"applyAnimation: win="</span> + <span class="keyword">this</span></span><br><span class="line">                + <span class="string">" anim="</span> + anim + <span class="string">" attr=0x"</span> + Integer.toHexString(attr)</span><br><span class="line">                + <span class="string">" a="</span> + a</span><br><span class="line">                + <span class="string">" transit="</span> + transit</span><br><span class="line">                + <span class="string">" type="</span> + mAttrType</span><br><span class="line">                + <span class="string">" isEntrance="</span> + isEntrance + <span class="string">" Callers "</span> + Debug.getCallers(<span class="number">3</span>));</span><br><span class="line">        <span class="keyword">if</span> (a != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (DEBUG_ANIM) logWithStack(TAG, <span class="string">"Loaded animation "</span> + a + <span class="string">" for "</span> + <span class="keyword">this</span>);</span><br><span class="line">            <span class="comment">// 保存Animation对象到SurfaceAnimator并开启动画</span></span><br><span class="line">            mWin.startAnimation(a);</span><br><span class="line">            mAnimationIsEntrance = isEntrance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果尚未准备好，取消动画</span></span><br><span class="line">        mWin.cancelAnimation();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!isEntrance &amp;&amp; mWin.mAttrs.type == TYPE_INPUT_METHOD) &#123;</span><br><span class="line">        mWin.getDisplayContent().adjustForImeIfNeeded();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Trace.traceEnd(Trace.TRACE_TAG_WINDOW_MANAGER);</span><br><span class="line">    <span class="keyword">return</span> mWin.isAnimating();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，WSA 并没有给 WMS 非常大的自由去选择任意动画。WMS 需要通过一个 transit 向 WSA 提出动画意图，WMP 和 WSA 再根据此意图去选择一个既有动画保存下来。</p>
+<h3 id="Transformation-计算"><a href="#Transformation-计算" class="headerlink" title="Transformation 计算"></a>Transformation 计算</h3><p>前面讲到 WindowState.startAnimation() 会保存 Animation 对象到 SurfaceAnimator 并开启动画</p>
+<p>从 WindowState.startAnimation() 开始，一路往下调用，在 <strong>SurfaceAnimator.startAnimation()</strong> 中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">startAnimation</span><span class="params">(Transaction t, AnimationAdapter anim, <span class="keyword">boolean</span> hidden)</span> </span>&#123;</span><br><span class="line">    cancelAnimation(t, <span class="keyword">true</span> <span class="comment">/* restarting */</span>, <span class="keyword">true</span> <span class="comment">/* forwardCancel */</span>);</span><br><span class="line">    <span class="comment">// 保存animation</span></span><br><span class="line">    mAnimation = anim;</span><br><span class="line">    <span class="keyword">final</span> SurfaceControl surface = mAnimatable.getSurfaceControl();</span><br><span class="line">    <span class="keyword">if</span> (surface == <span class="keyword">null</span>) &#123;</span><br><span class="line">        Slog.w(TAG, <span class="string">"Unable to start animation, surface is null or no children."</span>);</span><br><span class="line">        cancelAnimation();</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    mLeash = createAnimationLeash(surface, t,</span><br><span class="line">            mAnimatable.getSurfaceWidth(), mAnimatable.getSurfaceHeight(), hidden);</span><br><span class="line">    mAnimatable.onAnimationLeashCreated(t, mLeash);</span><br><span class="line">    <span class="keyword">if</span> (mAnimationStartDelayed) &#123;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG_ANIM) Slog.i(TAG, <span class="string">"Animation start delayed"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 继续往下调用</span></span><br><span class="line">    mAnimation.startAnimation(mLeash, t, mInnerAnimationFinishedCallback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一直往下调用到 <strong>SurfaceAnimationRunner.startAnimation()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">startAnimation</span><span class="params">(AnimationSpec a, SurfaceControl animationLeash, Transaction t,</span></span></span><br><span class="line"><span class="function"><span class="params">        Runnable finishCallback)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (mLock) &#123;</span><br><span class="line">        <span class="keyword">final</span> RunningAnimation runningAnim = <span class="keyword">new</span> RunningAnimation(a, animationLeash,</span><br><span class="line">                finishCallback);</span><br><span class="line">        mPendingAnimations.put(animationLeash, runningAnim);</span><br><span class="line">        <span class="keyword">if</span> (!mAnimationStartDeferred) &#123;</span><br><span class="line">            <span class="comment">// 在startAnimations这个回调中就是真正地开启动画了</span></span><br><span class="line">            mChoreographer.postFrameCallback(<span class="keyword">this</span>::startAnimations);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Some animations (e.g. move animations) require the initial transform to be applied</span></span><br><span class="line">        <span class="comment">// immediately.</span></span><br><span class="line">        <span class="comment">// 计算transformation</span></span><br><span class="line">        applyTransformation(runningAnim, t, <span class="number">0</span> <span class="comment">/* currentPlayTime */</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>SurfaceAnimationRunner.applyTransformation()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">applyTransformation</span><span class="params">(RunningAnimation a, Transaction t, <span class="keyword">long</span> currentPlayTime)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a.mAnimSpec.needsEarlyWakeup()) &#123;</span><br><span class="line">        t.setEarlyWakeup();</span><br><span class="line">    &#125;</span><br><span class="line">    a.mAnimSpec.apply(t, a.mLeash, currentPlayTime);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>WindowAnimationSpec.apply()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">apply</span><span class="params">(Transaction t, SurfaceControl leash, <span class="keyword">long</span> currentPlayTime)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> TmpValues tmp = mThreadLocalTmps.get();</span><br><span class="line">    tmp.transformation.clear();</span><br><span class="line">    <span class="comment">// 这里就是Transformation的计算了，计算结果保存在tmp.transformation</span></span><br><span class="line">    mAnimation.getTransformation(currentPlayTime, tmp.transformation);</span><br><span class="line">    tmp.transformation.getMatrix().postTranslate(mPosition.x, mPosition.y);</span><br><span class="line">    t.setMatrix(leash, tmp.transformation.getMatrix(), tmp.floats);</span><br><span class="line">    t.setAlpha(leash, tmp.transformation.getAlpha());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> cropSet = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (mStackClipMode == STACK_CLIP_NONE) &#123;</span><br><span class="line">        <span class="keyword">if</span> (tmp.transformation.hasClipRect()) &#123;</span><br><span class="line">            t.setWindowCrop(leash, tmp.transformation.getClipRect());</span><br><span class="line">            cropSet = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mTmpRect.set(mStackBounds);</span><br><span class="line">        <span class="keyword">if</span> (tmp.transformation.hasClipRect()) &#123;</span><br><span class="line">            mTmpRect.intersect(tmp.transformation.getClipRect());</span><br><span class="line">        &#125;</span><br><span class="line">        t.setWindowCrop(leash, mTmpRect);</span><br><span class="line">        cropSet = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// We can only apply rounded corner if a crop is set, as otherwise the value is meaningless,</span></span><br><span class="line">    <span class="comment">// since it doesn't have anything it's relative to.</span></span><br><span class="line">    <span class="keyword">if</span> (cropSet &amp;&amp; mAnimation.hasRoundedCorners() &amp;&amp; mWindowCornerRadius &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        t.setCornerRadius(leash, mWindowCornerRadius);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="WindowStateAnimator-的动画渲染"><a href="#WindowStateAnimator-的动画渲染" class="headerlink" title="WindowStateAnimator 的动画渲染"></a>WindowStateAnimator 的动画渲染</h3><p>在调用完 DisplayContent.updateWindowsForAnimator() 设置窗口动画后，会调用 <strong>DisplayConent.prepareSurfaces()</strong> 完成动画帧的渲染</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">prepareSurfaces</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Trace.traceBegin(TRACE_TAG_WINDOW_MANAGER, <span class="string">"prepareSurfaces"</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> ScreenRotationAnimation screenRotationAnimation =</span><br><span class="line">                mWmService.mAnimator.getScreenRotationAnimationLocked(mDisplayId);</span><br><span class="line">        <span class="keyword">final</span> Transaction transaction = getPendingTransaction();</span><br><span class="line">        <span class="keyword">if</span> (screenRotationAnimation != <span class="keyword">null</span> &amp;&amp; screenRotationAnimation.isAnimating()) &#123;</span><br><span class="line">            <span class="comment">// 渲染屏幕旋转的enter动画</span></span><br><span class="line">            screenRotationAnimation.getEnterTransformation().getMatrix().getValues(mTmpFloats);</span><br><span class="line">            transaction.setMatrix(mWindowingLayer,</span><br><span class="line">                    mTmpFloats[Matrix.MSCALE_X], mTmpFloats[Matrix.MSKEW_Y],</span><br><span class="line">                    mTmpFloats[Matrix.MSKEW_X], mTmpFloats[Matrix.MSCALE_Y]);</span><br><span class="line">            transaction.setPosition(mWindowingLayer,</span><br><span class="line">                    mTmpFloats[Matrix.MTRANS_X], mTmpFloats[Matrix.MTRANS_Y]);</span><br><span class="line">            transaction.setAlpha(mWindowingLayer,</span><br><span class="line">                    screenRotationAnimation.getEnterTransformation().getAlpha());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用父类的prepareSurfaces</span></span><br><span class="line">        <span class="keyword">super</span>.prepareSurfaces();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// <span class="doctag">TODO:</span> Once we totally eliminate global transaction we will pass transaction in here</span></span><br><span class="line">        <span class="comment">//       rather than merging to global.</span></span><br><span class="line">        SurfaceControl.mergeToGlobalTransaction(transaction);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        Trace.traceEnd(TRACE_TAG_WINDOW_MANAGER);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里有调用到父类的prepareSurfaces</p>
+<p><strong>WindowContainer.prepareSurfaces()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">prepareSurfaces</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// If a leash has been set when the transaction was committed, then the leash reparent has</span></span><br><span class="line">    <span class="comment">// been committed.</span></span><br><span class="line">    mCommittedReparentToAnimationLeash = mSurfaceAnimator.hasLeash();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; mChildren.size(); i++) &#123;</span><br><span class="line">        mChildren.get(i).prepareSurfaces();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里很有意思，WindowContainer 的 prepareSurfaces() 方法会再调用所有子元素的 prepareSurfaces() 方法，这这其中就包括 WindowState</p>
+<p><strong>WindowState.prepareSurfaces()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">prepareSurfaces</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> Dimmer dimmer = getDimmer();</span><br><span class="line">    mIsDimming = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (dimmer != <span class="keyword">null</span>) &#123;</span><br><span class="line">        applyDims(dimmer);</span><br><span class="line">    &#125;</span><br><span class="line">    updateSurfacePosition();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用到WindowStateAnimator的prepareSurfaceLocked</span></span><br><span class="line">    mWinAnimator.prepareSurfaceLocked(<span class="keyword">true</span>);</span><br><span class="line">    <span class="keyword">super</span>.prepareSurfaces();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>WindowStateAnimator.prepareSurfaceLocked()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">prepareSurfaceLocked</span><span class="params">(<span class="keyword">final</span> <span class="keyword">boolean</span> recoveringMemory)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> WindowState w = mWin;</span><br><span class="line">    <span class="keyword">if</span> (!hasSurface()) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// There is no need to wait for an animation change if our window is gone for layout</span></span><br><span class="line">        <span class="comment">// already as we'll never be visible.</span></span><br><span class="line">        <span class="keyword">if</span> (w.getOrientationChanging() &amp;&amp; w.isGoneForLayoutLw()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (DEBUG_ORIENTATION) &#123;</span><br><span class="line">                Slog.v(TAG, <span class="string">"Orientation change skips hidden "</span> + w);</span><br><span class="line">            &#125;</span><br><span class="line">            w.setOrientationChanging(<span class="keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> displayed = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算mShowFrame、Surface的变换矩阵，以及进行mShownAlpha的计算</span></span><br><span class="line">    computeShownFrameLocked();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//将计算好的mShownFrame设置为Surface的位置，完成平移操作</span></span><br><span class="line">    setSurfaceBoundariesLocked(recoveringMemory);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mIsWallpaper &amp;&amp; !w.mWallpaperVisible) &#123;</span><br><span class="line">        <span class="comment">// Wallpaper is no longer visible and there is no wp target =&gt; hide it.</span></span><br><span class="line">        hide(<span class="string">"prepareSurfaceLocked"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (w.isParentWindowHidden() || !w.isOnScreen()) &#123;</span><br><span class="line">        hide(<span class="string">"prepareSurfaceLocked"</span>);</span><br><span class="line">        mWallpaperControllerLocked.hideWallpapers(w);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// If we are waiting for this window to handle an orientation change. If this window is</span></span><br><span class="line">        <span class="comment">// really hidden (gone for layout), there is no point in still waiting for it.</span></span><br><span class="line">        <span class="comment">// Note that this does introduce a potential glitch if the window becomes unhidden</span></span><br><span class="line">        <span class="comment">// before it has drawn for the new orientation.</span></span><br><span class="line">        <span class="keyword">if</span> (w.getOrientationChanging() &amp;&amp; w.isGoneForLayoutLw()) &#123;</span><br><span class="line">            w.setOrientationChanging(<span class="keyword">false</span>);</span><br><span class="line">            <span class="keyword">if</span> (DEBUG_ORIENTATION) Slog.v(TAG,</span><br><span class="line">                    <span class="string">"Orientation change skips hidden "</span> + w);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mLastAlpha != mShownAlpha</span><br><span class="line">            || mLastDsDx != mDsDx</span><br><span class="line">            || mLastDtDx != mDtDx</span><br><span class="line">            || mLastDsDy != mDsDy</span><br><span class="line">            || mLastDtDy != mDtDy</span><br><span class="line">            || w.mLastHScale != w.mHScale</span><br><span class="line">            || w.mLastVScale != w.mVScale</span><br><span class="line">            || mLastHidden) &#123;</span><br><span class="line">        <span class="comment">// 如果参数发生了变化</span></span><br><span class="line">        displayed = <span class="keyword">true</span>;</span><br><span class="line">        mLastAlpha = mShownAlpha;</span><br><span class="line">        mLastDsDx = mDsDx;</span><br><span class="line">        mLastDtDx = mDtDx;</span><br><span class="line">        mLastDsDy = mDsDy;</span><br><span class="line">        mLastDtDy = mDtDy;</span><br><span class="line">        w.mLastHScale = w.mHScale;</span><br><span class="line">        w.mLastVScale = w.mVScale;</span><br><span class="line">        <span class="keyword">if</span> (SHOW_TRANSACTIONS) WindowManagerService.logSurface(w,</span><br><span class="line">                <span class="string">"controller="</span> + mSurfaceController +</span><br><span class="line">                <span class="string">"alpha="</span> + mShownAlpha</span><br><span class="line">                + <span class="string">" matrix=["</span> + mDsDx + <span class="string">"*"</span> + w.mHScale</span><br><span class="line">                + <span class="string">","</span> + mDtDx + <span class="string">"*"</span> + w.mVScale</span><br><span class="line">                + <span class="string">"]["</span> + mDtDy + <span class="string">"*"</span> + w.mHScale</span><br><span class="line">                + <span class="string">","</span> + mDsDy + <span class="string">"*"</span> + w.mVScale + <span class="string">"]"</span>, <span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置surface透明度以及surface的变换矩阵，缩放与旋转变换</span></span><br><span class="line">        <span class="keyword">boolean</span> prepared =</span><br><span class="line">            mSurfaceController.prepareToShowInTransaction(mShownAlpha,</span><br><span class="line">                    mDsDx * w.mHScale * mExtraHScale,</span><br><span class="line">                    mDtDx * w.mVScale * mExtraVScale,</span><br><span class="line">                    mDtDy * w.mHScale * mExtraHScale,</span><br><span class="line">                    mDsDy * w.mVScale * mExtraVScale,</span><br><span class="line">                    recoveringMemory);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果窗口的绘制状态是HAS_DRAWN，并且尚未显示，则显示surface</span></span><br><span class="line">        <span class="keyword">if</span> (prepared &amp;&amp; mDrawState == HAS_DRAWN) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mLastHidden) &#123;</span><br><span class="line">                <span class="keyword">if</span> (showSurfaceRobustlyLocked()) &#123;</span><br><span class="line">                    markPreservedSurfaceForDestroy();</span><br><span class="line">                    mAnimator.requestRemovalOfReplacedWindows(w);</span><br><span class="line">                    mLastHidden = <span class="keyword">false</span>;</span><br><span class="line">                    <span class="keyword">if</span> (mIsWallpaper) &#123;</span><br><span class="line">                        w.dispatchWallpaperVisibility(<span class="keyword">true</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (!w.getDisplayContent().getLastHasContent()) &#123;</span><br><span class="line">                        <span class="comment">// This draw means the difference between unique content and mirroring.</span></span><br><span class="line">                        <span class="comment">// Run another pass through performLayout to set mHasContent in the</span></span><br><span class="line">                        <span class="comment">// LogicalDisplay.</span></span><br><span class="line">                        mAnimator.setPendingLayoutChanges(w.getDisplayId(),</span><br><span class="line">                                FINISH_LAYOUT_REDO_ANIM);</span><br><span class="line">                        <span class="keyword">if</span> (DEBUG_LAYOUT_REPEATS) &#123;</span><br><span class="line">                            mService.mWindowPlacerLocked.debugLayoutRepeats(</span><br><span class="line">                                    <span class="string">"showSurfaceRobustlyLocked "</span> + w,</span><br><span class="line">                                    mAnimator.getPendingLayoutChanges(w.getDisplayId()));</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    w.setOrientationChanging(<span class="keyword">false</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (hasSurface()) &#123;</span><br><span class="line">            w.mToken.hasVisible = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG_ANIM &amp;&amp; mWin.isAnimating()) &#123;</span><br><span class="line">            Slog.v(TAG, <span class="string">"prepareSurface: No changes in animation for "</span> + <span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        displayed = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (w.getOrientationChanging()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!w.isDrawnLw()) &#123;</span><br><span class="line">            mAnimator.mBulkUpdateParams &amp;= ~SET_ORIENTATION_CHANGE_COMPLETE;</span><br><span class="line">            mAnimator.mLastWindowFreezeSource = w;</span><br><span class="line">            <span class="keyword">if</span> (DEBUG_ORIENTATION) Slog.v(TAG,</span><br><span class="line">                    <span class="string">"Orientation continue waiting for draw in "</span> + w);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            w.setOrientationChanging(<span class="keyword">false</span>);</span><br><span class="line">            <span class="keyword">if</span> (DEBUG_ORIENTATION) Slog.v(TAG, <span class="string">"Orientation change complete in "</span> + w);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (displayed) &#123;</span><br><span class="line">        w.mToken.hasVisible = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>prepareSurfaceLocked() 的第一个工作就是通过调用 computeShownFrameLocked() 进行 mShownFrame、Surface 的变换矩阵以及 mShownAlpha 的计算，这三个可以称为渲染参数</p>
+<p>计算后得到的渲染参数全部都被设置到 Surface，从而使这一帧中窗口的位置发生了变化</p>
+<h3 id="窗口绘制状态"><a href="#窗口绘制状态" class="headerlink" title="窗口绘制状态"></a>窗口绘制状态</h3><pre class="mermaid">graph TD
+    A(NO_SURFACE) --> |Create Surface/relayout| B(DRAW_PENDING)
+    B --> |Finish Drawing| C(COMMIT_DRAW_PENDING)
+    C --> |Commit Finish Drawing| D(READY_TO_SHOW)
+    D --> |Perform Show| E(HAS_DRAWN)
+    E --> |Orientation Change| B</pre>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/Framework/" rel="tag"># Framework</a>
+              <a href="/tags/WMS/" rel="tag"># WMS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/18/WMS%20Starting%20Window/" rel="prev" title="WMS Starting Window">
+      <i class="fa fa-chevron-left"></i> WMS Starting Window
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-动画原理"><span class="nav-number">1.</span> <span class="nav-text">Android 动画原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Animation-和-Transform"><span class="nav-number">1.1.</span> <span class="nav-text">Animation 和 Transform</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Animation"><span class="nav-number">1.1.1.</span> <span class="nav-text">Animation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Transformation"><span class="nav-number">1.1.2.</span> <span class="nav-text">Transformation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工作原理"><span class="nav-number">1.1.3.</span> <span class="nav-text">工作原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Choreographer"><span class="nav-number">1.2.</span> <span class="nav-text">Choreographer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单地实现一个动画"><span class="nav-number">1.3.</span> <span class="nav-text">简单地实现一个动画</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WMS-的动画系统框架"><span class="nav-number">2.</span> <span class="nav-text">WMS 的动画系统框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#入口：scheduleAnimationLocked"><span class="nav-number">2.1.</span> <span class="nav-text">入口：scheduleAnimationLocked()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WindowAnimator"><span class="nav-number">2.2.</span> <span class="nav-text">WindowAnimator</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Animator-的类型"><span class="nav-number">2.2.1.</span> <span class="nav-text">Animator 的类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WindowAnimator-animate"><span class="nav-number">2.2.2.</span> <span class="nav-text">WindowAnimator.animate()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窗口动画"><span class="nav-number">3.</span> <span class="nav-text">窗口动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#updateWindowsForAnimator"><span class="nav-number">3.1.</span> <span class="nav-text">updateWindowsForAnimator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动画的选择与设置"><span class="nav-number">3.2.</span> <span class="nav-text">动画的选择与设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transformation-计算"><span class="nav-number">3.3.</span> <span class="nav-text">Transformation 计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WindowStateAnimator-的动画渲染"><span class="nav-number">3.4.</span> <span class="nav-text">WindowStateAnimator 的动画渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#窗口绘制状态"><span class="nav-number">3.5.</span> <span class="nav-text">窗口绘制状态</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ray</p>
+  <div class="site-description" itemprop="description">我是Ray，一个不够有趣，但努力变有趣的人。但愿人长久有趣。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ray945" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ray945" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ray945@outlook.com" title="E-Mail → mailto:ray945@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/594ray" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;594ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ray</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
